@@ -16,7 +16,6 @@ import com.oryanmat.trellowidget.R;
 import com.oryanmat.trellowidget.TrelloWidget;
 import com.oryanmat.trellowidget.model.Board;
 import com.oryanmat.trellowidget.model.BoardList;
-import com.oryanmat.trellowidget.model.ListArray;
 import com.oryanmat.trellowidget.util.HttpErrorListener;
 import com.oryanmat.trellowidget.util.Json;
 import com.oryanmat.trellowidget.util.OnItemSelectedAdapter;
@@ -39,15 +38,8 @@ public class ConfigActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         setWidgetId();
-        getProgressDialog();
+        showProgressDialog();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
-    }
-
-    private void getProgressDialog() {
-        dialog = new ProgressDialog(this);
-        dialog.setCancelable(false);
-        dialog.setMessage(getString(R.string.loading_message));
-        dialog.show();
     }
 
     private void setWidgetId() {
@@ -62,6 +54,13 @@ public class ConfigActivity extends Activity {
         }
     }
 
+    private void showProgressDialog() {
+        dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+        dialog.setMessage(getString(R.string.loading_message));
+        dialog.show();
+    }
+
     void get(String url, Response.Listener<String> listener) {
         TrelloAPIUtil.instance.getAsync(url, listener, new HttpErrorListener(this));
     }
@@ -69,35 +68,31 @@ public class ConfigActivity extends Activity {
     class BoardListener implements Response.Listener<String> {
         @Override
         public void onResponse(String response) {
-            final Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
-            setSpinner(R.id.boardSpinner, boards, new OnItemSelectedAdapter() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Board board = (Board) parent.getItemAtPosition(position);
-                    get(String.format(TrelloAPIUtil.instance.boardLists(), board.id), new ListListener());
-                }
-            });
+            Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
+            setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected());
         }
     }
 
-    class ListListener implements Response.Listener<String> {
+    class BoardsItemSelected extends OnItemSelectedAdapter {
         @Override
-        public void onResponse(String response) {
-            final ListArray array = Json.tryParseJson(response, ListArray.class, ListArray.oneItemList(response));
-            setList(array);
-            setSpinner(R.id.listSpinner, array.lists, new OnItemSelectedAdapter() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    list = (BoardList) parent.getItemAtPosition(position);
-                }
-            });
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Board board = (Board) parent.getItemAtPosition(position);
+            setList(board);
+            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected());
             dialog.dismiss();
         }
 
-        private void setList(ListArray lists) {
-            if (lists.lists.length > 0) {
-                list = lists.lists[0];
+        private void setList(Board board) {
+            if (board.lists.length > 0) {
+                list = board.lists[0];
             }
+        }
+    }
+
+    class ListsItemSelected extends OnItemSelectedAdapter {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            list = (BoardList) parent.getItemAtPosition(position);
         }
     }
 
