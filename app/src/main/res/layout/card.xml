@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/card_bottom_margin"
+    android:paddingLeft="@dimen/card_margin"
+    android:paddingRight="@dimen/card_margin"
+    android:paddingTop="2dp">
+
+    <TextView
+        android:id="@+id/card_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/card_title"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:contentDescription="@string/card_desc_desc"
+        android:src="@drawable/ic_subject_white_24dp" />
+
+
+    <ImageView
+        android:id="@+id/comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/desc"
+        android:contentDescription="@string/comments_desc"
+        android:src="@drawable/ic_chat_bubble_outline_white_24dp" />
+
+    <TextView
+        android:id="@+id/comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/comments"
+        android:hint="@string/zero"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/attachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/comment_count"
+        android:contentDescription="@string/attachments_desc"
+        android:src="@drawable/ic_attachment_white_24dp" />
+
+    <TextView
+        android:id="@+id/attachment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/attachment"
+        android:text="@string/zero"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/checklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/attachment_count"
+        android:contentDescription="@string/checklist_desc"
+        android:src="@drawable/ic_check_box_white_24dp" />
+
+    <TextView
+        android:id="@+id/checklist_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/checklist"
+        android:text="@string/zero"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/due"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/checklist_count"
+        android:contentDescription="@string/due_date_desc"
+        android:src="@drawable/ic_access_time_white_24dp" />
+
+    <TextView
+        android:id="@+id/due_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_title"
+        android:layout_margin="2dp"
+        android:layout_toEndOf="@id/due"
+        android:text="@string/zero"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

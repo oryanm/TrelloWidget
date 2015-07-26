@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Widget for Trello</string>
+
+    <!-- config activity -->
+    <string name="title_activity_config">Choose List</string>
+    <string name="board">Board</string>
+    <string name="list">List</string>
+
+    <!-- widget -->
+    <string name="list_hint">List name</string>
+    <string name="no_cards">No more cards!</string>
+
+    <string name="card_title">Card title</string>
+
+    <string name="card_desc_desc">Card has description</string>
+    <string name="comments_desc">Comments</string>
+    <string name="attachments_desc">Attachments</string>
+    <string name="checklist_desc">Checklist items</string>
+    <string name="due_date_desc">Due date</string>
+    <string name="zero">0</string>
+
+    <!-- login frag -->
+    <string name="login">Lets go</string>
+    <string name="hello_world">Hello!\nTo begin, please login to your Trello account.</string>
+
+    <!-- error -->
+    <string name="http_fail">"Trello http request failed: %s"</string>
+
+</resources>

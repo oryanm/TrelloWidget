@@ -1,0 +1,49 @@
+<resources>
+    <string name="pref_title">Widget Settings</string>
+
+    <string name="pref_text_size_key">text_size_scale</string>
+    <string name="pref_text_size_title">Text size</string>
+    <string name="pref_text_size_desc">Adjust the text size</string>
+    <string name="pref_text_size_default">1.0</string>
+    <string name="pref_text_size_very_small">Very small</string>
+    <string name="pref_text_size_small">Small</string>
+    <string name="pref_text_size_medium">Medium</string>
+    <string name="pref_text_size_large">Large</string>
+    <string name="pref_text_size_very_large">Very large</string>
+
+    <string-array name="pref_text_size_entries">
+        <item>@string/pref_text_size_very_small</item>
+        <item>@string/pref_text_size_small</item>
+        <item>@string/pref_text_size_medium</item>
+        <item>@string/pref_text_size_large</item>
+        <item>@string/pref_text_size_very_large</item>
+    </string-array>
+    <string-array name="pref_text_size_values">
+        <item>0.6</item>
+        <item>0.8</item>
+        <item>1.0</item>
+        <item>1.25</item>
+        <item>1.75</item>
+    </string-array>
+
+    <string name="pref_back_color_key">back_color</string>
+    <string name="pref_back_color_title">Background color</string>
+    <string name="pref_back_color_desc">Change background color</string>
+    <integer name="pref_back_color_default">0xFF000000</integer>
+
+    <string name="pref_update_interval_key">interval_list</string>
+    <string name="pref_update_interval_title">Refresh interval</string>
+    <string name="pref_update_interval_desc">Adjust widget update interval</string>
+    <string name="pref_update_interval_default">900000</string>
+
+    <string-array name="pref_update_interval_titles">
+        <item>15 minuets</item>
+        <item>half hour</item>
+        <item>hour</item>
+    </string-array>
+    <string-array name="pref_update_interval_values">
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+    </string-array>
+</resources>

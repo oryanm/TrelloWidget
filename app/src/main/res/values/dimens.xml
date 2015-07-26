@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_padding">16dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+
+    <dimen name="card_margin">8dp</dimen>
+    <dimen name="card_bottom_margin">4dp</dimen>
+
+    <dimen name="card_title">20sp</dimen>
+    <dimen name="card_badges">16sp</dimen>
+</resources>

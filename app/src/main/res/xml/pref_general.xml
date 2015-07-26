@@ -1,0 +1,29 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_title"
+        android:key="pref_key_storage_settings">
+    <ListPreference
+            android:defaultValue="@string/pref_text_size_default"
+            android:entries="@array/pref_text_size_entries"
+            android:entryValues="@array/pref_text_size_values"
+            android:key="@string/pref_text_size_key"
+            android:summary="@string/pref_text_size_desc"
+            android:title="@string/pref_text_size_title" />
+
+        <com.oryanmat.trellowidget.util.ColorPreference
+            android:defaultValue="@integer/pref_back_color_default"
+            android:key="@string/pref_back_color_key"
+            android:summary="@string/pref_back_color_desc"
+            android:title="@string/pref_back_color_title" />
+
+        <ListPreference
+            android:defaultValue="@string/pref_update_interval_default"
+            android:entries="@array/pref_update_interval_titles"
+            android:entryValues="@array/pref_update_interval_values"
+            android:key="@string/pref_update_interval_key"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:summary="@string/pref_update_interval_desc"
+            android:title="@string/pref_update_interval_title" />
+    </PreferenceCategory>
+</PreferenceScreen>

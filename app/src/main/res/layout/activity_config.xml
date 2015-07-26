@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    tools:context="com.oryanmat.trellowidget.activity.ConfigActivity">
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/board" />
+
+        <Spinner
+            android:id="@+id/boardSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:text="@string/list" />
+
+        <Spinner
+            android:id="@+id/listSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="cancel"
+            android:text="@android:string/cancel"
+            android:textColor="@color/material_deep_teal_200" />
+
+        <Button
+            android:id="@+id/okButton"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="ok"
+            android:text="@android:string/ok"
+            android:textColor="@color/material_deep_teal_200" />
+    </LinearLayout>
+
+</RelativeLayout>
