@@ -33,6 +33,8 @@ public class LoggedInFragment extends Fragment {
             User user = Json.tryParseJson(response, User.class, new User());
             TextView text = (TextView) getActivity().findViewById(R.id.signed_text);
             text.setText(String.format(getString(R.string.singed), user));
+            getActivity().findViewById(R.id.loading_panel).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.signed_panel).setVisibility(View.VISIBLE);
         }
     }
 }

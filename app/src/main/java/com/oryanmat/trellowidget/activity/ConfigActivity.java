@@ -1,6 +1,7 @@
 package com.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,13 +32,22 @@ import static android.appwidget.AppWidgetManager.getInstance;
 public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
     BoardList list;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         setWidgetId();
+        getProgressDialog();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
+    }
+
+    private void getProgressDialog() {
+        dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
+        dialog.setMessage(getString(R.string.loading_message));
+        dialog.show();
     }
 
     private void setWidgetId() {
@@ -81,6 +91,7 @@ public class ConfigActivity extends Activity {
                     list = (BoardList) parent.getItemAtPosition(position);
                 }
             });
+            dialog.dismiss();
         }
 
         private void setList(ListArray lists) {

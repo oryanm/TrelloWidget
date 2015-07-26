@@ -5,19 +5,33 @@
     android:padding="@dimen/default_padding"
     tools:context="com.oryanmat.trellowidget.activity.LoggedInFragment">
 
-    <TextView
-        android:id="@+id/signed_text"
+    <ProgressBar
+        android:id="@+id/loading_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
-        android:text="@string/singed"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:layout_gravity="center" />
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:onClick="logout"
-        android:text="@string/logout" />
+    <FrameLayout
+        android:id="@+id/signed_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/signed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|top"
+            android:text="@string/singed"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/logout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:onClick="logout"
+            android:text="@string/logout" />
+    </FrameLayout>
+
 </FrameLayout>
