@@ -5,20 +5,18 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.oryanmat.trellowidget.R;
 import com.oryanmat.trellowidget.TrelloWidget;
 import com.oryanmat.trellowidget.model.Board;
 import com.oryanmat.trellowidget.model.BoardList;
 import com.oryanmat.trellowidget.model.ListArray;
+import com.oryanmat.trellowidget.util.HttpErrorListener;
 import com.oryanmat.trellowidget.util.Json;
 import com.oryanmat.trellowidget.util.OnItemSelectedAdapter;
 import com.oryanmat.trellowidget.util.TrelloAPIUtil;
@@ -29,7 +27,6 @@ import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.getInstance;
-import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
 public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
@@ -60,15 +57,7 @@ public class ConfigActivity extends Activity {
     }
 
     void get(String url, Response.Listener<String> listener) {
-        TrelloAPIUtil.instance.getAsync(url, listener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(T_WIDGET, error.toString());
-                Toast.makeText(ConfigActivity.this,
-                        String.format(getString(R.string.http_fail), error), Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+        TrelloAPIUtil.instance.getAsync(url, listener, new HttpErrorListener(this));
     }
 
     class BoardListener implements Response.Listener<String> {

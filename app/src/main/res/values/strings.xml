@@ -19,11 +19,12 @@
     <string name="due_date_desc">Due date</string>
     <string name="zero">0</string>
 
-    <!-- login frag -->
+    <!-- login frags -->
+    <string name="hello_world">Hello!\nTo begin, please sign in to your Trello account.</string>
     <string name="login">Lets go</string>
-    <string name="hello_world">Hello!\nTo begin, please login to your Trello account.</string>
+    <string name="singed">Signed in as %s</string>
+    <string name="logout">Logout</string>
 
     <!-- error -->
     <string name="http_fail">"Trello http request failed: %s"</string>
-
 </resources>

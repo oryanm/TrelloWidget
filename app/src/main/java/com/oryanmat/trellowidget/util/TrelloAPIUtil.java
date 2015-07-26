@@ -32,6 +32,7 @@ public class TrelloAPIUtil {
             "&callback_method=fragment" +
             "&return_url=trello-widget://callback";
 
+    public static final String USER = "members/me?fields=fullName,username";
     public static final String BOARDS = "members/me/boards?filter=open&fields=id,name";
     public static final String BOARD_LISTS = "boards/%s?fields=name&lists=open&list_fields=name";
     public static final String LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges";
@@ -61,6 +62,10 @@ public class TrelloAPIUtil {
     public String buildURL() {
         String token = preferences.getString(TrelloAPIUtil.TOKEN_PREF_KEY, "");
         return BASE_URL + API_VERSION + "%s" + KEY + "&" + token;
+    }
+
+    public String user() {
+        return String.format(buildURL(), USER);
     }
 
     public String boards() {

@@ -6,10 +6,11 @@
     tools:context="com.oryanmat.trellowidget.activity.LoggedInFragment">
 
     <TextView
+        android:id="@+id/signed_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|top"
-        android:text="You are logged in as X."
+        android:text="@string/singed"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
@@ -18,5 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:onClick="logout"
-        android:text="Logout" />
+        android:text="@string/logout" />
 </FrameLayout>
