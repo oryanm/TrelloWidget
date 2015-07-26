@@ -4,8 +4,8 @@ Choose and display lists from your Trello boards on your home screen for a quick
 
 Tools and Tech
 --------------
-* [Trello's API](trello.com/docs)
-* [Volly](github.com/mcxiaoke/android-volley) - http handling
-* [Gson](sites.google.com/site/gson/) - json parsing
-* [Holo ColorPicker](github.com/LarsWerkman/HoloColorPicker) - color picker dialog
-* [Calendar Widget](github.com/plusonelabs/calendar-widget) - inspiration
+* [Trello's API](http://trello.com/docs)
+* [Volly](http://github.com/mcxiaoke/android-volley) - http handling
+* [Gson](http://sites.google.com/site/gson/) - json parsing
+* [Holo ColorPicker](http://github.com/LarsWerkman/HoloColorPicker) - color picker dialog
+* [Calendar Widget](http://github.com/plusonelabs/calendar-widget) - inspiration
