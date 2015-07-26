@@ -5,16 +5,13 @@
     android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
-    <!-- todo style for list title-->
     <TextView
         android:id="@+id/list_title"
+        style="@style/WidgetTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="@string/list_hint"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:hint="@string/list_hint" />
 
     <ImageView
         android:id="@+id/divider"

@@ -13,7 +13,7 @@
         android:padding="16dp">
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Title"
+            style="?android:windowTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/board" />
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Title"
+            style="?android:windowTitleStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
@@ -37,28 +37,30 @@
     </LinearLayout>
 
     <LinearLayout
+        style="?android:buttonBarStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linear"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/cancelButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="cancel"
-            android:text="@android:string/cancel"
-            android:textColor="@color/material_deep_teal_200" />
+            android:text="@android:string/cancel" />
 
         <Button
             android:id="@+id/okButton"
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:onClick="ok"
-            android:text="@android:string/ok"
-            android:textColor="@color/material_deep_teal_200" />
+            android:text="@android:string/ok" />
     </LinearLayout>
 
 </RelativeLayout>
