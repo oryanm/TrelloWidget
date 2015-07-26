@@ -36,10 +36,6 @@ public class ConfigActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
-        // todo: remove this and see
-        // Set the result to CANCELED.  This will cause the widget host to cancel
-        // out of the widget placement if they press the back button.
-        setResult(RESULT_CANCELED);
         setWidgetId();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
     }
