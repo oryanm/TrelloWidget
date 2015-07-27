@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Widget for Trello</string>
+    <string name="app_name">Widget for Trello™</string>
 
     <!-- config activity -->
     <string name="title_activity_config">Choose List</string>
