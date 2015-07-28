@@ -7,6 +7,8 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:padding">@dimen/title_padding</item>
+        <item name="android:paddingTop">@dimen/title_padding</item>
+        <item name="android:paddingBottom">@dimen/title_padding</item>
+        <item name="android:paddingLeft">8dp</item>
     </style>
 </resources>

@@ -1,68 +1,72 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
     android:padding="@dimen/widget_margin">
+
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/widget_background"
+        tools:ignore="ContentDescription" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/list_title"
-            style="@style/WidgetTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/list_hint"
-            android:singleLine="true"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/refreshButt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/refresh"
-            android:paddingEnd="@dimen/title_padding"
-            android:paddingStart="0dp"
-            android:src="@drawable/ic_refresh_white_24dp" />
+            <TextView
+                android:id="@+id/list_title"
+                style="@style/WidgetTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/list_hint"
+                android:singleLine="true" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/refreshButt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/refresh"
+                android:paddingEnd="@dimen/title_padding"
+                android:paddingStart="0dp"
+                android:src="@drawable/ic_refresh_white_24dp" />
 
-    <ImageView
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:src="@drawable/divider"
-        tools:ignore="ContentDescription" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/background_image"
+            android:id="@+id/divider"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/widget_background"
+            android:layout_height="1dp"
+            android:src="@drawable/divider"
             tools:ignore="ContentDescription" />
 
-        <ListView
-            android:id="@+id/card_list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/divider" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/empty_card_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/no_cards"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </FrameLayout>
+            <ListView
+                android:id="@+id/card_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/divider" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/empty_card_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_cards"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </FrameLayout>
+    </LinearLayout>
+</FrameLayout>
