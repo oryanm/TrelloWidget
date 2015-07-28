@@ -2,8 +2,11 @@ package com.oryanmat.trellowidget.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -19,8 +22,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -30,6 +31,8 @@ import static java.lang.Float.parseFloat;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
+    static final String DATE_PARSE_ERROR = "Bad date";
+    static final double IMAGE_SCALE = 1.5;
 
     static final SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     static final SimpleDateFormat widgetFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
@@ -71,68 +74,81 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int position) {
         Card card = cards.get(position);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.card);
+
         views.setTextViewText(R.id.card_title, card.name);
-        views.setViewVisibility(R.id.desc, card.badges.description ? View.VISIBLE : View.GONE);
-        setComments(card, views);
-        setChecklist(card, views);
-        setDueDate(card, views);
-        setAttachments(card, views);
         setTextSize(context, views, R.id.card_title, R.dimen.card_title);
-        setTextSize(context, views, R.id.comment_count, R.dimen.card_badges_text);
-        setTextSize(context, views, R.id.checklist_count, R.dimen.card_badges_text);
-        setTextSize(context, views, R.id.due_string, R.dimen.card_badges_text);
-        setTextSize(context, views, R.id.attachment_count, R.dimen.card_badges_text);
+
+        views.setViewVisibility(R.id.desc, card.badges.description ? View.VISIBLE : View.GONE);
+        setImage(views, R.id.desc, R.drawable.ic_subject_white_24dp);
+
+        setComments(views, card);
+        setChecklist(views, card);
+        setDueDate(views, card);
+        setAttachments(views, card);
+
         return views;
     }
 
-    private void setAttachments(Card card, RemoteViews views) {
-        if (card.badges.attachments > 0) {
-            views.setViewVisibility(R.id.attachment, View.VISIBLE);
-            views.setTextViewText(R.id.attachment_count, String.valueOf(card.badges.attachments));
-            views.setViewVisibility(R.id.attachment_count, View.VISIBLE);
-        } else {
-            views.setViewVisibility(R.id.attachment, View.GONE);
-            views.setViewVisibility(R.id.attachment_count, View.GONE);
-        }
+    void setDueDate(RemoteViews views, Card card) {
+        boolean visible = card.badges.due != null;
+        String text = visible ? parseDate(card.badges.due) : "";
+        setBadge(views, R.id.due, R.id.due_string,
+                R.drawable.ic_access_time_white_24dp, text, visible);
     }
 
-    private void setDueDate(Card card, RemoteViews views) {
-        if (card.badges.due != null) {
-            views.setViewVisibility(R.id.due, View.VISIBLE);
-            Date date = Calendar.getInstance().getTime();
-            try {
-                date = apiFormat.parse(card.badges.due);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            views.setTextViewText(R.id.due_string, widgetFormat.format(date));
-            views.setViewVisibility(R.id.due_string, View.VISIBLE);
-        } else {
-            views.setViewVisibility(R.id.due, View.GONE);
-            views.setViewVisibility(R.id.due_string, View.GONE);
-        }
+    void setChecklist(RemoteViews views, Card card) {
+        String text = String.format("%d/%d", card.badges.checkItemsChecked, card.badges.checkItems);
+        boolean visible = card.badges.checkItems > 0;
+        setBadge(views, R.id.checklist, R.id.checklist_count,
+                R.drawable.ic_check_box_white_24dp, text, visible);
     }
 
-    private void setComments(Card card, RemoteViews views) {
-        if (card.badges.comments > 0) {
-            views.setViewVisibility(R.id.comments, View.VISIBLE);
-            views.setTextViewText(R.id.comment_count, String.valueOf(card.badges.comments));
-            views.setViewVisibility(R.id.comment_count, View.VISIBLE);
-        } else {
-            views.setViewVisibility(R.id.comments, View.GONE);
-            views.setViewVisibility(R.id.comment_count, View.GONE);
-        }
+    void setComments(RemoteViews views, Card card) {
+        setIntBadge(views, R.id.comments, R.id.comment_count,
+                R.drawable.ic_chat_bubble_outline_white_24dp, card.badges.comments);
     }
 
-    private void setChecklist(Card card, RemoteViews views) {
-        if (card.badges.checkItems > 0) {
-            views.setViewVisibility(R.id.checklist, View.VISIBLE);
-            views.setTextViewText(R.id.checklist_count,
-                    String.format("%d/%d", card.badges.checkItemsChecked, card.badges.checkItems));
-            views.setViewVisibility(R.id.checklist_count, View.VISIBLE);
-        } else {
-            views.setViewVisibility(R.id.checklist, View.GONE);
-            views.setViewVisibility(R.id.checklist_count, View.GONE);
+    void setAttachments(RemoteViews views, Card card) {
+        setIntBadge(views, R.id.attachment, R.id.attachment_count,
+                R.drawable.ic_attachment_white_24dp, card.badges.attachments);
+    }
+
+    void setIntBadge(RemoteViews views, int view, int textView, int imageId, int x) {
+        setBadge(views, view, textView, imageId, String.valueOf(x), x > 0);
+    }
+
+    void setBadge(RemoteViews views, int view, int textView, int imageId,
+                  String text, boolean visible) {
+        if (visible) {
+            views.setTextViewText(textView, text);
+        }
+
+        setVisibility(views, view, textView, visible);
+        setTextSize(context, views, textView, R.dimen.card_badges_text);
+        setImage(views, view, imageId);
+    }
+
+    private void setVisibility(RemoteViews views, int view, int textView, boolean visible) {
+        views.setViewVisibility(view, visible ? View.VISIBLE : View.GONE);
+        views.setViewVisibility(textView, visible ? View.VISIBLE : View.GONE);
+    }
+
+    void setImage(RemoteViews views, int viewId, int imageId) {
+        Drawable drawable = ContextCompat.getDrawable(context, imageId);
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        float density = context.getResources().getDisplayMetrics().density;
+        float prefTextScale = getPrefTextScale(context);
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,
+                (int) (bitmap.getWidth() * IMAGE_SCALE * prefTextScale / density),
+                (int) (bitmap.getHeight() * IMAGE_SCALE * prefTextScale / density), true);
+        views.setImageViewBitmap(viewId, scaledBitmap);
+    }
+
+    private String parseDate(String date) {
+        try {
+            return widgetFormat.format(apiFormat.parse(date));
+        } catch (ParseException e) {
+            return DATE_PARSE_ERROR;
         }
     }
 
@@ -141,22 +157,17 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     private static float getScaledValue(Context context, int dimenId) {
-        float resValue = getDimension(context, dimenId);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        float dimension = context.getResources().getDimension(dimenId);
         float density = context.getResources().getDisplayMetrics().density;
-        float prefTextScale = parseFloat(prefs.getString(
-                context.getString(R.string.pref_text_size_key),
-                context.getString(R.string.pref_text_size_default)));
-        return resValue * prefTextScale / density;
+        float prefTextScale = getPrefTextScale(context);
+        return dimension * prefTextScale / density;
     }
 
-    private static float getDimension(Context context, int dimenId) {
-        try {
-            return context.getResources().getDimension(dimenId);
-        } catch (Resources.NotFoundException e) {
-            // resource might not exist
-            return 0f;
-        }
+    private static float getPrefTextScale(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return parseFloat(prefs.getString(
+                context.getString(R.string.pref_text_size_key),
+                context.getString(R.string.pref_text_size_default)));
     }
 
     @Override
