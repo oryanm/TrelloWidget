@@ -2,7 +2,6 @@ package com.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -22,11 +21,8 @@ import com.oryanmat.trellowidget.util.OnItemSelectedAdapter;
 import com.oryanmat.trellowidget.util.TrelloAPIUtil;
 import com.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
-import static android.appwidget.AppWidgetManager.getInstance;
 
 public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
@@ -112,7 +108,7 @@ public class ConfigActivity extends Activity {
         }
 
         TrelloWidget.putList(this, appWidgetId, list);
-        updateWidget();
+        TrelloWidgetProvider.updateWidget(this, appWidgetId);
         returnOk();
     }
 
@@ -121,16 +117,6 @@ public class ConfigActivity extends Activity {
         resultValue.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
         setResult(RESULT_OK, resultValue);
         finish();
-    }
-
-    private void updateWidget() {
-        Intent intent = new Intent(this, TrelloWidgetProvider.class);
-        intent.setAction(ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
-        sendBroadcast(intent);
-
-        AppWidgetManager appWidgetManager = getInstance(this);
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.card_list);
     }
 
     public void cancel(View view) {

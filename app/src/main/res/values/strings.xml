@@ -10,6 +10,7 @@
     <!-- widget -->
     <string name="list_hint">List name</string>
     <string name="no_cards">No more cards!</string>
+    <string name="refresh">Refresh list cards</string>
 
     <string name="card_title">Card title</string>
 

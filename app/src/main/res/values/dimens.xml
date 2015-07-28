@@ -7,6 +7,8 @@
     <dimen name="card_margin">8dp</dimen>
     <dimen name="card_bottom_margin">4dp</dimen>
 
-    <dimen name="card_title">20sp</dimen>
-    <dimen name="card_badges">16sp</dimen>
+    <dimen name="card_title">16sp</dimen>
+    <dimen name="card_badges">14sp</dimen>
+
+    <dimen name="title_padding">4dp</dimen>
 </resources>
