@@ -44,7 +44,9 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        saveUserToken(intent);
+        if (intent.getAction().equals(Intent.ACTION_VIEW)){
+            saveUserToken(intent);
+        }
     }
 
     private void saveUserToken(Intent intent) {
