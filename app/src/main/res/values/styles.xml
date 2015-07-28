@@ -9,6 +9,14 @@
         <item name="android:textSize">20sp</item>
         <item name="android:paddingTop">@dimen/title_padding</item>
         <item name="android:paddingBottom">@dimen/title_padding</item>
-        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingLeft">@dimen/title_padding</item>
+    </style>
+
+    <style name="WidgetItemBadge">
+        <item name="android:padding">@dimen/card_badge_padding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/zero</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 </resources>

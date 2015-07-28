@@ -78,10 +78,10 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         setDueDate(card, views);
         setAttachments(card, views);
         setTextSize(context, views, R.id.card_title, R.dimen.card_title);
-        setTextSize(context, views, R.id.comment_count, R.dimen.card_badges);
-        setTextSize(context, views, R.id.checklist_count, R.dimen.card_badges);
-        setTextSize(context, views, R.id.due_string, R.dimen.card_badges);
-        setTextSize(context, views, R.id.attachment_count, R.dimen.card_badges);
+        setTextSize(context, views, R.id.comment_count, R.dimen.card_badges_text);
+        setTextSize(context, views, R.id.checklist_count, R.dimen.card_badges_text);
+        setTextSize(context, views, R.id.due_string, R.dimen.card_badges_text);
+        setTextSize(context, views, R.id.attachment_count, R.dimen.card_badges_text);
         return views;
     }
 

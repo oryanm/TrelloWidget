@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/card_bottom_margin"
-    android:paddingLeft="@dimen/card_margin"
-    android:paddingRight="@dimen/card_margin"
-    android:paddingTop="2dp">
+    android:paddingBottom="@dimen/card_padding_bottom"
+    android:paddingEnd="@dimen/title_padding"
+    android:paddingStart="@dimen/title_padding"
+    android:paddingTop="@dimen/card_padding_top">
 
     <TextView
         android:id="@+id/card_title"
@@ -21,71 +21,49 @@
 
         <ImageView
             android:id="@+id/desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            style="@style/WidgetItemBadge"
             android:contentDescription="@string/card_desc_desc"
             android:src="@drawable/ic_subject_white_24dp" />
 
         <ImageView
             android:id="@+id/comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            style="@style/WidgetItemBadge"
             android:contentDescription="@string/comments_desc"
             android:src="@drawable/ic_chat_bubble_outline_white_24dp" />
 
         <TextView
             android:id="@+id/comment_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="@string/zero" />
+            style="@style/WidgetItemBadge" />
 
         <ImageView
             android:id="@+id/attachment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            style="@style/WidgetItemBadge"
             android:contentDescription="@string/attachments_desc"
             android:src="@drawable/ic_attachment_white_24dp" />
 
         <TextView
             android:id="@+id/attachment_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="@string/zero" />
+            style="@style/WidgetItemBadge" />
 
         <ImageView
             android:id="@+id/checklist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            style="@style/WidgetItemBadge"
             android:contentDescription="@string/checklist_desc"
             android:src="@drawable/ic_check_box_white_24dp" />
 
         <TextView
             android:id="@+id/checklist_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="@string/zero" />
+            style="@style/WidgetItemBadge" />
 
         <ImageView
             android:id="@+id/due"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
+            style="@style/WidgetItemBadge"
             android:contentDescription="@string/due_date_desc"
             android:src="@drawable/ic_access_time_white_24dp" />
 
         <TextView
             android:id="@+id/due_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="@string/zero" />
+            style="@style/WidgetItemBadge" />
 
     </LinearLayout>
 </RelativeLayout>
