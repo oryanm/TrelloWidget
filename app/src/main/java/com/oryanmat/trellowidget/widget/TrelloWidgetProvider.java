@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.oryanmat.trellowidget.R;
@@ -24,7 +23,6 @@ import static android.graphics.Color.alpha;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
-import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String METHOD_SET_ALPHA = "setAlpha";
@@ -33,7 +31,6 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d(T_WIDGET, "Provider.onUpdate");
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }

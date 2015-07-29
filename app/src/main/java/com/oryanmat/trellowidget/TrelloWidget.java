@@ -5,10 +5,8 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.oryanmat.trellowidget.model.BoardList;
 import com.oryanmat.trellowidget.util.Json;
@@ -24,7 +22,6 @@ public class TrelloWidget extends Application {
     public void onCreate() {
         if (DEBUG) StrictMode.enableDefaults();
         super.onCreate();
-        Log.d(T_WIDGET, "Application.onCreate");
         TrelloAPIUtil.init(getApplicationContext());
         startScheduleAlarmThread();
     }
@@ -45,7 +42,6 @@ public class TrelloWidget extends Application {
         int interval = getInterval(context);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, interval, interval, pendingIntent);
-        Log.d(T_WIDGET, "alarm was set at interval: " + interval);
     }
 
     private static int getInterval(Context context) {

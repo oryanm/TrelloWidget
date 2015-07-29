@@ -7,7 +7,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -26,7 +25,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 import static java.lang.Float.parseFloat;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -52,13 +50,11 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onCreate() {
-        Log.d(T_WIDGET, "Factory.onCreate");
     }
 
     @Override
     public void onDataSetChanged() {
         this.cards = Arrays.asList(TrelloAPIUtil.instance.getCards(list).cards);
-        Log.d(T_WIDGET, "Factory.onDataSetChanged: " + cards.size());
     }
 
     @Override
