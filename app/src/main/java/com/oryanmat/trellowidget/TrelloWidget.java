@@ -5,6 +5,8 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -16,13 +18,23 @@ import com.oryanmat.trellowidget.widget.AlarmReceiver;
 public class TrelloWidget extends Application {
     public static final String T_WIDGET = "TWidget";
     public static final String INTERNAL_PREFS = "com.oryanmat.trellowidget.prefs";
+    private static final boolean DEBUG = true;
 
     @Override
     public void onCreate() {
+        if (DEBUG) StrictMode.enableDefaults();
         super.onCreate();
         Log.d(T_WIDGET, "Application.onCreate");
         TrelloAPIUtil.init(getApplicationContext());
-        scheduleAlarm(this);
+        startScheduleAlarmThread();
+    }
+
+    private void startScheduleAlarmThread() {
+        new Thread(new Runnable() {
+            public void run() {
+                scheduleAlarm(TrelloWidget.this);
+            }
+        }).start();
     }
 
     public static void scheduleAlarm(Context context) {
@@ -51,6 +63,6 @@ public class TrelloWidget extends Application {
         context.getSharedPreferences(INTERNAL_PREFS, MODE_PRIVATE)
                 .edit()
                 .putString(String.valueOf(appWidgetId), Json.get().toJson(list))
-                .commit();
+                .apply();
     }
 }
