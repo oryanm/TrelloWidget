@@ -21,10 +21,13 @@ public class SettingsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Fragment fragment = getUserToken().isEmpty() ? new LoginFragment() : new LoggedInFragment();
-        getFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, fragment)
-                .commit();
+
+        if (savedInstanceState == null) {
+            Fragment fragment = getUserToken().isEmpty() ? new LoginFragment() : new LoggedInFragment();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit();
+        }
     }
 
     private String getUserToken() {
