@@ -90,7 +90,7 @@ public class TrelloAPIUtil {
             return future.get();
         } catch (ExecutionException | InterruptedException e) {
             String msg = String.format(context.getString(R.string.http_fail), e);
-            Log.d(T_WIDGET, msg);
+            Log.e(T_WIDGET, msg);
             return msg;
         }
     }
