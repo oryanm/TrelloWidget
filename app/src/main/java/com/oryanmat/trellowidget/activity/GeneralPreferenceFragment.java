@@ -48,7 +48,8 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
         if (key.equals(getString(R.string.pref_update_interval_key))) {
             ListPreference preference = (ListPreference) findPreference(key);
             int index = preference.findIndexOfValue(preference.getValue());
-            preference.setSummary(String.format("Refresh lists every %s", preference.getEntries()[index]));
+            preference.setSummary(String.format(getActivity()
+                    .getString(R.string.pref_update_interval_value_desc), preference.getEntries()[index]));
         } else if (key.equals(getString(R.string.pref_text_size_key))) {
             ListPreference preference = (ListPreference) findPreference(key);
             int index = preference.findIndexOfValue(preference.getValue());
