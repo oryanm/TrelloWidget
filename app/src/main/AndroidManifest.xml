@@ -13,7 +13,7 @@
         <!-- use singleTask so that the activity will catch the callback intent from Trello's auth.
         see: http://developer.android.com/intl/zh-TW/guide/topics/manifest/activity-element.html -->
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask">
             <intent-filter>

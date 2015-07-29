@@ -15,7 +15,7 @@ import com.oryanmat.trellowidget.util.TrelloAPIUtil;
 import static com.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS;
 import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
-public class SettingsActivity extends Activity {
+public class MainActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,6 @@ public class SettingsActivity extends Activity {
                 .edit()
                 .putString(TrelloAPIUtil.TOKEN_PREF_KEY, fragment)
                 .commit();
-
-        Log.d(T_WIDGET, "Got user token");
 
         replaceFragment(new LoggedInFragment());
     }
