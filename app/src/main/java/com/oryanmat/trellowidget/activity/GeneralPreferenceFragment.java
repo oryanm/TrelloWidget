@@ -10,6 +10,8 @@ import com.oryanmat.trellowidget.util.ColorPreference;
 import com.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
 public class GeneralPreferenceFragment extends PreferenceFragment {
+    static final String COLOR_FORMAT = "#%08X";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,7 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
             preference.setSummary(preference.getEntries()[index]);
         } else if (key.equals(getString(R.string.pref_back_color_key))) {
             ColorPreference preference = (ColorPreference) findPreference(key);
-            preference.setSummary(String.format("#%08X", preference.getColor()));
+            preference.setSummary(String.format(COLOR_FORMAT, preference.getColor()));
         }
     }
 }
