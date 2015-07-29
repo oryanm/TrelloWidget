@@ -19,7 +19,7 @@ public class HttpErrorListener implements Response.ErrorListener {
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.d(T_WIDGET, error.toString());
+        Log.e(T_WIDGET, error.toString());
         String text = String.format(context.getString(R.string.http_fail), error);
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
