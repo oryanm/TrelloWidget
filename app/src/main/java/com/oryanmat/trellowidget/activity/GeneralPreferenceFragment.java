@@ -35,8 +35,8 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
         super.onPause();
         getPreferenceScreen().getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(listener);
-        TrelloWidgetProvider.updateAllWidgets(getActivity());
-        TrelloWidgetProvider.updateCardList(getActivity());
+        TrelloWidgetProvider.updateWidgets(getActivity());
+        TrelloWidgetProvider.updateWidgetsData(getActivity());
     }
 
     SharedPreferences.OnSharedPreferenceChangeListener listener =

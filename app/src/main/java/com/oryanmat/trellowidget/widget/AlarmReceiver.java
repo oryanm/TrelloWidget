@@ -11,7 +11,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(T_WIDGET, "AlarmReceiver.onReceive");
-        TrelloWidgetProvider.updateAllWidgets(context);
-        TrelloWidgetProvider.updateCardList(context);
+        TrelloWidgetProvider.updateWidgets(context);
+        TrelloWidgetProvider.updateWidgetsData(context);
     }
 }

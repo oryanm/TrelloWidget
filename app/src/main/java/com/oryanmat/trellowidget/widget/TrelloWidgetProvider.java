@@ -72,18 +72,18 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (intent.getAction().equals(REFRESH_ACTION)) {
-            updateCardList(context);
+            updateWidgetsData(context);
         }
     }
 
-    public static void updateCardList(Context context) {
+    public static void updateWidgetsData(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName compName = new ComponentName(context, TrelloWidgetProvider.class);
         int[] widgetIds = appWidgetManager.getAppWidgetIds(compName);
         appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.card_list);
     }
 
-    public static void updateAllWidgets(Context context) {
+    public static void updateWidgets(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName compName = new ComponentName(context, TrelloWidgetProvider.class);
         Intent intent = new Intent(context, TrelloWidgetProvider.class);
@@ -103,20 +103,12 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.card_list);
     }
 
-    private void configureBackground(Context context, RemoteViews rv) {
+    private void configureBackground(Context context, RemoteViews views) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int color = prefs.getInt(context.getString(R.string.pref_back_color_key),
                 context.getResources().getInteger(R.integer.pref_back_color_default));
         int opaqueColor = Color.rgb(red(color), green(color), blue(color));
-        setColorFilter(rv, R.id.background_image, opaqueColor);
-        setAlpha(rv, R.id.background_image, alpha(color));
-    }
-
-    static void setAlpha(RemoteViews views, int viewId, int alpha) {
-        views.setInt(viewId, METHOD_SET_ALPHA, alpha);
-    }
-
-    static void setColorFilter(RemoteViews views, int viewId, int color) {
-        views.setInt(viewId, METHOD_SET_COLOR_FILTER, color);
+        views.setInt(R.id.background_image, METHOD_SET_COLOR_FILTER, opaqueColor);
+        views.setInt(R.id.background_image, METHOD_SET_ALPHA, alpha(color));
     }
 }
