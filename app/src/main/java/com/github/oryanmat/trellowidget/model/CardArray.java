@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.model;
+package com.github.oryanmat.trellowidget.model;
 
 public class CardArray {
     public String id;

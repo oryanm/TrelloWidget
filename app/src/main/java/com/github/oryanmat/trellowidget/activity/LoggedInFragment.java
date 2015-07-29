@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.activity;
+package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.Response;
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.model.User;
-import com.oryanmat.trellowidget.util.HttpErrorListener;
-import com.oryanmat.trellowidget.util.Json;
-import com.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.model.User;
+import com.github.oryanmat.trellowidget.util.HttpErrorListener;
+import com.github.oryanmat.trellowidget.util.Json;
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
 public class LoggedInFragment extends Fragment {
-    static final String USER = "com.oryanmat.trellowidget.activity.user";
-    static final String VISIBILITY = "com.oryanmat.trellowidget.activity.visibility";
+    static final String USER = "com.github.oryanmat.trellowidget.activity.user";
+    static final String VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility";
 
     User user;
 

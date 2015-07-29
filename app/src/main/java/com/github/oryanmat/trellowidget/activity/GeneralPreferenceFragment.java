@@ -1,13 +1,13 @@
-package com.oryanmat.trellowidget.activity;
+package com.github.oryanmat.trellowidget.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.util.ColorPreference;
-import com.oryanmat.trellowidget.widget.TrelloWidgetProvider;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.util.ColorPreference;
+import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
 public class GeneralPreferenceFragment extends PreferenceFragment {
     static final String COLOR_FORMAT = "#%08X";

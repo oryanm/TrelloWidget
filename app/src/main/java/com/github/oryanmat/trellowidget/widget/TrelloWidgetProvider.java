@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.widget;
+package com.github.oryanmat.trellowidget.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -13,9 +13,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.TrelloWidget;
-import com.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.model.BoardList;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;

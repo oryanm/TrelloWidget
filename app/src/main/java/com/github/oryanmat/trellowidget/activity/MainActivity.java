@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.activity;
+package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -6,14 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
-import static com.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS;
-import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
+import static com.github.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS;
 
 public class MainActivity extends Activity {
 

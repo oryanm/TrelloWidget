@@ -10,7 +10,7 @@
             android:summary="@string/pref_text_size_desc"
             android:title="@string/pref_text_size_title" />
 
-        <com.oryanmat.trellowidget.util.ColorPreference
+        <com.github.oryanmat.trellowidget.util.ColorPreference
             android:defaultValue="@integer/pref_back_color_default"
             android:key="@string/pref_back_color_key"
             android:summary="@string/pref_back_color_desc"

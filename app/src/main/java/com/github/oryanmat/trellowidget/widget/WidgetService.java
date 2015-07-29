@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.widget;
+package com.github.oryanmat.trellowidget.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;

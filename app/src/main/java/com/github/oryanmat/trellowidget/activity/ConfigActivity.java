@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.activity;
+package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -11,15 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.android.volley.Response;
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.TrelloWidget;
-import com.oryanmat.trellowidget.model.Board;
-import com.oryanmat.trellowidget.model.BoardList;
-import com.oryanmat.trellowidget.util.HttpErrorListener;
-import com.oryanmat.trellowidget.util.Json;
-import com.oryanmat.trellowidget.util.OnItemSelectedAdapter;
-import com.oryanmat.trellowidget.util.TrelloAPIUtil;
-import com.oryanmat.trellowidget.widget.TrelloWidgetProvider;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.model.Board;
+import com.github.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.util.HttpErrorListener;
+import com.github.oryanmat.trellowidget.util.Json;
+import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter;
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;

@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.util;
+package com.github.oryanmat.trellowidget.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

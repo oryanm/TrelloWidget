@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    tools:context="com.oryanmat.trellowidget.activity.ConfigActivity">
+    tools:context="com.github.oryanmat.trellowidget.activity.ConfigActivity">
 
     <LinearLayout
         android:id="@+id/linear"

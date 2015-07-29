@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.widget;
+package com.github.oryanmat.trellowidget.widget;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,11 +11,11 @@ import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.TrelloWidget;
-import com.oryanmat.trellowidget.model.BoardList;
-import com.oryanmat.trellowidget.model.Card;
-import com.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.model.Card;
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

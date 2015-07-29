@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.model;
+package com.github.oryanmat.trellowidget.model;
 
 public class BoardList {
     public static final String NULL_JSON = "{\"id\":\"-1\",\"name\":\"oops\",\"cards\":[]}";

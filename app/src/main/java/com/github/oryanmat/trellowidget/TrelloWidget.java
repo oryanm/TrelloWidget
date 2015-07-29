@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget;
+package com.github.oryanmat.trellowidget;
 
 import android.app.AlarmManager;
 import android.app.Application;
@@ -8,10 +8,10 @@ import android.content.Intent;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 
-import com.oryanmat.trellowidget.model.BoardList;
-import com.oryanmat.trellowidget.util.Json;
-import com.oryanmat.trellowidget.util.TrelloAPIUtil;
-import com.oryanmat.trellowidget.widget.AlarmReceiver;
+import com.github.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.util.Json;
+import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.widget.AlarmReceiver;
 
 public class TrelloWidget extends Application {
     public static final String T_WIDGET = "TWidget";

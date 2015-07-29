@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/pref_fragment"
-        android:name="com.oryanmat.trellowidget.activity.GeneralPreferenceFragment"
+        android:name="com.github.oryanmat.trellowidget.activity.GeneralPreferenceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

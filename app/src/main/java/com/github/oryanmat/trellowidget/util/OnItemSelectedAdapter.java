@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.util;
+package com.github.oryanmat.trellowidget.util;
 
 import android.view.View;
 import android.widget.AdapterView;

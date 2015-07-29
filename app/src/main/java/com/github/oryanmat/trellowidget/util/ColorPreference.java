@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.util;
+package com.github.oryanmat.trellowidget.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,10 +8,10 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.github.oryanmat.trellowidget.R;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 import com.larswerkman.holocolorpicker.SVBar;
-import com.oryanmat.trellowidget.R;
 
 /**
  * a Preference class for colors (using a color picker) in the PreferenceFragments/Activities

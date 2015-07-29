@@ -1,4 +1,4 @@
-package com.oryanmat.trellowidget.util;
+package com.github.oryanmat.trellowidget.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,14 +10,14 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.oryanmat.trellowidget.R;
-import com.oryanmat.trellowidget.model.BoardList;
-import com.oryanmat.trellowidget.model.CardArray;
+import com.github.oryanmat.trellowidget.R;
+import com.github.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.model.CardArray;
 
 import java.util.concurrent.ExecutionException;
 
-import static com.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS;
-import static com.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
+import static com.github.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS;
+import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
 public class TrelloAPIUtil {
     public static final String TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken";
