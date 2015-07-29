@@ -9,10 +9,6 @@ import android.view.ViewGroup;
 import com.oryanmat.trellowidget.R;
 
 public class LoginFragment extends Fragment {
-
-    public LoginFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
