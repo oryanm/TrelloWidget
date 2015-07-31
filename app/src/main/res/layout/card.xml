@@ -23,6 +23,12 @@
         android:paddingStart="@dimen/title_padding">
 
         <ImageView
+            android:id="@+id/subscribed"
+            style="@style/WidgetItemBadge"
+            android:contentDescription="@string/card_subscribed_desc"
+            android:src="@drawable/ic_visibility_white_24dp" />
+
+        <ImageView
             android:id="@+id/desc"
             style="@style/WidgetItemBadge"
             android:contentDescription="@string/card_desc_desc"
