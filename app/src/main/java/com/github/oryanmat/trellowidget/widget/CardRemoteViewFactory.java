@@ -1,12 +1,9 @@
 package com.github.oryanmat.trellowidget.widget;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -15,6 +12,7 @@ import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.model.Card;
+import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
 import java.text.ParseException;
@@ -25,12 +23,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import static java.lang.Float.parseFloat;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
-    private static final String METHOD_SET_TEXT_SIZE = "setTextSize";
     static final String DATE_PARSE_ERROR = "Bad date";
-    static final double IMAGE_SCALE = 1.5;
 
     static final SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
     static final SimpleDateFormat widgetFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
@@ -39,6 +37,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     int appWidgetId;
     BoardList list;
     List<Card> cards = new ArrayList<>();
+    @ColorInt int color;
 
     public CardRemoteViewFactory(Context context, int appWidgetId) {
         this.context = context;
@@ -55,6 +54,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     @Override
     public void onDataSetChanged() {
         this.cards = Arrays.asList(TrelloAPIUtil.instance.getCards(list).cards);
+        color = PrefUtil.getForegroundColor(context);
     }
 
     @Override
@@ -70,19 +70,23 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int position) {
         Card card = cards.get(position);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.card);
-
-        views.setTextViewText(R.id.card_title, card.name);
-        setTextSize(context, views, R.id.card_title, R.dimen.card_title);
-
-        views.setViewVisibility(R.id.desc, card.badges.description ? View.VISIBLE : View.GONE);
-        setImage(views, R.id.desc, R.drawable.ic_subject_white_24dp);
-
+        setTitle(views, card);
+        setDescription(views, card);
         setComments(views, card);
         setChecklist(views, card);
         setDueDate(views, card);
         setAttachments(views, card);
+        setDivider(views);
 
         return views;
+    }
+
+    private void setTitle(RemoteViews views, Card card) {
+        setTextView(context, views, R.id.card_title, card.name, color, R.dimen.card_badges_text);
+    }
+
+    private void setDescription(RemoteViews views, Card card) {
+        setBadge(views, R.id.desc, R.drawable.ic_subject_white_24dp, card.badges.description);
     }
 
     void setDueDate(RemoteViews views, Card card) {
@@ -109,35 +113,26 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
                 R.drawable.ic_attachment_white_24dp, card.badges.attachments);
     }
 
-    void setIntBadge(RemoteViews views, int view, int textView, int imageId, int x) {
-        setBadge(views, view, textView, imageId, String.valueOf(x), x > 0);
+    void setIntBadge(RemoteViews views, @IdRes int view, @IdRes int textView,
+                     @DrawableRes int image, int value) {
+        setBadge(views, view, textView, image, String.valueOf(value), value > 0);
     }
 
-    void setBadge(RemoteViews views, int view, int textView, int imageId,
-                  String text, boolean visible) {
-        if (visible) {
-            views.setTextViewText(textView, text);
-        }
-
-        setVisibility(views, view, textView, visible);
-        setTextSize(context, views, textView, R.dimen.card_badges_text);
-        setImage(views, view, imageId);
-    }
-
-    private void setVisibility(RemoteViews views, int view, int textView, boolean visible) {
-        views.setViewVisibility(view, visible ? View.VISIBLE : View.GONE);
+    void setBadge(RemoteViews views, @IdRes int view, @IdRes int textView,
+                  @DrawableRes int image, String text, boolean visible) {
+        setTextView(context, views, textView, text, color, R.dimen.card_badges_text);
         views.setViewVisibility(textView, visible ? View.VISIBLE : View.GONE);
+        setBadge(views, view, image, visible);
     }
 
-    void setImage(RemoteViews views, int viewId, int imageId) {
-        Drawable drawable = ContextCompat.getDrawable(context, imageId);
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        float density = context.getResources().getDisplayMetrics().density;
-        float prefTextScale = getPrefTextScale(context);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap,
-                (int) (bitmap.getWidth() * IMAGE_SCALE * prefTextScale / density),
-                (int) (bitmap.getHeight() * IMAGE_SCALE * prefTextScale / density), true);
-        views.setImageViewBitmap(viewId, scaledBitmap);
+    void setBadge(RemoteViews views, @IdRes int view, @DrawableRes int image, boolean visible) {
+        views.setViewVisibility(view, visible ? View.VISIBLE : View.GONE);
+        setImageViewColor(views, view, color);
+        setImage(context, views, view, image);
+    }
+
+    private void setDivider(RemoteViews views) {
+        setImageViewColor(views, R.id.list_item_divider, color);
     }
 
     private String parseDate(String date) {
@@ -146,24 +141,6 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         } catch (ParseException e) {
             return DATE_PARSE_ERROR;
         }
-    }
-
-    public static void setTextSize(Context context, RemoteViews rv, int viewId, int dimenId) {
-        rv.setFloat(viewId, METHOD_SET_TEXT_SIZE, getScaledValue(context, dimenId));
-    }
-
-    private static float getScaledValue(Context context, int dimenId) {
-        float dimension = context.getResources().getDimension(dimenId);
-        float density = context.getResources().getDisplayMetrics().density;
-        float prefTextScale = getPrefTextScale(context);
-        return dimension * prefTextScale / density;
-    }
-
-    private static float getPrefTextScale(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return parseFloat(prefs.getString(
-                context.getString(R.string.pref_text_size_key),
-                context.getString(R.string.pref_text_size_default)));
     }
 
     @Override

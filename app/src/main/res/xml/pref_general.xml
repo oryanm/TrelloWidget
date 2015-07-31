@@ -16,6 +16,12 @@
             android:summary="@string/pref_back_color_desc"
             android:title="@string/pref_back_color_title" />
 
+        <com.github.oryanmat.trellowidget.util.ColorPreference
+            android:defaultValue="@integer/pref_fore_color_default"
+            android:key="@string/pref_fore_color_key"
+            android:summary="@string/pref_fore_color_desc"
+            android:title="@string/pref_fore_color_title" />
+
         <ListPreference
             android:defaultValue="@string/pref_update_interval_default"
             android:entries="@array/pref_update_interval_titles"

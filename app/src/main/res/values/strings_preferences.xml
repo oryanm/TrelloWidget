@@ -31,6 +31,11 @@
     <string name="pref_back_color_desc">Change background color</string>
     <integer name="pref_back_color_default">0xFF000000</integer>
 
+    <string name="pref_fore_color_key">fore_color</string>
+    <string name="pref_fore_color_title">Foreground color</string>
+    <string name="pref_fore_color_desc">Change foreground color</string>
+    <integer name="pref_fore_color_default">0xFFFFFFFF</integer>
+
     <string name="pref_update_interval_key">interval_list</string>
     <string name="pref_update_interval_title">Refresh interval</string>
     <string name="pref_update_interval_desc">Adjust widget update interval</string>

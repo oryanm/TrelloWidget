@@ -6,27 +6,22 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.Uri;
-import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
 import com.github.oryanmat.trellowidget.model.BoardList;
+import com.github.oryanmat.trellowidget.util.PrefUtil;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
-import static android.graphics.Color.alpha;
-import static android.graphics.Color.blue;
-import static android.graphics.Color.green;
-import static android.graphics.Color.red;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
-    private static final String METHOD_SET_ALPHA = "setAlpha";
-    private static final String METHOD_SET_COLOR_FILTER = "setColorFilter";
     private static final String REFRESH_ACTION = "refreshAction";
 
     @Override
@@ -40,13 +35,18 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         BoardList list = TrelloWidget.getList(context, appWidgetId);
         Intent intent = getRemoteAdapterIntent(context, appWidgetId);
         PendingIntent pendingIntent = getRefreshPendingIntent(context);
+        @ColorInt int color = PrefUtil.getForegroundColor(context);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
-        views.setTextViewText(R.id.list_title, list.name);
+        setTextView(views, R.id.list_title, list.name, color);
+        views.setOnClickPendingIntent(R.id.refreshButt, pendingIntent);
+        setImageViewColor(views, R.id.refreshButt, color);
+        setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, intent);
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
-        views.setOnClickPendingIntent(R.id.refreshButt, pendingIntent);
-        configureBackground(context, views);
+        views.setTextColor(R.id.empty_card_list, color);
+        setImageViewColor(views, R.id.background_image,
+                PrefUtil.getBackgroundColor(context));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -98,14 +98,5 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.card_list);
-    }
-
-    private void configureBackground(Context context, RemoteViews views) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int color = prefs.getInt(context.getString(R.string.pref_back_color_key),
-                context.getResources().getInteger(R.integer.pref_back_color_default));
-        int opaqueColor = Color.rgb(red(color), green(color), blue(color));
-        views.setInt(R.id.background_image, METHOD_SET_COLOR_FILTER, opaqueColor);
-        views.setInt(R.id.background_image, METHOD_SET_ALPHA, alpha(color));
     }
 }

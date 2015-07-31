@@ -20,6 +20,7 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
         SharedPreferences preferences = getPreferenceScreen().getSharedPreferences();
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_text_size_key));
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_back_color_key));
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_fore_color_key));
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key));
     }
 
@@ -57,6 +58,9 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
             int index = preference.findIndexOfValue(preference.getValue());
             preference.setSummary(preference.getEntries()[index]);
         } else if (key.equals(getString(R.string.pref_back_color_key))) {
+            ColorPreference preference = (ColorPreference) findPreference(key);
+            preference.setSummary(String.format(COLOR_FORMAT, preference.getColor()));
+        } else if (key.equals(getString(R.string.pref_fore_color_key))) {
             ColorPreference preference = (ColorPreference) findPreference(key);
             preference.setSummary(String.format(COLOR_FORMAT, preference.getColor()));
         }

@@ -6,17 +6,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.Json;
+import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 import com.github.oryanmat.trellowidget.widget.AlarmReceiver;
 
 public class TrelloWidget extends Application {
     public static final String T_WIDGET = "TWidget";
     public static final String INTERNAL_PREFS = "com.oryanmat.trellowidget.prefs";
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     @Override
     public void onCreate() {
@@ -39,15 +39,9 @@ public class TrelloWidget extends Application {
                 new Intent(context, AlarmReceiver.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int interval = getInterval(context);
+        int interval = PrefUtil.getInterval(context);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, interval, interval, pendingIntent);
-    }
-
-    private static int getInterval(Context context) {
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(context.getString(R.string.pref_update_interval_key),
-                        context.getString(R.string.pref_update_interval_default)));
     }
 
     public static BoardList getList(Context context, int appWidgetId) {
