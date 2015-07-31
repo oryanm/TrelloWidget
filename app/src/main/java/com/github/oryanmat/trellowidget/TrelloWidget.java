@@ -41,7 +41,7 @@ public class TrelloWidget extends Application {
 
         int interval = getInterval(context);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, interval, interval, pendingIntent);
+        manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, interval, interval, pendingIntent);
     }
 
     private static int getInterval(Context context) {
