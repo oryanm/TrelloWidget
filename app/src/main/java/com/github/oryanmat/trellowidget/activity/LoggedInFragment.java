@@ -1,6 +1,7 @@
 package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.model.User;
 import com.github.oryanmat.trellowidget.util.HttpErrorListener;
@@ -35,7 +37,20 @@ public class LoggedInFragment extends Fragment {
             setUser(Json.tryParseJson(savedInstanceState.getString(USER), User.class, new User()));
         } else {
             TrelloAPIUtil.instance.getAsync(TrelloAPIUtil.instance.user(),
-                    new UserListener(), new HttpErrorListener(getActivity()));
+                    new UserListener(), new LoginErrorListener(getActivity()));
+        }
+    }
+
+    class LoginErrorListener extends HttpErrorListener {
+        public LoginErrorListener(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            super.onErrorResponse(error);
+            // if user get request failed then logout so user can try to login again
+            ((MainActivity)getActivity()).logout();
         }
     }
 

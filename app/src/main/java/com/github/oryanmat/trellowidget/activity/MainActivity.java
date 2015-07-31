@@ -62,6 +62,10 @@ public class MainActivity extends Activity {
     }
 
     public void logout(View view) {
+        logout();
+    }
+
+    void logout() {
         getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
                 .edit()
                 .remove(TrelloAPIUtil.TOKEN_PREF_KEY)
