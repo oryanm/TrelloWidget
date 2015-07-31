@@ -17,6 +17,7 @@
     <string name="card_subscribed_desc">You are subscribed to this card</string>
     <string name="card_desc_desc">Card has description</string>
     <string name="comments_desc">Comments</string>
+    <string name="votes_desc">Votes</string>
     <string name="attachments_desc">Attachments</string>
     <string name="checklist_desc">Checklist items</string>
     <string name="due_date_desc">Due date</string>

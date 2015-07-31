@@ -70,8 +70,9 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int position) {
         Card card = cards.get(position);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.card);
-        setSubscribed(views, card);
         setTitle(views, card);
+        setSubscribed(views, card);
+        setVotes(views, card);
         setDescription(views, card);
         setComments(views, card);
         setChecklist(views, card);
@@ -88,6 +89,11 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     private void setSubscribed(RemoteViews views, Card card) {
         setBadge(views, R.id.subscribed, R.drawable.ic_visibility_white_24dp, card.badges.subscribed);
+    }
+
+    void setVotes(RemoteViews views, Card card) {
+        setIntBadge(views, R.id.votes, R.id.vote_count,
+                R.drawable.ic_thumb_up_white_24dp, card.badges.votes);
     }
 
     private void setDescription(RemoteViews views, Card card) {

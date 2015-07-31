@@ -29,6 +29,16 @@
             android:src="@drawable/ic_visibility_white_24dp" />
 
         <ImageView
+            android:id="@+id/votes"
+            style="@style/WidgetItemBadge"
+            android:contentDescription="@string/votes_desc"
+            android:src="@drawable/ic_thumb_up_white_24dp" />
+
+        <TextView
+            android:id="@+id/vote_count"
+            style="@style/WidgetItemBadge" />
+
+        <ImageView
             android:id="@+id/desc"
             style="@style/WidgetItemBadge"
             android:contentDescription="@string/card_desc_desc"
