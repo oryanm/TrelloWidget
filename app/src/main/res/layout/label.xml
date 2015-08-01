@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/label_width"
-    android:layout_height="@dimen/label_height"
-    android:background="@color/accent_material_light"
-    android:orientation="vertical"
-    android:id="@+id/label">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/label"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

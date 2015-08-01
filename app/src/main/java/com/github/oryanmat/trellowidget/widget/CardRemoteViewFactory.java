@@ -30,7 +30,6 @@ import static android.graphics.Color.alpha;
 import static android.graphics.Color.blue;
 import static android.graphics.Color.green;
 import static android.graphics.Color.red;
-import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.METHOD_SET_BACKGROUND_COLOR;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
@@ -157,9 +156,9 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     private void setLabels(RemoteViews views, Card card) {
-        if (card.labels != null && card.labels.length > 0) {
-            views.removeAllViews(R.id.labels_layout);
+        views.removeAllViews(R.id.labels_layout);
 
+        if (card.labels != null && card.labels.length > 0) {
             for (Label label : card.labels) {
                 setLabel(views, label);
             }
@@ -170,7 +169,8 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         int labelColor = LabelColors.colors.get(label.color);
         labelColor = Color.argb(alpha(color), red(labelColor), green(labelColor), blue(labelColor));
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.label);
-        view.setInt(R.id.label, METHOD_SET_BACKGROUND_COLOR, labelColor);
+        setImageViewColor(view, R.id.label, labelColor);
+        setImage(context, view, R.id.label, R.drawable.label);
         views.addView(R.id.labels_layout, view);
     }
 
