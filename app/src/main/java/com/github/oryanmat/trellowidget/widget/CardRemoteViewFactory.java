@@ -1,6 +1,7 @@
 package com.github.oryanmat.trellowidget.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -12,6 +13,8 @@ import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.model.Card;
+import com.github.oryanmat.trellowidget.model.Label;
+import com.github.oryanmat.trellowidget.util.LabelColors;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
@@ -23,6 +26,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static android.graphics.Color.alpha;
+import static android.graphics.Color.blue;
+import static android.graphics.Color.green;
+import static android.graphics.Color.red;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.METHOD_SET_BACKGROUND_COLOR;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
@@ -37,7 +45,8 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     int appWidgetId;
     BoardList list;
     List<Card> cards = new ArrayList<>();
-    @ColorInt int color;
+    @ColorInt
+    int color;
 
     public CardRemoteViewFactory(Context context, int appWidgetId) {
         this.context = context;
@@ -70,7 +79,15 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     public RemoteViews getViewAt(int position) {
         Card card = cards.get(position);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.card);
+        setLabels(views, card);
         setTitle(views, card);
+        setBadges(views, card);
+        setDivider(views);
+
+        return views;
+    }
+
+    private void setBadges(RemoteViews views, Card card) {
         setSubscribed(views, card);
         setVotes(views, card);
         setDescription(views, card);
@@ -78,9 +95,6 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         setChecklist(views, card);
         setDueDate(views, card);
         setAttachments(views, card);
-        setDivider(views);
-
-        return views;
     }
 
     private void setTitle(RemoteViews views, Card card) {
@@ -140,6 +154,24 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         views.setViewVisibility(view, visible ? View.VISIBLE : View.GONE);
         setImageViewColor(views, view, color);
         setImage(context, views, view, image);
+    }
+
+    private void setLabels(RemoteViews views, Card card) {
+        if (card.labels != null && card.labels.length > 0) {
+            views.removeAllViews(R.id.labels_layout);
+
+            for (Label label : card.labels) {
+                setLabel(views, label);
+            }
+        }
+    }
+
+    private void setLabel(RemoteViews views, Label label) {
+        int labelColor = LabelColors.colors.get(label.color);
+        labelColor = Color.argb(alpha(color), red(labelColor), green(labelColor), blue(labelColor));
+        RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.label);
+        view.setInt(R.id.label, METHOD_SET_BACKGROUND_COLOR, labelColor);
+        views.addView(R.id.labels_layout, view);
     }
 
     private void setDivider(RemoteViews views) {

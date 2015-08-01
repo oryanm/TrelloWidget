@@ -1,8 +1,9 @@
 package com.github.oryanmat.trellowidget.model;
 
-public class Card {
+public class Label {
     public String id;
+    public String idBoard;
     public String name;
-    public Badges badges;
-    public Label[] labels;
+    public String color;
+    public int uses;
 }

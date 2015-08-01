@@ -19,8 +19,9 @@ import static android.graphics.Color.green;
 import static android.graphics.Color.red;
 
 public class RemoteViewsUtil {
-    static final String METHOD_SET_ALPHA = "setAlpha";
-    static final String METHOD_SET_COLOR_FILTER = "setColorFilter";
+    public static final String METHOD_SET_ALPHA = "setAlpha";
+    public static final String METHOD_SET_COLOR_FILTER = "setColorFilter";
+    public static final String METHOD_SET_BACKGROUND_COLOR = "setBackgroundColor";
     static final double IMAGE_SCALE = 1.5;
 
     public static void setTextView(Context context, RemoteViews views,

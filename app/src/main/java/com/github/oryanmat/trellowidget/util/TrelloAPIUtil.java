@@ -35,7 +35,7 @@ public class TrelloAPIUtil {
     public static final String USER = "members/me?fields=fullName,username";
     public static final String BOARDS = "members/me/boards?filter=open&fields=id,name" +
             "&lists=open&list_fields=id,name";
-    public static final String LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges";
+    public static final String LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels";
 
     public static TrelloAPIUtil instance;
 

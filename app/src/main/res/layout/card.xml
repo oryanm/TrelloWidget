@@ -2,15 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="@dimen/card_padding_top">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/labels_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/title_padding"
+        android:paddingStart="@dimen/title_padding"/>
 
     <TextView
         android:id="@+id/card_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/labels_layout"
         android:paddingEnd="@dimen/title_padding"
         android:paddingStart="@dimen/title_padding"
+        android:paddingTop="@dimen/card_padding_top"
         android:text="@string/card_title" />
 
     <LinearLayout
