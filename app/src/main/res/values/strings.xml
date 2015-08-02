@@ -30,5 +30,7 @@
     <string name="logout">Logout</string>
 
     <!-- error -->
-    <string name="http_fail">"Trello http request failed: %s"</string>
+    <string name="http_fail">Trello http request failed: %s</string>
+    <string name="login_fail">Login failed multiple times. Logging you out: %s</string>
+
 </resources>

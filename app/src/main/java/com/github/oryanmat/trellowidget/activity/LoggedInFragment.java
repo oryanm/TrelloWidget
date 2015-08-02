@@ -1,24 +1,27 @@
 package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.model.User;
-import com.github.oryanmat.trellowidget.util.HttpErrorListener;
 import com.github.oryanmat.trellowidget.util.Json;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
+
+import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
 public class LoggedInFragment extends Fragment {
     static final String USER = "com.github.oryanmat.trellowidget.activity.user";
     static final String VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility";
+    static final int MAX_LOGIN_FAIL = 3;
 
     User user;
 
@@ -37,20 +40,27 @@ public class LoggedInFragment extends Fragment {
             setUser(Json.tryParseJson(savedInstanceState.getString(USER), User.class, new User()));
         } else {
             TrelloAPIUtil.instance.getAsync(TrelloAPIUtil.instance.user(),
-                    new UserListener(), new LoginErrorListener(getActivity()));
+                    new UserListener(), new LoginErrorListener());
         }
     }
 
-    class LoginErrorListener extends HttpErrorListener {
-        public LoginErrorListener(Context context) {
-            super(context);
-        }
+    class LoginErrorListener implements Response.ErrorListener {
+        int count = 1;
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            super.onErrorResponse(error);
-            // if user get request failed then logout so user can try to login again
-            ((MainActivity)getActivity()).logout();
+            Log.e(T_WIDGET, error.toString());
+
+            if (count >= MAX_LOGIN_FAIL) {
+                // if user get request failed N times then logout so user can try to login again
+                ((MainActivity) getActivity()).logout();
+                String text = String.format(getActivity().getString(R.string.login_fail), error);
+                Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+            } else {
+                // try again. could be temp problem
+                count += 1;
+                TrelloAPIUtil.instance.getAsync(TrelloAPIUtil.instance.user(), new UserListener(), this);
+            }
         }
     }
 
