@@ -22,7 +22,8 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageView
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
-    private static final String REFRESH_ACTION = "refreshAction";
+    private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
+    public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -34,7 +35,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         BoardList list = TrelloWidget.getList(context, appWidgetId);
         Intent intent = getRemoteAdapterIntent(context, appWidgetId);
-        PendingIntent pendingIntent = getRefreshPendingIntent(context);
+        PendingIntent pendingIntent = getRefreshPendingIntent(context, appWidgetId);
         @ColorInt int color = PrefUtil.getForegroundColor(context);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
@@ -58,10 +59,11 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return intent;
     }
 
-    private PendingIntent getRefreshPendingIntent(Context context) {
+    private PendingIntent getRefreshPendingIntent(Context context, int appWidgetId) {
         Intent refreshIntent = new Intent(context, TrelloWidgetProvider.class);
         refreshIntent.setAction(REFRESH_ACTION);
-        return PendingIntent.getBroadcast(context, 0, refreshIntent, 0);
+        refreshIntent.putExtra(WIDGET_ID, appWidgetId);
+        return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if (intent.getAction().equals(REFRESH_ACTION)) {
-            updateWidgetsData(context);
+            notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0));
         }
     }
 
@@ -83,20 +85,23 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     public static void updateWidgets(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName compName = new ComponentName(context, TrelloWidgetProvider.class);
-        Intent intent = new Intent(context, TrelloWidgetProvider.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,
-                appWidgetManager.getAppWidgetIds(compName));
-        context.sendBroadcast(intent);
+        sendUpdateBroadcast(context, appWidgetManager.getAppWidgetIds(compName));
     }
 
     public static void updateWidget(Context context, int appWidgetId) {
+        sendUpdateBroadcast(context, appWidgetId);
+        notifyDataChanged(context, appWidgetId);
+    }
+
+    private static void sendUpdateBroadcast(Context context, int... appWidgetIds) {
         Intent intent = new Intent(context, TrelloWidgetProvider.class);
         intent.setAction(ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
+        intent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
         context.sendBroadcast(intent);
+    }
 
+    private static void notifyDataChanged(Context context, int... appWidgetIds) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.card_list);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.card_list);
     }
 }
