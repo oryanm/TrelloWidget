@@ -1,5 +1,6 @@
 package com.github.oryanmat.trellowidget.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,8 @@ public class LoggedInFragment extends Fragment {
     static final String VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility";
     static final int MAX_LOGIN_FAIL = 3;
 
+    MainActivity activity;
+
     User user;
 
     @Override
@@ -44,6 +47,12 @@ public class LoggedInFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (MainActivity) activity;
+    }
+
     class LoginErrorListener implements Response.ErrorListener {
         int count = 1;
 
@@ -53,9 +62,9 @@ public class LoggedInFragment extends Fragment {
 
             if (count >= MAX_LOGIN_FAIL) {
                 // if user get request failed N times then logout so user can try to login again
-                ((MainActivity) getActivity()).logout();
-                String text = String.format(getActivity().getString(R.string.login_fail), error);
-                Toast.makeText(getActivity(), text, Toast.LENGTH_LONG).show();
+                activity.logout();
+                String text = String.format(activity.getString(R.string.login_fail), error);
+                Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
             } else {
                 // try again. could be temp problem
                 count += 1;
@@ -73,16 +82,20 @@ public class LoggedInFragment extends Fragment {
 
     private void setUser(User user) {
         this.user = user;
-        TextView text = (TextView) getActivity().findViewById(R.id.signed_text);
+        View view = getView();
+        if (view == null) return;
+        TextView text = (TextView) view.findViewById(R.id.signed_text);
         text.setText(String.format(getString(R.string.singed), user));
-        getActivity().findViewById(R.id.loading_panel).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.signed_panel).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.loading_panel).setVisibility(View.GONE);
+        view.findViewById(R.id.signed_panel).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        int visibility = getActivity().findViewById(R.id.loading_panel).getVisibility();
+        View view = getView();
+        if (view == null) return;
+        int visibility = view.findViewById(R.id.loading_panel).getVisibility();
         outState.putInt(VISIBILITY, visibility);
         outState.putString(USER, Json.get().toJson(user));
     }
