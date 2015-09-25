@@ -1,6 +1,7 @@
 package com.github.oryanmat.trellowidget.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -56,22 +57,9 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     @Override
-    public void onCreate() {
-    }
-
-    @Override
     public void onDataSetChanged() {
         this.cards = Arrays.asList(TrelloAPIUtil.instance.getCards(list).cards);
         color = PrefUtil.getForegroundColor(context);
-    }
-
-    @Override
-    public void onDestroy() {
-    }
-
-    @Override
-    public int getCount() {
-        return cards.size();
     }
 
     @Override
@@ -82,8 +70,15 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         setTitle(views, card);
         setBadges(views, card);
         setDivider(views);
+        setOnClickFillInIntent(card, views);
 
         return views;
+    }
+
+    private void setOnClickFillInIntent(Card card, RemoteViews views) {
+        Intent intent = new Intent();
+        intent.putExtra(TrelloWidgetProvider.CARD_EXTRA, card.id);
+        views.setOnClickFillInIntent(R.id.card, intent);
     }
 
     private void setBadges(RemoteViews views, Card card) {
@@ -184,6 +179,19 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         } catch (ParseException e) {
             return DATE_PARSE_ERROR;
         }
+    }
+
+    @Override
+    public void onCreate() {
+    }
+
+    @Override
+    public void onDestroy() {
+    }
+
+    @Override
+    public int getCount() {
+        return cards.size();
     }
 
     @Override

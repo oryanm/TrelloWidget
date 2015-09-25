@@ -23,7 +23,9 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
+    private static final String CARD_ACTION = "com.github.oryanmat.trellowidget.cardAction";
     public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
+    public static final String CARD_EXTRA = "com.github.oryanmat.trellowidget.card";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -41,6 +43,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, pendingIntent);
+        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context, appWidgetId));
         setImageViewColor(views, R.id.refreshButt, color);
         setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, intent);
@@ -66,12 +69,21 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0);
     }
 
+    private PendingIntent getCardPendingIntent(Context context, int appWidgetId) {
+        Intent intent = new Intent(context, TrelloWidgetProvider.class);
+        intent.setAction(CARD_ACTION);
+        intent.putExtra(WIDGET_ID, appWidgetId);
+        return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+    }
+
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
 
         if (intent.getAction().equals(REFRESH_ACTION)) {
             notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0));
+        } else if (intent.getAction().equals(CARD_ACTION)) {
+            // TODO: 25/09/2015 open card activity
         }
     }
 
