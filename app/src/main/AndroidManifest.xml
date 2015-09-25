@@ -51,15 +51,10 @@
                 android:resource="@xml/trello_widget_info" />
         </receiver>
 
-        <receiver android:name=".widget.AlarmReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
+        <receiver android:name=".widget.AlarmReceiver" />
 
         <service
             android:name=".widget.WidgetService"
-            android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
