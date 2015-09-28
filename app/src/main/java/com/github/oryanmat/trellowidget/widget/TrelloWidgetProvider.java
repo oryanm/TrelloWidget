@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.activity.CardActivity;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 
@@ -23,7 +24,6 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
-    private static final String CARD_ACTION = "com.github.oryanmat.trellowidget.cardAction";
     public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
     public static final String CARD_EXTRA = "com.github.oryanmat.trellowidget.card";
 
@@ -43,7 +43,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, pendingIntent);
-        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context, appWidgetId));
+        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
         setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, intent);
@@ -69,11 +69,11 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0);
     }
 
-    private PendingIntent getCardPendingIntent(Context context, int appWidgetId) {
-        Intent intent = new Intent(context, TrelloWidgetProvider.class);
-        intent.setAction(CARD_ACTION);
-        intent.putExtra(WIDGET_ID, appWidgetId);
-        return PendingIntent.getBroadcast(context, appWidgetId, intent, 0);
+    private PendingIntent getCardPendingIntent(Context context) {
+        Intent intent = new Intent(context, CardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
@@ -82,8 +82,6 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
 
         if (intent.getAction().equals(REFRESH_ACTION)) {
             notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0));
-        } else if (intent.getAction().equals(CARD_ACTION)) {
-            // TODO: 25/09/2015 open card activity
         }
     }
 

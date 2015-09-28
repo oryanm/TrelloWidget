@@ -7,6 +7,9 @@
     <string name="list">List</string>
     <string name="loading_message">Wait a second…</string>
 
+    <!-- card activity -->
+    <string name="title_activity_card">Card Details</string>
+
     <!-- widget -->
     <string name="list_hint">List name</string>
     <string name="no_cards">No more cards!</string>

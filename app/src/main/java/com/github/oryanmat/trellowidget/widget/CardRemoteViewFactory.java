@@ -15,17 +15,14 @@ import com.github.oryanmat.trellowidget.TrelloWidget;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.model.Card;
 import com.github.oryanmat.trellowidget.model.Label;
+import com.github.oryanmat.trellowidget.util.DateTimeUtil;
 import com.github.oryanmat.trellowidget.util.LabelColors;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import static android.graphics.Color.alpha;
 import static android.graphics.Color.blue;
@@ -36,11 +33,6 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageView
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
-    static final String DATE_PARSE_ERROR = "Bad date";
-
-    static final SimpleDateFormat apiFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-    static final SimpleDateFormat widgetFormat = new SimpleDateFormat("MMM dd", Locale.getDefault());
-
     private final Context context;
     int appWidgetId;
     BoardList list;
@@ -52,8 +44,6 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         this.context = context;
         this.appWidgetId = appWidgetId;
         list = TrelloWidget.getList(context, appWidgetId);
-        // it appears that trello returns dates in UTC time zone
-        apiFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
     @Override
@@ -110,7 +100,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     void setDueDate(RemoteViews views, Card card) {
         boolean visible = card.badges.due != null;
-        String text = visible ? parseDate(card.badges.due) : "";
+        String text = visible ? DateTimeUtil.parseDate(card.badges.due) : "";
         setBadge(views, R.id.due, R.id.due_string,
                 R.drawable.ic_access_time_white_24dp, text, visible);
     }
@@ -171,14 +161,6 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     private void setDivider(RemoteViews views) {
         setImageViewColor(views, R.id.list_item_divider, color);
-    }
-
-    private String parseDate(String date) {
-        try {
-            return widgetFormat.format(apiFormat.parse(date));
-        } catch (ParseException e) {
-            return DATE_PARSE_ERROR;
-        }
     }
 
     @Override
