@@ -26,6 +26,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
     public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
     public static final String CARD_EXTRA = "com.github.oryanmat.trellowidget.card";
+    public static final String TRELLO_PACKAGE_NAME = "com.trello";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -36,17 +37,16 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         BoardList list = TrelloWidget.getList(context, appWidgetId);
-        Intent intent = getRemoteAdapterIntent(context, appWidgetId);
-        PendingIntent pendingIntent = getRefreshPendingIntent(context, appWidgetId);
         @ColorInt int color = PrefUtil.getForegroundColor(context);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
-        views.setOnClickPendingIntent(R.id.refreshButt, pendingIntent);
+        views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
+        views.setOnClickPendingIntent(R.id.list_title, getTitlePendingIntent(context));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
         setImageViewColor(views, R.id.divider, color);
-        views.setRemoteAdapter(R.id.card_list, intent);
+        views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId));
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
         views.setTextColor(R.id.empty_card_list, color);
         setImageViewColor(views, R.id.background_image,
@@ -74,6 +74,11 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getTitlePendingIntent(Context context) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(TRELLO_PACKAGE_NAME);
+        return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     @Override
