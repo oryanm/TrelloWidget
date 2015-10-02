@@ -1,8 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="@string/pref_title"
-        android:key="pref_key_storage_settings">
-    <ListPreference
+        android:key="pref_key_storage_settings"
+        android:title="@string/pref_title">
+        <ListPreference
             android:defaultValue="@string/pref_text_size_default"
             android:entries="@array/pref_text_size_entries"
             android:entryValues="@array/pref_text_size_values"
@@ -31,5 +31,12 @@
             android:positiveButtonText="@null"
             android:summary="@string/pref_update_interval_desc"
             android:title="@string/pref_update_interval_title" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_title_onclick_key"
+            android:summary="@string/pref_title_onclick_desc"
+            android:title="@string/pref_title_onclick_title" />
+
     </PreferenceCategory>
 </PreferenceScreen>

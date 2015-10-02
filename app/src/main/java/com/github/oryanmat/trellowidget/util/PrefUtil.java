@@ -34,4 +34,10 @@ public class PrefUtil {
     public static @ColorInt int getColor(Context context, String key, int defValue) {
         return getDefaultSharedPreferences(context).getInt(key, defValue);
     }
+
+    public static boolean isTitleEnabled(Context context) {
+        return getDefaultSharedPreferences(context).getBoolean(
+                context.getString(R.string.pref_title_onclick_key),
+                context.getResources().getBoolean(R.bool.pref_title_onclick_default));
+    }
 }

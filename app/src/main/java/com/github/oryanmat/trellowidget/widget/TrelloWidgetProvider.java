@@ -27,6 +27,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
     public static final String CARD_EXTRA = "com.github.oryanmat.trellowidget.card";
     public static final String TRELLO_PACKAGE_NAME = "com.trello";
+    public static final String TRELLO_URL = "https://www.trello.com";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -42,15 +43,14 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
-        views.setOnClickPendingIntent(R.id.list_title, getTitlePendingIntent(context));
+        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
         setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId));
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
         views.setTextColor(R.id.empty_card_list, color);
-        setImageViewColor(views, R.id.background_image,
-                PrefUtil.getBackgroundColor(context));
+        setImageViewColor(views, R.id.background_image, PrefUtil.getBackgroundColor(context));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -69,18 +69,6 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0);
     }
 
-    private PendingIntent getCardPendingIntent(Context context) {
-        Intent intent = new Intent(context, CardActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    private PendingIntent getTitlePendingIntent(Context context) {
-        Intent intent = context.getPackageManager().getLaunchIntentForPackage(TRELLO_PACKAGE_NAME);
-        return PendingIntent.getActivity(context, 0, intent, 0);
-    }
-
     @Override
     public void onReceive(@NonNull Context context, @NonNull Intent intent) {
         super.onReceive(context, intent);
@@ -88,6 +76,24 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         if (intent.getAction().equals(REFRESH_ACTION)) {
             notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0));
         }
+    }
+
+    private PendingIntent getCardPendingIntent(Context context) {
+        Intent intent = new Intent(context, CardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getTitleIntent(Context context) {
+        Intent intent = PrefUtil.isTitleEnabled(context) ? getTrelloIntent(context) : new Intent();
+        return PendingIntent.getActivity(context, 0, intent, 0);
+    }
+
+    private Intent getTrelloIntent(Context context) {
+        // try to find trello's app if installed. otherwise just open the website.
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(TRELLO_PACKAGE_NAME);
+        return intent != null ? intent : new Intent(Intent.ACTION_VIEW, Uri.parse(TRELLO_URL));
     }
 
     public static void updateWidgetsData(Context context) {

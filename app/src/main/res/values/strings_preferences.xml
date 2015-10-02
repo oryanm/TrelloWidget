@@ -56,4 +56,10 @@
         <item>21600000</item>
         <item>86400000</item>
     </string-array>
+
+    <string name="pref_title_onclick_key">title_onclick</string>
+    <string name="pref_title_onclick_title">Open Trello</string>
+    <string name="pref_title_onclick_desc">Press the widget\'s title to open Trello</string>
+    <bool name="pref_title_onclick_default">true</bool>
+
 </resources>
