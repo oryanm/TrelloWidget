@@ -17,9 +17,9 @@ import com.github.oryanmat.trellowidget.model.Card;
 import com.github.oryanmat.trellowidget.model.CardArray;
 import com.github.oryanmat.trellowidget.model.Label;
 import com.github.oryanmat.trellowidget.util.DateTimeUtil;
-import com.github.oryanmat.trellowidget.util.LabelColors;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
+import com.github.oryanmat.trellowidget.util.color.LabelColors;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +32,7 @@ import static android.graphics.Color.red;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
+import static com.github.oryanmat.trellowidget.util.color.ColorUtil.dim;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private final Context context;
@@ -57,14 +58,6 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         } else {
             color = dim(color);
         }
-    }
-
-    private int dim(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        // half the value component
-        hsv[2] *= 0.5f;
-        return Color.HSVToColor(hsv);
     }
 
     @Override

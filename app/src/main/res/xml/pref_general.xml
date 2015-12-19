@@ -10,13 +10,13 @@
             android:summary="@string/pref_text_size_desc"
             android:title="@string/pref_text_size_title" />
 
-        <com.github.oryanmat.trellowidget.util.ColorPreference
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
             android:defaultValue="@integer/pref_back_color_default"
             android:key="@string/pref_back_color_key"
             android:summary="@string/pref_back_color_desc"
             android:title="@string/pref_back_color_title" />
 
-        <com.github.oryanmat.trellowidget.util.ColorPreference
+        <com.github.oryanmat.trellowidget.util.color.ColorPreference
             android:defaultValue="@integer/pref_fore_color_default"
             android:key="@string/pref_fore_color_key"
             android:summary="@string/pref_fore_color_desc"

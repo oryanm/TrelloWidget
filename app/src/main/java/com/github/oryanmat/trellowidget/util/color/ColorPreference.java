@@ -1,4 +1,4 @@
-package com.github.oryanmat.trellowidget.util;
+package com.github.oryanmat.trellowidget.util.color;
 
 import android.content.Context;
 import android.content.res.TypedArray;

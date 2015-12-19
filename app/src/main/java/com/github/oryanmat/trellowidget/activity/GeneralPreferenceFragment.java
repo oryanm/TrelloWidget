@@ -6,7 +6,7 @@ import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
 
 import com.github.oryanmat.trellowidget.R;
-import com.github.oryanmat.trellowidget.util.ColorPreference;
+import com.github.oryanmat.trellowidget.util.color.ColorPreference;
 import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
 public class GeneralPreferenceFragment extends PreferenceFragment {
