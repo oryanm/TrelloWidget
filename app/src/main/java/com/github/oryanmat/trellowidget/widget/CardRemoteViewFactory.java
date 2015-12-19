@@ -14,6 +14,7 @@ import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.model.Card;
+import com.github.oryanmat.trellowidget.model.CardArray;
 import com.github.oryanmat.trellowidget.model.Label;
 import com.github.oryanmat.trellowidget.util.DateTimeUtil;
 import com.github.oryanmat.trellowidget.util.LabelColors;
@@ -48,8 +49,22 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-        this.cards = Arrays.asList(TrelloAPIUtil.instance.getCards(list).cards);
+        CardArray cardArray = TrelloAPIUtil.instance.getCards(list);
         color = PrefUtil.getForegroundColor(context);
+
+        if (!CardArray.ERROR.equals(cardArray.id)) {
+            cards = Arrays.asList(cardArray.cards);
+        } else {
+            color = dim(color);
+        }
+    }
+
+    private int dim(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        // half the value component
+        hsv[2] *= 0.5f;
+        return Color.HSVToColor(hsv);
     }
 
     @Override
