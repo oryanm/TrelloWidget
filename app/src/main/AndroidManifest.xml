@@ -41,11 +41,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activity.CardActivity"
-            android:label="@string/title_activity_card"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
         <receiver android:name=".widget.TrelloWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

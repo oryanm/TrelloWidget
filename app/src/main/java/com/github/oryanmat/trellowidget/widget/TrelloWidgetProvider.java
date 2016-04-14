@@ -13,7 +13,6 @@ import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
-import com.github.oryanmat.trellowidget.activity.CardActivity;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 
@@ -25,7 +24,6 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
     public static final String WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId";
-    public static final String CARD_EXTRA = "com.github.oryanmat.trellowidget.card";
     public static final String TRELLO_PACKAGE_NAME = "com.trello";
     public static final String TRELLO_URL = "https://www.trello.com";
 
@@ -79,10 +77,9 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     }
 
     private PendingIntent getCardPendingIntent(Context context) {
-        Intent intent = new Intent(context, CardActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // The card's URI will be filled in CardRemoteViewFactory.setOnClickFillInIntent
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
     private PendingIntent getTitleIntent(Context context) {

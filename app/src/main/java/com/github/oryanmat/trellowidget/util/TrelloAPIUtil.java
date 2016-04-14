@@ -35,8 +35,7 @@ public class TrelloAPIUtil {
     public static final String USER = "members/me?fields=fullName,username";
     public static final String BOARDS = "members/me/boards?filter=open&fields=id,name" +
             "&lists=open&list_fields=id,name";
-    public static final String LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels";
-    public static final String CARD = "cards/%s?fields=name,desc,due";
+    public static final String LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url";
 
     public static TrelloAPIUtil instance;
 
@@ -71,10 +70,6 @@ public class TrelloAPIUtil {
 
     public String boards() {
         return String.format(buildURL(), BOARDS);
-    }
-
-    public String card(String id) {
-        return String.format(String.format(buildURL(), CARD), id);
     }
 
     public CardArray getCards(BoardList list) {
