@@ -10,5 +10,14 @@ public class BoardList {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof BoardList) {
+            return this.id.equals(((BoardList) that).id);
+        }
+        return super.equals(that);
+    }
+
 }
 
