@@ -9,15 +9,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.model.Board;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
+import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
@@ -35,13 +38,15 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     }
 
     void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+        // TODO: We should update both the BoardList and Board on a refresh
         BoardList list = TrelloWidget.getList(context, appWidgetId);
+        Board board = TrelloWidget.getBoard(context, appWidgetId);
         @ColorInt int color = PrefUtil.getForegroundColor(context);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
-        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context));
+        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
         setImageViewColor(views, R.id.divider, color);
@@ -82,9 +87,16 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
-    private PendingIntent getTitleIntent(Context context) {
-        Intent intent = PrefUtil.isTitleEnabled(context) ? getTrelloIntent(context) : new Intent();
+    private PendingIntent getTitleIntent(Context context, Board board) {
+        Intent intent = PrefUtil.isTitleEnabled(context) ? getBoardIntent(context, board) : new Intent();
         return PendingIntent.getActivity(context, 0, intent, 0);
+    }
+
+    private Intent getBoardIntent(Context context, Board board)
+    {
+        // If the board has an URI, use it, otherwise fallback to the trello main app context (or website)
+        Intent intent = (board.url.isEmpty()) ? getTrelloIntent(context) : new Intent(Intent.ACTION_VIEW, board.uri());
+        return intent;
     }
 
     private Intent getTrelloIntent(Context context) {
