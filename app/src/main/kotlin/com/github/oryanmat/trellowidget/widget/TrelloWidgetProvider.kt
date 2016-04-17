@@ -12,6 +12,7 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 
@@ -38,6 +39,7 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         val list = context.getList(appWidgetId)
         val board = context.getBoard(appWidgetId)
         @ColorInt val color = context.getForegroundColor()
+        @ColorInt val bgcolor = context.getBackgroundColor()
 
         val views = RemoteViews(context.packageName, R.layout.trello_widget)
         setTextView(views, R.id.list_title, list.name, color)
@@ -51,7 +53,8 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId))
         views.setEmptyView(R.id.card_list, R.id.empty_card_list)
         views.setTextColor(R.id.empty_card_list, color)
-        setImageViewColor(views, R.id.background_image, context.getBackgroundColor())
+        setBackgroundColor(views, R.id.card_frame, bgcolor)
+        setBackgroundColor(views, R.id.title_bar, bgcolor)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }

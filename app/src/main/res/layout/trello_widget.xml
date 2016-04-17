@@ -18,7 +18,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/title_bar"
+            android:background="#54ffffff">
 
             <TextView
                 android:id="@+id/list_title"
@@ -47,12 +49,13 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:src="@drawable/divider"
+            android:src="@drawable/heading_divider"
             tools:ignore="ContentDescription" />
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/card_frame">
 
             <ListView
                 android:id="@+id/card_list"

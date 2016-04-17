@@ -50,6 +50,10 @@ object RemoteViewsUtil {
         views.setInt(view, METHOD_SET_ALPHA, alpha(color))
     }
 
+    fun setBackgroundColor(views: RemoteViews, @IdRes view: Int, @ColorInt color: Int) {
+        views.setInt(view, "setBackgroundColor", color)
+    }
+
     fun getScaledValue(context: Context, @DimenRes dimen: Int): Float {
         val dimension = context.resources.getDimension(dimen)
         val density = context.resources.displayMetrics.density
