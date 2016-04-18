@@ -36,6 +36,12 @@
     <string name="pref_title_fore_color_desc">Change the text color of the title</string>
     <integer name="pref_title_fore_color_default">0xFFFFFFFF</integer>
 
+    <string name="pref_title_use_unique_color_key">title_use_unique_color</string>
+    <string name="pref_title_use_unique_color_title">Unique title color</string>
+    <string name="pref_title_use_unique_color_enabled_desc">Disable to use a single color for the entire widget</string>
+    <string name="pref_title_use_unique_color_disabled_desc">Enable to set a separate color for the widget title</string>
+    <bool name="pref_title_use_unique_color_default">false</bool>
+
     <string name="pref_back_color_key">back_color</string>
     <string name="pref_back_color_title">List background</string>
     <string name="pref_back_color_desc">Change background color of the card list area</string>

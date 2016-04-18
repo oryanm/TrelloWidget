@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
+import android.preference.SwitchPreference
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
@@ -23,6 +24,7 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_fore_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_back_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_fore_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
     }
 
@@ -60,6 +62,17 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         } else if (key == getString(R.string.pref_title_fore_color_key)) {
             val preference = findPreference(key) as ColorPreference
             preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_use_unique_color_key)) {
+            val preference = findPreference(key) as SwitchPreference
+            with(preference) {
+                setSummary(if (isChecked)
+                    R.string.pref_title_use_unique_color_enabled_desc else
+                    R.string.pref_title_use_unique_color_disabled_desc)
+                val titleFgPref = findPreference(getString(R.string.pref_title_fore_color_key)) as ColorPreference
+                val titleBgPref = findPreference(getString(R.string.pref_title_back_color_key)) as ColorPreference
+                titleFgPref.isEnabled = isChecked
+                titleBgPref.isEnabled = isChecked
+            }
         }
     }
 }

@@ -22,6 +22,12 @@
             android:summary="@string/pref_fore_color_desc"
             android:title="@string/pref_fore_color_title" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/pref_title_use_unique_color_default"
+            android:key="@string/pref_title_use_unique_color_key"
+            android:summary="@string/pref_title_use_unique_color_disabled_desc"
+            android:title="@string/pref_title_use_unique_color_title" />
+
         <com.github.oryanmat.trellowidget.util.color.ColorPreference
             android:defaultValue="@integer/pref_title_back_color_default"
             android:key="@string/pref_title_back_color_key"
