@@ -26,14 +26,24 @@
         <item>1.75</item>
     </string-array>
 
+    <string name="pref_title_back_color_key">title_back_color</string>
+    <string name="pref_title_back_color_title">Title background</string>
+    <string name="pref_title_back_color_desc">Change background color of the title area</string>
+    <integer name="pref_title_back_color_default">0xDD000000</integer>
+
+    <string name="pref_title_fore_color_key">title_fore_color</string>
+    <string name="pref_title_fore_color_title">Title text color</string>
+    <string name="pref_title_fore_color_desc">Change the text color of the title</string>
+    <integer name="pref_title_fore_color_default">0xFFFFFFFF</integer>
+
     <string name="pref_back_color_key">back_color</string>
-    <string name="pref_back_color_title">Background color</string>
-    <string name="pref_back_color_desc">Change background color</string>
-    <integer name="pref_back_color_default">0xFF000000</integer>
+    <string name="pref_back_color_title">List background</string>
+    <string name="pref_back_color_desc">Change background color of the card list area</string>
+    <integer name="pref_back_color_default">0xAA000000</integer>
 
     <string name="pref_fore_color_key">fore_color</string>
-    <string name="pref_fore_color_title">Foreground color</string>
-    <string name="pref_fore_color_desc">Change foreground color</string>
+    <string name="pref_fore_color_title">List text color</string>
+    <string name="pref_fore_color_desc">Change the text color of the card list</string>
     <integer name="pref_fore_color_default">0xFFFFFFFF</integer>
 
     <string name="pref_update_interval_key">interval_list</string>

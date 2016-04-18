@@ -10,3 +10,11 @@ import android.support.annotation.ColorInt
     hsv[2] *= 0.5f
     return Color.HSVToColor(hsv)
 }
+
+@ColorInt fun Int.buttonDim(): Int {
+    val hsv = FloatArray(3)
+    Color.colorToHSV(this, hsv)
+    // 3/4 the value component
+    hsv[2] *= 0.75f
+    return Color.HSVToColor(hsv)
+}

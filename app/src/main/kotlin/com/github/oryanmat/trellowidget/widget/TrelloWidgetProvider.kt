@@ -15,6 +15,7 @@ import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
+import com.github.oryanmat.trellowidget.util.color.buttonDim
 
 private val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
 private val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
@@ -38,23 +39,29 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         // TODO: We should update both the BoardList and Board on a refresh
         val list = context.getList(appWidgetId)
         val board = context.getBoard(appWidgetId)
-        @ColorInt val color = context.getForegroundColor()
-        @ColorInt val bgcolor = context.getBackgroundColor()
+        @ColorInt val cardFgColor = context.getCardForegroundColor()
+        @ColorInt val cardBgColor = context.getCardBackgroundColor()
+        @ColorInt val titleFgColor = context.getTitleForegroundColor()
+        @ColorInt val titleBgColor = context.getTitleBackgroundColor()
 
         val views = RemoteViews(context.packageName, R.layout.trello_widget)
-        setTextView(views, R.id.list_title, list.name, color)
+
+        // Set up the title bar
+        setTextView(views, R.id.list_title, list.name, titleFgColor)
+        setImageViewColor(views, R.id.refreshButt, titleFgColor.buttonDim())
+        setImageViewColor(views, R.id.configButt, titleFgColor.buttonDim())
+        setBackgroundColor(views, R.id.title_bar, titleBgColor)
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
-        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context))
-        setImageViewColor(views, R.id.refreshButt, color)
-        setImageViewColor(views, R.id.configButt, color)
-        setImageViewColor(views, R.id.divider, color)
-        views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId))
+
+        // Set up the card list
+        setImageViewColor(views, R.id.divider, cardFgColor)
         views.setEmptyView(R.id.card_list, R.id.empty_card_list)
-        views.setTextColor(R.id.empty_card_list, color)
-        setBackgroundColor(views, R.id.card_frame, bgcolor)
-        setBackgroundColor(views, R.id.title_bar, bgcolor)
+        views.setTextColor(R.id.empty_card_list, cardFgColor)
+        setBackgroundColor(views, R.id.card_frame, cardBgColor)
+        views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context))
+        views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId))
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }

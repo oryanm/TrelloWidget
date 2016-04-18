@@ -21,6 +21,8 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_text_size_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_back_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_fore_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_back_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_fore_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
     }
 
@@ -50,6 +52,12 @@ class GeneralPreferenceFragment : PreferenceFragment() {
             val preference = findPreference(key) as ColorPreference
             preference.summary = String.format(COLOR_FORMAT, preference.color)
         } else if (key == getString(R.string.pref_fore_color_key)) {
+            val preference = findPreference(key) as ColorPreference
+            preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_back_color_key)) {
+            val preference = findPreference(key) as ColorPreference
+            preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_fore_color_key)) {
             val preference = findPreference(key) as ColorPreference
             preference.summary = String.format(COLOR_FORMAT, preference.color)
         }
