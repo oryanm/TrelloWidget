@@ -21,4 +21,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_title_copy_from_card"
+        android:id="@+id/copyButton" />
+
 </LinearLayout>

@@ -17,7 +17,8 @@ val DEFAULT_VALUE = Color.BLACK
  */
 class ColorPreference @JvmOverloads constructor(
         context: Context, attributeSet: AttributeSet,
-        var color: Int = DEFAULT_VALUE) : DialogPreference(context, attributeSet) {
+        var color: Int = DEFAULT_VALUE,
+        var copyFrom: ColorPreference? = null) : DialogPreference(context, attributeSet) {
 
     init {
         dialogLayoutResource = R.layout.color_chooser
@@ -41,6 +42,17 @@ class ColorPreference @JvmOverloads constructor(
             oldCenterColor = getPersistedInt(DEFAULT_VALUE)
             onColorChangedListener = ColorPicker.OnColorChangedListener { this@ColorPreference.color = it }
             repairSVBar(view, color)
+        }
+        with(view.copyButton) {
+            val copyTarget = copyFrom as? ColorPreference
+            visibility = if (copyTarget != null) View.VISIBLE else View.INVISIBLE
+            if (copyTarget is ColorPreference) {
+                text = context.getString(R.string.pref_title_copy_from_card, copyTarget.title)
+                setOnClickListener {
+                    view.color_picker.color = copyTarget.color
+                    repairSVBar(view, copyTarget.color)
+                }
+            }
         }
     }
 

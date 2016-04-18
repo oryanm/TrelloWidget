@@ -26,6 +26,13 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_fore_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
+
+        val titleBgPref = findPreference(getString(R.string.pref_title_back_color_key)) as ColorPreference
+        val cardBgPref = findPreference(getString(R.string.pref_back_color_key)) as ColorPreference
+        titleBgPref.copyFrom = cardBgPref
+        val titleFgPref = findPreference(getString(R.string.pref_title_fore_color_key)) as ColorPreference
+        val cardFgPref = findPreference(getString(R.string.pref_fore_color_key)) as ColorPreference
+        titleFgPref.copyFrom = cardFgPref
     }
 
     override fun onResume() {

@@ -42,6 +42,8 @@
     <string name="pref_title_use_unique_color_disabled_desc">Enable to set a separate color for the widget title</string>
     <bool name="pref_title_use_unique_color_default">false</bool>
 
+    <string name="pref_title_copy_from_card">Copy from %s</string>
+
     <string name="pref_back_color_key">back_color</string>
     <string name="pref_back_color_title">List background</string>
     <string name="pref_back_color_desc">Change background color of the card list area</string>
