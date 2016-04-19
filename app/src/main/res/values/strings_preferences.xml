@@ -57,6 +57,12 @@
     <string name="pref_update_interval_value_desc">Refresh lists every %s</string>
     <string name="pref_update_interval_default">900000</string>
 
+    <string name="pref_two_line_title_key">two_line_key</string>
+    <string name="pref_two_line_title_title">Two-line title</string>
+    <string name="pref_two_line_title_enabled_desc">Disable to have only the list name as the widget title</string>
+    <string name="pref_two_line_title_disabled_desc">Enable to have the board and list names in the widget title</string>
+    <bool name="pref_two_line_title_default">true</bool>
+
     <string-array name="pref_update_interval_titles">
         <item>15 minuets</item>
         <item>half hour</item>
