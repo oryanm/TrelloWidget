@@ -3,14 +3,30 @@
     <style name="AppTheme" parent="android:Theme.DeviceDefault" />
 
     <style name="WidgetTitle">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/title_padding</item>
+        <item name="android:paddingBottom">@dimen/title_padding</item>
+        <item name="android:paddingLeft">@dimen/left_title_padding</item>
+    </style>
+
+    <style name="BoardTitle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="ListSubtitle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListTitle">
+        <item name="android:paddingTop">@dimen/list_title_padding</item>
+        <item name="android:paddingBottom">@dimen/list_title_padding</item>
+        <item name="android:paddingLeft">@dimen/left_title_padding</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:paddingTop">@dimen/title_padding</item>
-        <item name="android:paddingBottom">@dimen/title_padding</item>
-        <item name="android:paddingLeft">@dimen/title_padding</item>
     </style>
 
     <style name="WidgetItemBadge">

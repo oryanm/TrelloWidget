@@ -10,6 +10,12 @@
             android:summary="@string/pref_text_size_desc"
             android:title="@string/pref_text_size_title" />
 
+        <SwitchPreference
+            android:defaultValue="@bool/pref_two_line_title_default"
+            android:key="@string/pref_two_line_title_key"
+            android:summary="@string/pref_two_line_title_enabled_desc"
+            android:title="@string/pref_two_line_title_title" />
+
         <com.github.oryanmat.trellowidget.util.color.ColorPreference
             android:defaultValue="@integer/pref_back_color_default"
             android:key="@string/pref_back_color_key"

@@ -6,7 +6,9 @@
     <!-- widget-->
     <dimen name="widget_margin">8dp</dimen>
 
-    <dimen name="title_padding">4dp</dimen>
+    <dimen name="left_title_padding">4dp</dimen>
+    <dimen name="title_padding">2dp</dimen>
+    <dimen name="list_title_padding">3dp</dimen>
     <dimen name="card_padding_bottom">4dp</dimen>
     <dimen name="card_padding_top">2dp</dimen>
     <dimen name="card_badge_padding">2dp</dimen>

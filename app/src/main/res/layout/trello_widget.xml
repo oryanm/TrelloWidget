@@ -22,14 +22,45 @@
             android:layout_height="wrap_content"
             android:background="#54ffffff">
 
-            <TextView
-                android:id="@+id/list_title"
-                style="@style/WidgetTitle"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/list_hint"
-                android:maxLines="1" />
+                android:id="@+id/widget_title">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/WidgetTitle"
+                    android:id="@+id/two_line_title">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/board_hint"
+                        android:id="@+id/board_title"
+                        android:maxLines="1"
+                        style="@style/BoardTitle" />
+
+                    <TextView
+                        android:id="@+id/list_subtitle"
+                        style="@style/ListSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/list_hint"
+                        android:maxLines="1"
+                        android:layout_marginTop="-3dp" />
+                </LinearLayout>
+
+                 <TextView
+                     android:id="@+id/list_title"
+                     style="@style/ListTitle"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:hint="@string/list_hint"
+                     android:maxLines="1" />
+            </FrameLayout>
 
             <ImageButton
                 android:id="@+id/refreshButt"
@@ -71,5 +102,6 @@
                 android:text="@string/no_cards"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </FrameLayout>
+
     </LinearLayout>
 </FrameLayout>
