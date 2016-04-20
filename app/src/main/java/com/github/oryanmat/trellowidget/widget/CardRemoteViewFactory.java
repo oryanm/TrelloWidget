@@ -3,6 +3,7 @@ package com.github.oryanmat.trellowidget.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -74,8 +75,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     private void setOnClickFillInIntent(Card card, RemoteViews views) {
-        Intent intent = new Intent();
-        intent.putExtra(TrelloWidgetProvider.CARD_EXTRA, card.id);
+        Intent intent = new Intent(Intent.ACTION_VIEW, card.uri());
         views.setOnClickFillInIntent(R.id.card, intent);
     }
 

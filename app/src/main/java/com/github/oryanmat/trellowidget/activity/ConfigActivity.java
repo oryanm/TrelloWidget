@@ -29,6 +29,7 @@ import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 
 public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
+    Board board;
     BoardList list;
     ProgressDialog dialog;
 
@@ -68,6 +69,9 @@ public class ConfigActivity extends Activity {
         @Override
         public void onResponse(String response) {
             Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
+            if (boards.length > 0) {
+                board = boards[0];
+            }
             setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected());
         }
 
@@ -85,16 +89,12 @@ public class ConfigActivity extends Activity {
     class BoardsItemSelected extends OnItemSelectedAdapter {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Board board = (Board) parent.getItemAtPosition(position);
-            setList(board);
-            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected());
-            dialog.dismiss();
-        }
-
-        private void setList(Board board) {
+            board = (Board) parent.getItemAtPosition(position);
             if (board.lists.length > 0) {
                 list = board.lists[0];
             }
+            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected());
+            dialog.dismiss();
         }
     }
 
@@ -116,11 +116,11 @@ public class ConfigActivity extends Activity {
     }
 
     public void ok(View view) {
-        if (list == null) {
+        if (board == null || list == null) {
             return;
         }
 
-        TrelloWidget.putList(this, appWidgetId, list);
+        TrelloWidget.putConfigInfo(this, appWidgetId, board, list);
         TrelloWidgetProvider.updateWidget(this, appWidgetId);
         returnOk();
     }

@@ -5,8 +5,11 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.util.Log;
 
+import com.github.oryanmat.trellowidget.model.Board;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.Json;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
@@ -16,6 +19,8 @@ import com.github.oryanmat.trellowidget.widget.AlarmReceiver;
 public class TrelloWidget extends Application {
     public static final String T_WIDGET = "TWidget";
     public static final String INTERNAL_PREFS = "com.oryanmat.trellowidget.prefs";
+    public static final String LIST_KEY = "";
+    public static final String BOARD_KEY = ".board";
     private static final boolean DEBUG = false;
 
     @Override
@@ -44,15 +49,32 @@ public class TrelloWidget extends Application {
         manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, interval, interval, pendingIntent);
     }
 
-    public static BoardList getList(Context context, int appWidgetId) {
-        return Json.get().fromJson(context.getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
-                .getString(String.valueOf(appWidgetId), BoardList.NULL_JSON), BoardList.class);
+    private static String getPreferenceKey(int appWidgetId, String key)
+    {
+        return String.valueOf(appWidgetId) + key;
     }
 
-    public static void putList(Context context, int appWidgetId, BoardList list) {
+    public static BoardList getList(Context context, int appWidgetId)
+    {
+        String key = getPreferenceKey(appWidgetId, LIST_KEY);
+        String json = context.getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
+                .getString(key, BoardList.NULL_JSON);
+        return Json.get().fromJson(json, BoardList.class);
+    }
+
+    public static Board getBoard(Context context, int appWidgetId)
+    {
+        String key = getPreferenceKey(appWidgetId, BOARD_KEY);
+        String json = context.getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
+                .getString(key, Board.NULL_JSON);
+        return Json.get().fromJson(json, Board.class);
+    }
+
+    public static void putConfigInfo(Context context, int appWidgetId, Board board, BoardList list) {
         context.getSharedPreferences(INTERNAL_PREFS, MODE_PRIVATE)
                 .edit()
-                .putString(String.valueOf(appWidgetId), Json.get().toJson(list))
+                .putString(getPreferenceKey(appWidgetId, BOARD_KEY), Json.get().toJson(board))
+                .putString(getPreferenceKey(appWidgetId, LIST_KEY), Json.get().toJson(list))
                 .apply();
     }
 }
