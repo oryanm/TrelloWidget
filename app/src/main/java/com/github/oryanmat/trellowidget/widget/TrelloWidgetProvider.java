@@ -77,6 +77,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         Intent reconfigIntent = new Intent(context, ConfigActivity.class);
         reconfigIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
         reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        reconfigIntent.putExtra(ConfigActivity.CONFIG_ACTIVITY_IS_RECONFIG, true);
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0);
     }
 

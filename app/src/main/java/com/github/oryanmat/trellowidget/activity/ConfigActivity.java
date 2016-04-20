@@ -34,6 +34,7 @@ public class ConfigActivity extends Activity {
     BoardList list;
     Context context;
     ProgressDialog dialog;
+    public static final String CONFIG_ACTIVITY_IS_RECONFIG = "com.github.oryanmat.trellowidget.configactivity.isreconfig";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class ConfigActivity extends Activity {
         context = this;
         setContentView(R.layout.activity_config);
         setWidgetId();
+        setupConfigButton();
         showProgressDialog();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
     }
@@ -54,6 +56,23 @@ public class ConfigActivity extends Activity {
 
         if (appWidgetId == INVALID_APPWIDGET_ID) {
             finish();
+        }
+    }
+
+    private void setupConfigButton() {
+        Bundle extras = getIntent().getExtras();
+        View cfgButton = findViewById(R.id.configButton);
+        if (extras != null && extras.getBoolean(CONFIG_ACTIVITY_IS_RECONFIG, false)) {
+            cfgButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+            cfgButton.setVisibility(View.VISIBLE);
+        } else {
+            cfgButton.setVisibility(View.GONE);
         }
     }
 
