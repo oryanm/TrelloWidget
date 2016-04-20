@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
@@ -20,7 +19,6 @@ import com.github.oryanmat.trellowidget.util.PrefUtil;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
-import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 
@@ -82,9 +80,8 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     }
 
     private PendingIntent getCardPendingIntent(Context context) {
-        // The card's URI will be filled in CardRemoteViewFactory.setOnClickFillInIntent
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        return PendingIntent.getActivity(context, 0, intent, 0);
+        // individual card URIs are set in a RemoteViewsFactory.setOnClickFillInIntent
+        return PendingIntent.getActivity(context, 0, new Intent(Intent.ACTION_VIEW), 0);
     }
 
     private PendingIntent getTitleIntent(Context context, Board board) {
@@ -92,11 +89,10 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 
-    private Intent getBoardIntent(Context context, Board board)
-    {
-        // If the board has an URI, use it, otherwise fallback to the trello main app context (or website)
-        Intent intent = (board.url.isEmpty()) ? getTrelloIntent(context) : new Intent(Intent.ACTION_VIEW, board.uri());
-        return intent;
+    private Intent getBoardIntent(Context context, Board board) {
+        return !board.url.isEmpty() ?
+                new Intent(Intent.ACTION_VIEW, Uri.parse(board.url)) :
+                getTrelloIntent(context);
     }
 
     private Intent getTrelloIntent(Context context) {

@@ -25,6 +25,7 @@ import com.github.oryanmat.trellowidget.util.color.LabelColors;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static android.graphics.Color.alpha;
 import static android.graphics.Color.blue;
@@ -69,13 +70,13 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
         setTitle(views, card);
         setBadges(views, card);
         setDivider(views);
-        setOnClickFillInIntent(card, views);
+        setOnClickFillInIntent(views, card);
 
         return views;
     }
 
-    private void setOnClickFillInIntent(Card card, RemoteViews views) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, card.uri());
+    private void setOnClickFillInIntent(RemoteViews views, Card card) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(card.url));
         views.setOnClickFillInIntent(R.id.card, intent);
     }
 
@@ -114,7 +115,8 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     void setChecklist(RemoteViews views, Card card) {
-        String text = String.format("%d/%d", card.badges.checkItemsChecked, card.badges.checkItems);
+        String text = String.format(Locale.getDefault(), "%d/%d",
+                card.badges.checkItemsChecked, card.badges.checkItems);
         boolean visible = card.badges.checkItems > 0;
         setBadge(views, R.id.checklist, R.id.checklist_count,
                 R.drawable.ic_check_box_white_24dp, text, visible);

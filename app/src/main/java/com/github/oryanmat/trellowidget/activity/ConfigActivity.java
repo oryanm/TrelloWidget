@@ -69,9 +69,7 @@ public class ConfigActivity extends Activity {
         @Override
         public void onResponse(String response) {
             Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
-            if (boards.length > 0) {
-                board = boards[0];
-            }
+            board = getFirst(boards);
             setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected());
         }
 
@@ -90,9 +88,7 @@ public class ConfigActivity extends Activity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             board = (Board) parent.getItemAtPosition(position);
-            if (board.lists.length > 0) {
-                list = board.lists[0];
-            }
+            list = getFirst(board.lists);
             setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected());
             dialog.dismiss();
         }
@@ -134,5 +130,9 @@ public class ConfigActivity extends Activity {
 
     public void cancel(View view) {
         finish();
+    }
+
+    public static <T> T getFirst(T[] array) {
+        return array.length > 0 ? array[0] : null;
     }
 }
