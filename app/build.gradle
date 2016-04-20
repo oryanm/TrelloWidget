@@ -20,5 +20,4 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile 'com.github.Commit451:bypasses:1.0.2'
 }
