@@ -52,4 +52,8 @@ internal fun Context.isTitleEnabled() = sharedPreferences().getBoolean(
         getString(R.string.pref_title_onclick_key),
         resources.getBoolean(R.bool.pref_title_onclick_default))
 
+internal fun Context.isDarkThemeEnabled() = sharedPreferences().getBoolean(
+        getString(R.string.pref_ui_theme_dark_key),
+        resources.getBoolean(R.bool.pref_ui_theme_dark_default))
+
 private fun Context.sharedPreferences() = getDefaultSharedPreferences(this)

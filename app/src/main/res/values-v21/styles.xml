@@ -11,10 +11,23 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>
     </style>
+    <style name="AppThemeLight" parent="android:Theme.DeviceDefault.Light">
+        <item name="android:colorPrimary">@color/light_primary</item>
+        <item name="android:colorPrimaryDark">@color/light_primary_dark</item>
+        <item name="android:colorAccent">@color/light_accent</item>
+    </style>
+    <style name="DialogThemeLight" parent="android:Theme.DeviceDefault.Light.Dialog.NoActionBar">
+        <item name="android:colorPrimary">@color/light_primary</item>
+        <item name="android:colorPrimaryDark">@color/light_primary_dark</item>
+        <item name="android:colorAccent">@color/light_accent</item>
+    </style>
 
     <color name="primary">#0277bd</color>
     <color name="primary_dark">#01579b</color>
     <color name="accent">#0277bd</color>
 
+    <color name="light_primary">#64b5f6</color>
+    <color name="light_primary_dark">#2196f3</color>
+    <color name="light_accent">#2196f3</color>
     <color name="dialogButtonFg">@color/material_grey_600</color>
 </resources>

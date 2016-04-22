@@ -2,6 +2,8 @@
 
     <style name="AppTheme" parent="android:Theme.DeviceDefault" />
     <style name="DialogTheme" parent="android:Theme.DeviceDefault.Dialog.NoActionBar" />
+    <style name="AppThemeLight" parent="android:Theme.DeviceDefault.Light" />
+    <style name="DialogThemeLight" parent="android:Theme.DeviceDefault.Light.Dialog.NoActionBar" />
     <color name="dialogButtonFg">#ffffff</color>
 
     <style name="WidgetTitle">

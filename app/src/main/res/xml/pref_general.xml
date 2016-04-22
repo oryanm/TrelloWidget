@@ -63,5 +63,13 @@
             android:title="@string/pref_title_onclick_title" />
 
     </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/ui_prefs_title">
+        <SwitchPreference
+                android:defaultValue="@bool/pref_ui_theme_dark_default"
+                android:key="@string/pref_ui_theme_dark_key"
+                android:summary="@string/pref_ui_theme_dark_desc"
+                android:title="@string/pref_ui_theme_dark_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

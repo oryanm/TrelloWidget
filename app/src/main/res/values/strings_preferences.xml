@@ -82,4 +82,10 @@
     <string name="pref_title_onclick_desc">Press the widget\'s title to open Trello</string>
     <bool name="pref_title_onclick_default">true</bool>
 
+    <string name="ui_prefs_title">UI Settings</string>
+    <string name="pref_ui_theme_dark_key">ui_theme_dark</string>
+    <string name="pref_ui_theme_dark_title">Dark UI</string>
+    <string name="pref_ui_theme_dark_desc">Toggle between dark or light UI elements</string>
+    <bool name="pref_ui_theme_dark_default">true</bool>
+
 </resources>

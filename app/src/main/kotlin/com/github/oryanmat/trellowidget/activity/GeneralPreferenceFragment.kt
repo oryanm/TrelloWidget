@@ -31,6 +31,7 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_display_board_name_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_ui_theme_dark_key))
     }
 
     override fun onResume() {
@@ -77,6 +78,12 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         } else if (key == getString(R.string.pref_display_board_name_key)) {
             val preference = findPreference(key) as SwitchPreference
             preference.summary = activity.getString(R.string.pref_display_board_name_desc)
+        } else if (key == getString(R.string.pref_ui_theme_dark_key)) {
+            val app = activity.application as TrelloWidget
+            val changed = app.loadThemes()
+            if (changed) {
+                activity.recreate()
+            }
         }
     }
 

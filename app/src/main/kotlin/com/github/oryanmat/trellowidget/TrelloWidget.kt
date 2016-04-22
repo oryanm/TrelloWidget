@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
+import com.github.oryanmat.trellowidget.util.isDarkThemeEnabled
 import com.github.oryanmat.trellowidget.util.getInterval
 import com.github.oryanmat.trellowidget.widget.AlarmReceiver
 import java.util.concurrent.Executors
@@ -28,8 +29,13 @@ class TrelloWidget : Application() {
 
     fun loadThemes() : Boolean {
         val oldTheme = appTheme
-        appTheme = R.style.AppTheme
-        dialogTheme = R.style.DialogTheme
+        if (applicationContext.isDarkThemeEnabled()) {
+            appTheme = R.style.AppTheme
+            dialogTheme = R.style.DialogTheme
+        } else {
+            appTheme = R.style.AppThemeLight
+            dialogTheme = R.style.DialogThemeLight
+        }
         return (oldTheme != appTheme)
     }
 
