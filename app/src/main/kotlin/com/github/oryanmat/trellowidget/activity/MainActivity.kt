@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import com.github.oryanmat.trellowidget.R
+import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.AUTH_URL
 import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
@@ -14,6 +15,8 @@ import com.github.oryanmat.trellowidget.util.preferences
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val app = application as TrelloWidget
+        setTheme(app.appTheme)
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {

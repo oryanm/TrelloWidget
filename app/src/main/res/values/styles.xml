@@ -1,6 +1,8 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.DeviceDefault" />
+    <style name="DialogTheme" parent="android:Theme.DeviceDefault.Dialog.NoActionBar" />
+    <color name="dialogButtonFg">#ffffff</color>
 
     <style name="WidgetTitle">
         <item name="android:paddingTop">@dimen/title_padding</item>

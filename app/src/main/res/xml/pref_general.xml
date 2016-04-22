@@ -63,4 +63,5 @@
             android:title="@string/pref_title_onclick_title" />
 
     </PreferenceCategory>
+
 </PreferenceScreen>

@@ -36,7 +36,7 @@
             android:name=".activity.ConfigActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_config"
-            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar">
+            android:theme="@style/DialogTheme">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

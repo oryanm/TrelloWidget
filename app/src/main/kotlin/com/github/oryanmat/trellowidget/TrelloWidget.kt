@@ -15,11 +15,22 @@ val T_WIDGET = "TWidget"
 private val DEBUG = false
 
 class TrelloWidget : Application() {
+    var appTheme = R.style.AppTheme
+    var dialogTheme = R.style.DialogTheme
+
     override fun onCreate() {
         if (DEBUG) StrictMode.enableDefaults()
         super.onCreate()
+        loadThemes()
         TrelloAPIUtil.init(applicationContext)
         Executors.callable { scheduleAlarm(this@TrelloWidget) }.call()
+    }
+
+    fun loadThemes() : Boolean {
+        val oldTheme = appTheme
+        appTheme = R.style.AppTheme
+        dialogTheme = R.style.DialogTheme
+        return (oldTheme != appTheme)
     }
 
     fun scheduleAlarm(context: Context) {

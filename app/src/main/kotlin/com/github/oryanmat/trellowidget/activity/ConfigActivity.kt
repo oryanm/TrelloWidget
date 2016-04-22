@@ -22,7 +22,7 @@ import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
 import kotlinx.android.synthetic.main.activity_config.*
 
-class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
+class ConfigActivity : ThemedActivity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()
