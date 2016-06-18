@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/default_padding"
     tools:context="com.github.oryanmat.trellowidget.activity.LoggedInFragment">
 
@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/signed_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:visibility="gone">
 
         <TextView
@@ -22,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|top"
+            android:layout_weight="1"
             android:text="@string/singed"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -32,6 +34,6 @@
             android:layout_gravity="end|bottom"
             android:onClick="logout"
             android:text="@string/logout" />
-    </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>
