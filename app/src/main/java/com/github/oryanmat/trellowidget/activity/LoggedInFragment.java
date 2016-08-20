@@ -1,7 +1,6 @@
 package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,8 +23,6 @@ public class LoggedInFragment extends Fragment {
     static final String VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility";
     static final int MAX_LOGIN_FAIL = 3;
 
-    MainActivity activity;
-
     User user;
 
     @Override
@@ -47,12 +44,6 @@ public class LoggedInFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.activity = (MainActivity) context;
-    }
-
     class LoginErrorListener implements Response.ErrorListener {
         int count = 1;
 
@@ -62,9 +53,12 @@ public class LoggedInFragment extends Fragment {
 
             if (count >= MAX_LOGIN_FAIL) {
                 // if user get request failed N times then logout so user can try to login again
-                activity.logout();
-                String text = String.format(activity.getString(R.string.login_fail), error);
-                Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+                if (isAdded()) {
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.logout();
+                    String text = String.format(activity.getString(R.string.login_fail), error);
+                    Toast.makeText(activity, text, Toast.LENGTH_LONG).show();
+                }
             } else {
                 // try again. could be temp problem
                 count += 1;
