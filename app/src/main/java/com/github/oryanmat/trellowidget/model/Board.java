@@ -1,11 +1,13 @@
 package com.github.oryanmat.trellowidget.model;
 
+import java.util.List;
+
 public class Board {
     public static final String NULL_JSON = "{\"id\":\"-1\",\"name\":\"oops\",\"url\":\"\",\"lists\":[]}";
     public String id;
     public String name;
     public String url;
-    public BoardList[] lists;
+    public List<BoardList> lists;
 
     @Override
     public String toString() {
@@ -13,10 +15,10 @@ public class Board {
     }
 
     @Override
-    public boolean equals(Object that) {
-        if (that instanceof Board) {
-            return this.id.equals(((Board) that).id);
-        }
-        return super.equals(that);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board = (Board) o;
+        return id.equals(board.id);
     }
 }

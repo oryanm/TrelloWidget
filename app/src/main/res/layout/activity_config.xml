@@ -12,27 +12,11 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                style="?android:windowTitleStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/board"
-                android:layout_weight="1"
-                android:layout_gravity="bottom" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/configButton"
-                android:layout_gravity="right"
-                android:src="@drawable/ic_settings_white_24dp"
-                android:contentDescription="@string/configDescription" />
-        </LinearLayout>
+        <TextView
+            style="?android:windowTitleStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/board" />
 
         <Spinner
             android:id="@+id/boardSpinner"
@@ -50,34 +34,33 @@
             android:id="@+id/listSpinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
+    </LinearLayout>
 
-        <LinearLayout
-            style="?android:buttonBarStyle"
+    <LinearLayout
+        style="?android:buttonBarStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linear"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="?android:buttonBarButtonStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:onClick="cancel"
+            android:text="@android:string/cancel" />
 
-            <Button
-                android:id="@+id/cancelButton"
-                style="?android:buttonBarButtonStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="cancel"
-                android:text="@android:string/cancel" />
-
-            <Button
-                android:id="@+id/okButton"
-                style="?android:buttonBarButtonStyle"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="ok"
-                android:text="@android:string/ok" />
-
-        </LinearLayout>
-
+        <Button
+            android:id="@+id/okButton"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="ok"
+            android:text="@android:string/ok" />
     </LinearLayout>
 
 </RelativeLayout>

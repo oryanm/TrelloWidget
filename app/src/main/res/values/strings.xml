@@ -5,7 +5,6 @@
     <string name="title_activity_config">Choose List</string>
     <string name="board">Board</string>
     <string name="list">List</string>
-    <string name="configDescription">Global configuration</string>
     <string name="loading_message">Wait a second…</string>
 
     <!-- card activity -->
@@ -15,6 +14,7 @@
     <string name="list_hint">List name</string>
     <string name="no_cards">No more cards!</string>
     <string name="refresh">Refresh list cards</string>
+    <string name="config">Change widgets list</string>
 
     <string name="card_title">Card title</string>
 

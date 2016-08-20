@@ -2,7 +2,6 @@ package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -24,25 +23,25 @@ import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider;
 
+import java.util.Collections;
+import java.util.List;
+
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
+import static com.github.oryanmat.trellowidget.model.BoardList.BOARD_LIST_TYPE;
 
 public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
     Board board;
     BoardList list;
-    Context context;
     ProgressDialog dialog;
-    public static final String CONFIG_ACTIVITY_IS_RECONFIG = "com.github.oryanmat.trellowidget.configactivity.isreconfig";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.activity_config);
         setWidgetId();
-        setupConfigButton();
         showProgressDialog();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
     }
@@ -56,23 +55,6 @@ public class ConfigActivity extends Activity {
 
         if (appWidgetId == INVALID_APPWIDGET_ID) {
             finish();
-        }
-    }
-
-    private void setupConfigButton() {
-        Bundle extras = getIntent().getExtras();
-        View cfgButton = findViewById(R.id.configButton);
-        if (extras != null && extras.getBoolean(CONFIG_ACTIVITY_IS_RECONFIG, false)) {
-            cfgButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MainActivity.class);
-                    context.startActivity(intent);
-                }
-            });
-            cfgButton.setVisibility(View.VISIBLE);
-        } else {
-            cfgButton.setVisibility(View.GONE);
         }
     }
 
@@ -90,11 +72,9 @@ public class ConfigActivity extends Activity {
     class BoardListener implements Response.Listener<String>, Response.ErrorListener {
         @Override
         public void onResponse(String response) {
-            Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
-            Board currentBoard = TrelloWidget.getBoard(context, appWidgetId);
-            int selectedIndex = getSelectedIndex(boards, currentBoard);
-            board = getSelectedItem(boards, selectedIndex);
-            setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected(), selectedIndex);
+            List<Board> boards = Json.tryParseJson(response, BOARD_LIST_TYPE, Collections.<Board>emptyList());
+            board = TrelloWidget.getBoard(ConfigActivity.this, appWidgetId);
+            setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected(), boards.indexOf(board));
         }
 
         @Override
@@ -112,10 +92,8 @@ public class ConfigActivity extends Activity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             board = (Board) parent.getItemAtPosition(position);
-            BoardList currentList = TrelloWidget.getList(context, appWidgetId);
-            int selectedIndex = getSelectedIndex(board.lists, currentList);
-            list = getSelectedItem(board.lists, selectedIndex);
-            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected(), selectedIndex);
+            list = TrelloWidget.getList(ConfigActivity.this, appWidgetId);
+            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected(), board.lists.indexOf(list));
             dialog.dismiss();
         }
     }
@@ -127,16 +105,14 @@ public class ConfigActivity extends Activity {
         }
     }
 
-    private <T> Spinner setSpinner(@IdRes int id, T[] lists, AdapterView.OnItemSelectedListener listener, int selectedIndex) {
+    private <T> Spinner setSpinner(@IdRes int id, List<T> lists, AdapterView.OnItemSelectedListener listener, int selectedIndex) {
         Spinner spinner = (Spinner) findViewById(id);
         ArrayAdapter<T> adapter = new ArrayAdapter<>(
                 ConfigActivity.this, android.R.layout.simple_spinner_item, lists);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        if (selectedIndex > -1) {
-            spinner.setSelection(selectedIndex);
-        }
         spinner.setOnItemSelectedListener(listener);
+        spinner.setSelection(selectedIndex > -1 ? selectedIndex : 0);
         return spinner;
     }
 
@@ -159,23 +135,5 @@ public class ConfigActivity extends Activity {
 
     public void cancel(View view) {
         finish();
-    }
-
-    public static <T> int getSelectedIndex(T[] array, T currentItem) {
-        int selectedIndex = (array.length > 0) ? 0 : -1;
-        for (int i = 0; i < array.length; ++i) {
-            if (currentItem.equals(array[i])) {
-                selectedIndex = i;
-                break;
-            }
-        }
-        return selectedIndex;
-    }
-
-    public static <T> T getSelectedItem(T[] array, int selectedIndex) {
-        if (selectedIndex >= 0 && selectedIndex < array.length) {
-            return array[selectedIndex];
-        }
-        return null;
     }
 }

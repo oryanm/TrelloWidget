@@ -45,11 +45,11 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
-        views.setOnClickPendingIntent(R.id.reconfigureButt, getReconfigPendingIntent(context, appWidgetId));
+        views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId));
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
-        setImageViewColor(views, R.id.reconfigureButt, color);
+        setImageViewColor(views, R.id.configButt, color);
         setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId));
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
@@ -77,7 +77,6 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         Intent reconfigIntent = new Intent(context, ConfigActivity.class);
         reconfigIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
         reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        reconfigIntent.putExtra(ConfigActivity.CONFIG_ACTIVITY_IS_RECONFIG, true);
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0);
     }
 
