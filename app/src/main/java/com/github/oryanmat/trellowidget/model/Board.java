@@ -11,4 +11,12 @@ public class Board {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Board) {
+            return this.id.equals(((Board) that).id);
+        }
+        return super.equals(that);
+    }
 }

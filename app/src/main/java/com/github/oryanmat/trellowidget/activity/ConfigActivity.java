@@ -2,6 +2,7 @@ package com.github.oryanmat.trellowidget.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -31,13 +32,17 @@ public class ConfigActivity extends Activity {
     int appWidgetId = INVALID_APPWIDGET_ID;
     Board board;
     BoardList list;
+    Context context;
     ProgressDialog dialog;
+    public static final String CONFIG_ACTIVITY_IS_RECONFIG = "com.github.oryanmat.trellowidget.configactivity.isreconfig";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.activity_config);
         setWidgetId();
+        setupConfigButton();
         showProgressDialog();
         get(TrelloAPIUtil.instance.boards(), new BoardListener());
     }
@@ -51,6 +56,23 @@ public class ConfigActivity extends Activity {
 
         if (appWidgetId == INVALID_APPWIDGET_ID) {
             finish();
+        }
+    }
+
+    private void setupConfigButton() {
+        Bundle extras = getIntent().getExtras();
+        View cfgButton = findViewById(R.id.configButton);
+        if (extras != null && extras.getBoolean(CONFIG_ACTIVITY_IS_RECONFIG, false)) {
+            cfgButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, MainActivity.class);
+                    context.startActivity(intent);
+                }
+            });
+            cfgButton.setVisibility(View.VISIBLE);
+        } else {
+            cfgButton.setVisibility(View.GONE);
         }
     }
 
@@ -69,8 +91,10 @@ public class ConfigActivity extends Activity {
         @Override
         public void onResponse(String response) {
             Board[] boards = Json.tryParseJson(response, Board[].class, new Board[]{});
-            board = getFirst(boards);
-            setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected());
+            Board currentBoard = TrelloWidget.getBoard(context, appWidgetId);
+            int selectedIndex = getSelectedIndex(boards, currentBoard);
+            board = getSelectedItem(boards, selectedIndex);
+            setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected(), selectedIndex);
         }
 
         @Override
@@ -88,8 +112,10 @@ public class ConfigActivity extends Activity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             board = (Board) parent.getItemAtPosition(position);
-            list = getFirst(board.lists);
-            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected());
+            BoardList currentList = TrelloWidget.getList(context, appWidgetId);
+            int selectedIndex = getSelectedIndex(board.lists, currentList);
+            list = getSelectedItem(board.lists, selectedIndex);
+            setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected(), selectedIndex);
             dialog.dismiss();
         }
     }
@@ -101,12 +127,15 @@ public class ConfigActivity extends Activity {
         }
     }
 
-    private <T> Spinner setSpinner(@IdRes int id, T[] lists, AdapterView.OnItemSelectedListener listener) {
+    private <T> Spinner setSpinner(@IdRes int id, T[] lists, AdapterView.OnItemSelectedListener listener, int selectedIndex) {
         Spinner spinner = (Spinner) findViewById(id);
         ArrayAdapter<T> adapter = new ArrayAdapter<>(
                 ConfigActivity.this, android.R.layout.simple_spinner_item, lists);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        if (selectedIndex > -1) {
+            spinner.setSelection(selectedIndex);
+        }
         spinner.setOnItemSelectedListener(listener);
         return spinner;
     }
@@ -132,7 +161,21 @@ public class ConfigActivity extends Activity {
         finish();
     }
 
-    public static <T> T getFirst(T[] array) {
-        return array.length > 0 ? array[0] : null;
+    public static <T> int getSelectedIndex(T[] array, T currentItem) {
+        int selectedIndex = (array.length > 0) ? 0 : -1;
+        for (int i = 0; i < array.length; ++i) {
+            if (currentItem.equals(array[i])) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        return selectedIndex;
+    }
+
+    public static <T> T getSelectedItem(T[] array, int selectedIndex) {
+        if (selectedIndex >= 0 && selectedIndex < array.length) {
+            return array[selectedIndex];
+        }
+        return null;
     }
 }
