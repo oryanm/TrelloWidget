@@ -13,6 +13,7 @@ import android.widget.RemoteViews;
 
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.activity.ConfigActivity;
 import com.github.oryanmat.trellowidget.model.Board;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
@@ -44,9 +45,11 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
         setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
+        views.setOnClickPendingIntent(R.id.reconfigureButt, getReconfigPendingIntent(context, appWidgetId));
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
         setImageViewColor(views, R.id.refreshButt, color);
+        setImageViewColor(views, R.id.reconfigureButt, color);
         setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId));
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
@@ -68,6 +71,14 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         refreshIntent.setAction(REFRESH_ACTION);
         refreshIntent.putExtra(WIDGET_ID, appWidgetId);
         return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0);
+    }
+
+    private PendingIntent getReconfigPendingIntent(Context context, int appWidgetId) {
+        Intent reconfigIntent = new Intent(context, ConfigActivity.class);
+        reconfigIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
+        reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        reconfigIntent.putExtra(ConfigActivity.CONFIG_ACTIVITY_IS_RECONFIG, true);
+        return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0);
     }
 
     @Override

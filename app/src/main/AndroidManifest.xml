@@ -34,6 +34,7 @@
         </activity>
         <activity
             android:name=".activity.ConfigActivity"
+            android:excludeFromRecents="true"
             android:label="@string/title_activity_config"
             android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar">
             <intent-filter>

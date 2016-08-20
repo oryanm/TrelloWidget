@@ -39,7 +39,6 @@ import static com.github.oryanmat.trellowidget.util.color.ColorUtil.dim;
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private final Context context;
     int appWidgetId;
-    BoardList list;
     List<Card> cards = new ArrayList<>();
     @ColorInt
     int color;
@@ -47,11 +46,11 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     public CardRemoteViewFactory(Context context, int appWidgetId) {
         this.context = context;
         this.appWidgetId = appWidgetId;
-        list = TrelloWidget.getList(context, appWidgetId);
     }
 
     @Override
     public void onDataSetChanged() {
+        BoardList list = TrelloWidget.getList(context, appWidgetId);
         CardArray cardArray = TrelloAPIUtil.instance.getCards(list);
         color = PrefUtil.getForegroundColor(context);
 
