@@ -12,7 +12,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.model.BoardList;
-import com.github.oryanmat.trellowidget.model.CardArray;
 
 import java.util.concurrent.ExecutionException;
 
@@ -72,10 +71,10 @@ public class TrelloAPIUtil {
         return String.format(buildURL(), BOARDS);
     }
 
-    public CardArray getCards(BoardList list) {
+    public BoardList getCards(BoardList list) {
         String json = get(String.format(String.format(buildURL(), LIST_CARDS), list.id));
 
-        return Json.tryParseJson(json, CardArray.class, CardArray.oneItemList(json));
+        return Json.tryParseJson(json, BoardList.class, BoardList.oneItemList(json));
     }
 
     String get(String url) {
