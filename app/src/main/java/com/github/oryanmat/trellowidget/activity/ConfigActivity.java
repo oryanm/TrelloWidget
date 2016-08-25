@@ -105,7 +105,7 @@ public class ConfigActivity extends Activity {
         }
     }
 
-    private <T> Spinner setSpinner(@IdRes int id, List<T> lists, AdapterView.OnItemSelectedListener listener, int selectedIndex) {
+    <T> Spinner setSpinner(@IdRes int id, List<T> lists, AdapterView.OnItemSelectedListener listener, int selectedIndex) {
         Spinner spinner = (Spinner) findViewById(id);
         ArrayAdapter<T> adapter = new ArrayAdapter<>(
                 ConfigActivity.this, android.R.layout.simple_spinner_item, lists);

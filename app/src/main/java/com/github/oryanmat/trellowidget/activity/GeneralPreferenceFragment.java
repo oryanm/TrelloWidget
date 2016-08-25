@@ -47,7 +47,7 @@ public class GeneralPreferenceFragment extends PreferenceFragment {
                 }
             };
 
-    private void setPreferenceChanges(String key) {
+    void setPreferenceChanges(String key) {
         if (key.equals(getString(R.string.pref_update_interval_key))) {
             ListPreference preference = (ListPreference) findPreference(key);
             int index = preference.findIndexOfValue(preference.getValue());

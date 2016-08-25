@@ -74,7 +74,7 @@ public class LoggedInFragment extends Fragment {
         }
     }
 
-    private void setUser(User user) {
+    void setUser(User user) {
         this.user = user;
         View view = getView();
         if (view == null) return;
