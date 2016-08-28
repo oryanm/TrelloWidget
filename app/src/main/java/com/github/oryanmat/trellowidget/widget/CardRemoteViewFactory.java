@@ -32,7 +32,7 @@ import static android.graphics.Color.red;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
-import static com.github.oryanmat.trellowidget.util.color.ColorUtil.dim;
+import static com.github.oryanmat.trellowidget.util.color.ColorUtilKt.dim;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private final Context context;
