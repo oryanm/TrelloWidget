@@ -2,10 +2,7 @@ package com.github.oryanmat.trellowidget.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
-import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -103,38 +100,5 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         // try to find trello's app if installed. otherwise just open the website.
         val intent = context.packageManager.getLaunchIntentForPackage(TRELLO_PACKAGE_NAME)
         return intent ?: Intent(Intent.ACTION_VIEW, Uri.parse(TRELLO_URL))
-    }
-
-    companion object {
-
-        fun updateWidgetsData(context: Context) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val compName = ComponentName(context, TrelloWidgetProvider::class.java)
-            val widgetIds = appWidgetManager.getAppWidgetIds(compName)
-            appWidgetManager.notifyAppWidgetViewDataChanged(widgetIds, R.id.card_list)
-        }
-
-        fun updateWidgets(context: Context) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            val compName = ComponentName(context, TrelloWidgetProvider::class.java)
-            sendUpdateBroadcast(context, *appWidgetManager.getAppWidgetIds(compName))
-        }
-
-        fun updateWidget(context: Context, appWidgetId: Int) {
-            sendUpdateBroadcast(context, appWidgetId)
-            notifyDataChanged(context, appWidgetId)
-        }
-
-        private fun sendUpdateBroadcast(context: Context, vararg appWidgetIds: Int) {
-            val intent = Intent(context, TrelloWidgetProvider::class.java)
-            intent.action = ACTION_APPWIDGET_UPDATE
-            intent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds)
-            context.sendBroadcast(intent)
-        }
-
-        private fun notifyDataChanged(context: Context, vararg appWidgetIds: Int) {
-            val appWidgetManager = AppWidgetManager.getInstance(context)
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.card_list)
-        }
     }
 }

@@ -7,7 +7,7 @@ import android.content.Intent;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        TrelloWidgetProvider.Companion.updateWidgets(context);
-        TrelloWidgetProvider.Companion.updateWidgetsData(context);
+        WidgetNotifierKt.updateWidgets(context);
+        WidgetNotifierKt.updateWidgetsData(context);
     }
 }

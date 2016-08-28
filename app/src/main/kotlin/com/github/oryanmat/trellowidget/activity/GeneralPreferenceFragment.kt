@@ -4,10 +4,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
-
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.color.ColorPreference
-import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider
+import com.github.oryanmat.trellowidget.widget.updateWidgets
+import com.github.oryanmat.trellowidget.widget.updateWidgetsData
 
 val COLOR_FORMAT = "#%08X"
 
@@ -33,8 +33,8 @@ class GeneralPreferenceFragment : PreferenceFragment() {
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
-        TrelloWidgetProvider.updateWidgets(activity)
-        TrelloWidgetProvider.updateWidgetsData(activity)
+        updateWidgets(activity)
+        updateWidgetsData(activity)
     }
 
     fun setPreferenceChanges(key: String) {

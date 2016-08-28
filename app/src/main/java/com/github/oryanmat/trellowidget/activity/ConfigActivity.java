@@ -21,7 +21,7 @@ import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.Json;
 import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
-import com.github.oryanmat.trellowidget.widget.TrelloWidgetProvider;
+import com.github.oryanmat.trellowidget.widget.WidgetNotifierKt;
 
 import java.util.Collections;
 import java.util.List;
@@ -122,7 +122,7 @@ public class ConfigActivity extends Activity {
         }
 
         TrelloWidget.putConfigInfo(this, appWidgetId, board, list);
-        TrelloWidgetProvider.Companion.updateWidget(this, appWidgetId);
+        WidgetNotifierKt.updateWidget(this, appWidgetId);
         returnOk();
     }
 
