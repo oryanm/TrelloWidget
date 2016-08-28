@@ -9,9 +9,9 @@ import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.github.oryanmat.trellowidget.INTERNAL_PREFS
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS
-import com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET
+import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
 import java.util.concurrent.ExecutionException
 

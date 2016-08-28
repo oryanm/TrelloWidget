@@ -16,7 +16,7 @@ import com.github.oryanmat.trellowidget.model.User;
 import com.github.oryanmat.trellowidget.util.Json;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
 
-import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
+import static com.github.oryanmat.trellowidget.TrelloWidgetKt.getT_WIDGET;
 
 public class LoggedInFragment extends Fragment {
     static final String USER = "com.github.oryanmat.trellowidget.activity.user";
@@ -49,7 +49,7 @@ public class LoggedInFragment extends Fragment {
 
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e(T_WIDGET, error.toString());
+            Log.e(getT_WIDGET(), error.toString());
 
             if (count >= MAX_LOGIN_FAIL) {
                 // if user get request failed N times then logout so user can try to login again

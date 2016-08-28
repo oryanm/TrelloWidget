@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.github.oryanmat.trellowidget.R;
 import com.github.oryanmat.trellowidget.TrelloWidget;
+import com.github.oryanmat.trellowidget.TrelloWidgetKt;
 import com.github.oryanmat.trellowidget.model.Board;
 import com.github.oryanmat.trellowidget.model.BoardList;
 import com.github.oryanmat.trellowidget.util.Json;
@@ -29,7 +30,6 @@ import java.util.List;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
-import static com.github.oryanmat.trellowidget.TrelloWidget.T_WIDGET;
 import static com.github.oryanmat.trellowidget.model.BoardList.BOARD_LIST_TYPE;
 
 public class ConfigActivity extends Activity {
@@ -74,7 +74,7 @@ public class ConfigActivity extends Activity {
         @Override
         public void onResponse(String response) {
             List<Board> boards = Json.INSTANCE.tryParseJson(response, BOARD_LIST_TYPE, Collections.<Board>emptyList());
-            board = TrelloWidget.getBoard(ConfigActivity.this, appWidgetId);
+            board = TrelloWidget.Companion.getBoard(ConfigActivity.this, appWidgetId);
             setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected(), boards.indexOf(board));
         }
 
@@ -83,7 +83,7 @@ public class ConfigActivity extends Activity {
             dialog.dismiss();
             finish();
 
-            Log.e(T_WIDGET, error.toString());
+            Log.e(TrelloWidgetKt.getT_WIDGET(), error.toString());
             String text = String.format(getString(R.string.board_load_fail), error);
             Toast.makeText(ConfigActivity.this, text, Toast.LENGTH_LONG).show();
         }
@@ -93,7 +93,7 @@ public class ConfigActivity extends Activity {
         @Override
         public void onItemSelected(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
             board = (Board) parent.getItemAtPosition(position);
-            list = TrelloWidget.getList(ConfigActivity.this, appWidgetId);
+            list = TrelloWidget.Companion.getList(ConfigActivity.this, appWidgetId);
             setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected(), board.lists.indexOf(list));
             dialog.dismiss();
         }
@@ -122,7 +122,7 @@ public class ConfigActivity extends Activity {
             return;
         }
 
-        TrelloWidget.putConfigInfo(this, appWidgetId, board, list);
+        TrelloWidget.Companion.putConfigInfo(this, appWidgetId, board, list);
         WidgetNotifierKt.updateWidget(this, appWidgetId);
         returnOk();
     }

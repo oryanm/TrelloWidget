@@ -7,8 +7,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import com.github.oryanmat.trellowidget.INTERNAL_PREFS
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS
 import com.github.oryanmat.trellowidget.util.AUTH_URL
 import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
 
