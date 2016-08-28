@@ -26,7 +26,7 @@ public class TrelloWidget extends Application {
     public void onCreate() {
         if (DEBUG) StrictMode.enableDefaults();
         super.onCreate();
-        TrelloAPIUtil.init(getApplicationContext());
+        TrelloAPIUtil.Companion.init(getApplicationContext());
         startScheduleAlarmThread();
     }
 

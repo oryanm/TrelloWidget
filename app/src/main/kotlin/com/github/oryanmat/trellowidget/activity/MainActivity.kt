@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.view.View
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.TrelloWidget.INTERNAL_PREFS
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
+import com.github.oryanmat.trellowidget.util.AUTH_URL
+import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,11 +24,10 @@ class MainActivity : Activity() {
 
     val userToken: String
         get() = getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
-                .getString(TrelloAPIUtil.TOKEN_PREF_KEY, "")
+                .getString(TOKEN_PREF_KEY, "")
 
     fun startBrowserWithAuthURL(view: View) {
-        val uri = Uri.parse(TrelloAPIUtil.AUTH_URL)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(AUTH_URL))
 
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
@@ -44,7 +44,7 @@ class MainActivity : Activity() {
     fun saveUserToken(intent: Intent) {
         getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
                 .edit()
-                .putString(TrelloAPIUtil.TOKEN_PREF_KEY, intent.data.fragment)
+                .putString(TOKEN_PREF_KEY, intent.data.fragment)
                 .commit()
 
         replaceFragment(LoggedInFragment())
@@ -53,7 +53,7 @@ class MainActivity : Activity() {
     @JvmOverloads fun logout(view: View? = null) {
         getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
                 .edit()
-                .remove(TrelloAPIUtil.TOKEN_PREF_KEY)
+                .remove(TOKEN_PREF_KEY)
                 .commit()
 
         replaceFragment(LoginFragment())
