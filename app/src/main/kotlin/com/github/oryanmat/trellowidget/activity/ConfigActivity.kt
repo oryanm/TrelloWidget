@@ -19,7 +19,7 @@ import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.model.BoardList
-import com.github.oryanmat.trellowidget.model.BoardList.BOARD_LIST_TYPE
+import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
@@ -104,7 +104,7 @@ class ConfigActivity : Activity() {
     }
 
     fun ok(view: View) {
-        if (board.id == "-1" || list.id == "-1") {
+        if (board.id.isEmpty() || list.id.isEmpty()) {
             return
         }
 

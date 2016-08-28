@@ -88,7 +88,7 @@ class CardRemoteViewFactory(val context: Context, val appWidgetId: Int) : Remote
 
     internal fun setDueDate(views: RemoteViews, card: Card) {
         val visible = card.badges.due != null
-        val text = if (visible) DateTimeUtil.parseDate(card.badges.due) else ""
+        val text = if (visible) DateTimeUtil.parseDate(card.badges.due!!) else ""
         setBadge(views, R.id.due, R.id.due_string,
                 R.drawable.ic_access_time_white_24dp, text, visible)
     }
@@ -130,10 +130,7 @@ class CardRemoteViewFactory(val context: Context, val appWidgetId: Int) : Remote
 
     private fun setLabels(views: RemoteViews, card: Card) {
         views.removeAllViews(R.id.labels_layout)
-
-        if (card.labels != null) {
-            card.labels.forEach { label -> setLabel(views, label) }
-        }
+        card.labels.forEach { label -> setLabel(views, label) }
     }
 
     private fun setLabel(views: RemoteViews, label: Label) {
