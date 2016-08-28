@@ -122,7 +122,7 @@ public class ConfigActivity extends Activity {
         }
 
         TrelloWidget.putConfigInfo(this, appWidgetId, board, list);
-        TrelloWidgetProvider.updateWidget(this, appWidgetId);
+        TrelloWidgetProvider.Companion.updateWidget(this, appWidgetId);
         returnOk();
     }
 
