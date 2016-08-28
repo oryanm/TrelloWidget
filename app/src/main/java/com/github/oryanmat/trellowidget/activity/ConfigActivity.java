@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -90,7 +91,7 @@ public class ConfigActivity extends Activity {
 
     class BoardsItemSelected extends OnItemSelectedAdapter {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
             board = (Board) parent.getItemAtPosition(position);
             list = TrelloWidget.getList(ConfigActivity.this, appWidgetId);
             setSpinner(R.id.listSpinner, board.lists, new ListsItemSelected(), board.lists.indexOf(list));
@@ -100,7 +101,7 @@ public class ConfigActivity extends Activity {
 
     class ListsItemSelected extends OnItemSelectedAdapter {
         @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemSelected(@NonNull AdapterView<?> parent, @NonNull View view, int position, long id) {
             list = (BoardList) parent.getItemAtPosition(position);
         }
     }
