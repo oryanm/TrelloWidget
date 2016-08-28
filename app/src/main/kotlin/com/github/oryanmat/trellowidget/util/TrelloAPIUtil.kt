@@ -56,6 +56,10 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
         return Json.tryParseJson(json, BoardList::class.java, BoardList.oneItemList(json))
     }
 
+    fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
+        getAsync(user(), listener, errorListener)
+    }
+
     fun getAsync(url: String, listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
         queue.add(StringRequest(Request.Method.GET, url, listener, errorListener))
     }
