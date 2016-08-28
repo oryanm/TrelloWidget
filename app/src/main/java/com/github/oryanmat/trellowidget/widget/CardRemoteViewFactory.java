@@ -19,7 +19,6 @@ import com.github.oryanmat.trellowidget.model.Label;
 import com.github.oryanmat.trellowidget.util.DateTimeUtil;
 import com.github.oryanmat.trellowidget.util.PrefUtil;
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil;
-import com.github.oryanmat.trellowidget.util.color.LabelColors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +32,7 @@ import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
 import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
 import static com.github.oryanmat.trellowidget.util.color.ColorUtilKt.dim;
+import static com.github.oryanmat.trellowidget.util.color.LabelColorsKt.getColors;
 
 public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private final Context context;
@@ -158,7 +158,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
     }
 
     private void setLabel(RemoteViews views, Label label) {
-        int labelColor = LabelColors.colors.get(label.color);
+        int labelColor = getColors().get(label.color);
         labelColor = Color.argb(alpha(color), red(labelColor), green(labelColor), blue(labelColor));
         RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.label);
         setImageViewColor(view, R.id.label, labelColor);
