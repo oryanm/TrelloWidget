@@ -20,8 +20,7 @@ import com.github.oryanmat.trellowidget.util.PrefUtil;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
-import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor;
-import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView;
+import static com.github.oryanmat.trellowidget.util.RemoteViewsUtil.INSTANCE;
 
 public class TrelloWidgetProvider extends AppWidgetProvider {
     private static final String REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction";
@@ -40,21 +39,21 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
         // TODO: We should update both the BoardList and Board on a refresh
         BoardList list = TrelloWidget.getList(context, appWidgetId);
         Board board = TrelloWidget.getBoard(context, appWidgetId);
-        @ColorInt int color = PrefUtil.getForegroundColor(context);
+        @ColorInt int color = PrefUtil.INSTANCE.getForegroundColor(context);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.trello_widget);
-        setTextView(views, R.id.list_title, list.name, color);
+        INSTANCE.setTextView(views, R.id.list_title, list.name, color);
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId));
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId));
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board));
         views.setPendingIntentTemplate(R.id.card_list, getCardPendingIntent(context));
-        setImageViewColor(views, R.id.refreshButt, color);
-        setImageViewColor(views, R.id.configButt, color);
-        setImageViewColor(views, R.id.divider, color);
+        INSTANCE.setImageViewColor(views, R.id.refreshButt, color);
+        INSTANCE.setImageViewColor(views, R.id.configButt, color);
+        INSTANCE.setImageViewColor(views, R.id.divider, color);
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId));
         views.setEmptyView(R.id.card_list, R.id.empty_card_list);
         views.setTextColor(R.id.empty_card_list, color);
-        setImageViewColor(views, R.id.background_image, PrefUtil.getBackgroundColor(context));
+        INSTANCE.setImageViewColor(views, R.id.background_image, PrefUtil.INSTANCE.getBackgroundColor(context));
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -95,7 +94,7 @@ public class TrelloWidgetProvider extends AppWidgetProvider {
     }
 
     private PendingIntent getTitleIntent(Context context, Board board) {
-        Intent intent = PrefUtil.isTitleEnabled(context) ? getBoardIntent(context, board) : new Intent();
+        Intent intent = PrefUtil.INSTANCE.isTitleEnabled(context) ? getBoardIntent(context, board) : new Intent();
         return PendingIntent.getActivity(context, 0, intent, 0);
     }
 

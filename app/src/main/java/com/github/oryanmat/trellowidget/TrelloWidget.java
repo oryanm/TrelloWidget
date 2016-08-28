@@ -43,7 +43,7 @@ public class TrelloWidget extends Application {
                 new Intent(context, AlarmReceiver.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int interval = PrefUtil.getInterval(context);
+        int interval = PrefUtil.INSTANCE.getInterval(context);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         manager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, interval, interval, pendingIntent);
     }
