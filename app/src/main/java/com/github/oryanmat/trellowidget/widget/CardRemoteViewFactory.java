@@ -106,7 +106,7 @@ public class CardRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     void setDueDate(RemoteViews views, Card card) {
         boolean visible = card.badges.due != null;
-        String text = visible ? DateTimeUtil.parseDate(card.badges.due) : "";
+        String text = visible ? DateTimeUtil.INSTANCE.parseDate(card.badges.due) : "";
         setBadge(views, R.id.due, R.id.due_string,
                 R.drawable.ic_access_time_white_24dp, text, visible);
     }
