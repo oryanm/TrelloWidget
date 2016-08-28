@@ -74,7 +74,7 @@ public class TrelloAPIUtil {
     public BoardList getCards(BoardList list) {
         String json = get(String.format(String.format(buildURL(), LIST_CARDS), list.id));
 
-        return Json.tryParseJson(json, BoardList.class, BoardList.oneItemList(json));
+        return Json.INSTANCE.tryParseJson(json, BoardList.class, BoardList.oneItemList(json));
     }
 
     String get(String url) {

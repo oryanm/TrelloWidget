@@ -51,20 +51,20 @@ public class TrelloWidget extends Application {
     public static BoardList getList(Context context, int appWidgetId) {
         String key = getPreferenceKey(appWidgetId, LIST_KEY);
         String json = getPreferences(context).getString(key, BoardList.NULL_JSON);
-        return Json.get().fromJson(json, BoardList.class);
+        return Json.INSTANCE.getGson().fromJson(json, BoardList.class);
     }
 
     public static Board getBoard(Context context, int appWidgetId) {
         String key = getPreferenceKey(appWidgetId, BOARD_KEY);
         String json = getPreferences(context).getString(key, Board.NULL_JSON);
-        return Json.get().fromJson(json, Board.class);
+        return Json.INSTANCE.getGson().fromJson(json, Board.class);
     }
 
     public static void putConfigInfo(Context context, int appWidgetId, Board board, BoardList list) {
         getPreferences(context)
                 .edit()
-                .putString(getPreferenceKey(appWidgetId, BOARD_KEY), Json.get().toJson(board))
-                .putString(getPreferenceKey(appWidgetId, LIST_KEY), Json.get().toJson(list))
+                .putString(getPreferenceKey(appWidgetId, BOARD_KEY), Json.INSTANCE.getGson().toJson(board))
+                .putString(getPreferenceKey(appWidgetId, LIST_KEY), Json.INSTANCE.getGson().toJson(list))
                 .apply();
     }
 

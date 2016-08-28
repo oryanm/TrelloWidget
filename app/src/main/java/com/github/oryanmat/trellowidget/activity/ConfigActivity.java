@@ -72,7 +72,7 @@ public class ConfigActivity extends Activity {
     class BoardListener implements Response.Listener<String>, Response.ErrorListener {
         @Override
         public void onResponse(String response) {
-            List<Board> boards = Json.tryParseJson(response, BOARD_LIST_TYPE, Collections.<Board>emptyList());
+            List<Board> boards = Json.INSTANCE.tryParseJson(response, BOARD_LIST_TYPE, Collections.<Board>emptyList());
             board = TrelloWidget.getBoard(ConfigActivity.this, appWidgetId);
             setSpinner(R.id.boardSpinner, boards, new BoardsItemSelected(), boards.indexOf(board));
         }

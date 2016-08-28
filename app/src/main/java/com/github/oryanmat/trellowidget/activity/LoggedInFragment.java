@@ -37,7 +37,7 @@ public class LoggedInFragment extends Fragment {
                 savedInstanceState.getInt(VISIBILITY, View.VISIBLE) : View.VISIBLE;
 
         if (visibility == View.GONE) {
-            setUser(Json.tryParseJson(savedInstanceState.getString(USER), User.class, new User()));
+            setUser(Json.INSTANCE.tryParseJson(savedInstanceState.getString(USER), User.class, new User()));
         } else {
             TrelloAPIUtil.instance.getAsync(TrelloAPIUtil.instance.user(),
                     new UserListener(), new LoginErrorListener());
@@ -70,7 +70,7 @@ public class LoggedInFragment extends Fragment {
     class UserListener implements Response.Listener<String> {
         @Override
         public void onResponse(String response) {
-            setUser(Json.tryParseJson(response, User.class, new User()));
+            setUser(Json.INSTANCE.tryParseJson(response, User.class, new User()));
         }
     }
 
@@ -91,6 +91,6 @@ public class LoggedInFragment extends Fragment {
         if (view == null) return;
         int visibility = view.findViewById(R.id.loading_panel).getVisibility();
         outState.putInt(VISIBILITY, visibility);
-        outState.putString(USER, Json.get().toJson(user));
+        outState.putString(USER, Json.INSTANCE.getGson().toJson(user));
     }
 }
