@@ -11,7 +11,7 @@ public class BoardList {
     public static final String NULL_JSON = "{\"id\":\"-1\",\"name\":\"oops\",\"cards\":[]}";
     public static final String ERROR = "ERROR";
 
-    public String id;
+    public String id = "-1";
     public String name;
     public List<Card> cards;
 

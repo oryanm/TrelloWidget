@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Board {
     public static final String NULL_JSON = "{\"id\":\"-1\",\"name\":\"oops\",\"url\":\"\",\"lists\":[]}";
-    public String id;
+    public String id = "-1";
     public String name;
     public String url;
     public List<BoardList> lists;
