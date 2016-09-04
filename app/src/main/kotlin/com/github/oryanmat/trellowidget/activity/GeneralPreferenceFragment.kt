@@ -9,9 +9,8 @@ import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
 
-val COLOR_FORMAT = "#%08X"
-
 class GeneralPreferenceFragment : PreferenceFragment() {
+    val COLOR_FORMAT = "#%08X"
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key -> setPreferenceChanges(key) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
