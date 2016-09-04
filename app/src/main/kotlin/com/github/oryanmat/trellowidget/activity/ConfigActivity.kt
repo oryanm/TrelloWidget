@@ -27,10 +27,10 @@ import com.github.oryanmat.trellowidget.widget.updateWidget
 import kotlinx.android.synthetic.main.activity_config.*
 
 class ConfigActivity : Activity() {
-    internal var appWidgetId = INVALID_APPWIDGET_ID
-    internal var board: Board = Board()
-    internal var list: BoardList = BoardList()
-    internal val dialog: ProgressDialog by lazy { showProgressDialog() }
+    private var appWidgetId = INVALID_APPWIDGET_ID
+    private var board: Board = Board()
+    private var list: BoardList = BoardList()
+    private val dialog: ProgressDialog by lazy { showProgressDialog() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +57,10 @@ class ConfigActivity : Activity() {
         return dialog
     }
 
-    internal operator fun get(url: String, listener: BoardListener) {
-        TrelloAPIUtil.instance.getAsync(url, listener, listener)
-    }
+    private fun get(url: String, listener: BoardListener) =
+            TrelloAPIUtil.instance.getAsync(url, listener, listener)
 
-    internal inner class BoardListener : Response.Listener<String>, Response.ErrorListener {
+    private inner class BoardListener : Response.Listener<String>, Response.ErrorListener {
         override fun onResponse(response: String) {
             val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
             board = TrelloWidget.getBoard(this@ConfigActivity, appWidgetId)
@@ -78,7 +77,7 @@ class ConfigActivity : Activity() {
         }
     }
 
-    internal inner class BoardsItemSelected : OnItemSelectedAdapter() {
+    private inner class BoardsItemSelected : OnItemSelectedAdapter() {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             board = parent.getItemAtPosition(position) as Board
             list = TrelloWidget.getList(this@ConfigActivity, appWidgetId)
@@ -87,14 +86,14 @@ class ConfigActivity : Activity() {
         }
     }
 
-    internal inner class ListsItemSelected : OnItemSelectedAdapter() {
+    private inner class ListsItemSelected : OnItemSelectedAdapter() {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             list = parent.getItemAtPosition(position) as BoardList
         }
     }
 
-    internal fun <T> setSpinner(spinner: Spinner, lists: List<T>,
-                                listener: AdapterView.OnItemSelectedListener, selectedIndex: Int): Spinner {
+    private fun <T> setSpinner(spinner: Spinner, lists: List<T>,
+                               listener: AdapterView.OnItemSelectedListener, selectedIndex: Int): Spinner {
         val adapter = ArrayAdapter(this@ConfigActivity, android.R.layout.simple_spinner_item, lists)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
