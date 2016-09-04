@@ -16,19 +16,25 @@ import com.github.oryanmat.trellowidget.util.PrefUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 
-class TrelloWidgetProvider : AppWidgetProvider() {
-    val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
-    val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
-    val TRELLO_PACKAGE_NAME = "com.trello"
-    val TRELLO_URL = "https://www.trello.com"
+private val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
+private val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
+private val TRELLO_PACKAGE_NAME = "com.trello"
+private val TRELLO_URL = "https://www.trello.com"
 
+class TrelloWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId)
+        appWidgetIds.forEach { appWidgetId -> updateAppWidget(context, appWidgetManager, appWidgetId) }
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+
+        when (intent.action) {
+            REFRESH_ACTION -> notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0))
         }
     }
 
-    internal fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+    private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         // TODO: We should update both the BoardList and Board on a refresh
         val list = TrelloWidget.getList(context, appWidgetId)
         val board = TrelloWidget.getBoard(context, appWidgetId)
@@ -70,14 +76,6 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         reconfigIntent.action = AppWidgetManager.ACTION_APPWIDGET_CONFIGURE
         reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0)
-    }
-
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-
-        if (intent.action == REFRESH_ACTION) {
-            notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0))
-        }
     }
 
     private fun getCardPendingIntent(context: Context): PendingIntent {
