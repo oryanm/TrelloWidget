@@ -26,7 +26,7 @@ import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.widget.updateWidget
 import kotlinx.android.synthetic.main.activity_config.*
 
-class ConfigActivity : Activity() {
+class ConfigActivity : Activity(), OnItemSelectedAdapter {
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()
@@ -64,7 +64,7 @@ class ConfigActivity : Activity() {
         override fun onResponse(response: String) {
             val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
             board = TrelloWidget.getBoard(this@ConfigActivity, appWidgetId)
-            setSpinner(boardSpinner, boards, BoardsItemSelected(), boards.indexOf(board))
+            setSpinner(boardSpinner, boards, this@ConfigActivity, boards.indexOf(board))
         }
 
         override fun onErrorResponse(error: VolleyError) {
@@ -77,19 +77,18 @@ class ConfigActivity : Activity() {
         }
     }
 
-    private inner class BoardsItemSelected : OnItemSelectedAdapter() {
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            board = parent.getItemAtPosition(position) as Board
-            list = TrelloWidget.getList(this@ConfigActivity, appWidgetId)
-            setSpinner(listSpinner, board.lists, ListsItemSelected(), board.lists.indexOf(list))
-            dialog.dismiss()
+    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+        when (parent) {
+            boardSpinner -> boardSelected(parent, position)
+            listSpinner -> list = parent.getItemAtPosition(position) as BoardList
         }
     }
 
-    private inner class ListsItemSelected : OnItemSelectedAdapter() {
-        override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            list = parent.getItemAtPosition(position) as BoardList
-        }
+    private fun boardSelected(spinner: AdapterView<*>, position: Int) {
+        board = spinner.getItemAtPosition(position) as Board
+        list = TrelloWidget.getList(this@ConfigActivity, appWidgetId)
+        setSpinner(listSpinner, board.lists, this, board.lists.indexOf(list))
+        dialog.dismiss()
     }
 
     private fun <T> setSpinner(spinner: Spinner, lists: List<T>,
