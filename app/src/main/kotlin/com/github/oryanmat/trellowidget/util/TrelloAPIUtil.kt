@@ -74,12 +74,12 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
     private fun get(future: RequestFuture<String>) = try {
         future.get()
     } catch (e: ExecutionException) {
-        s(e)
+        logException(e)
     } catch (e: InterruptedException) {
-        s(e)
+        logException(e)
     }
 
-    private fun s(e: Exception): String {
+    private fun logException(e: Exception): String {
         val msg = String.format(context.getString(R.string.http_fail), e)
         Log.e(T_WIDGET, msg)
         return msg
