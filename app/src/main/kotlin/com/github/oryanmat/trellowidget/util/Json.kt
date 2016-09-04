@@ -6,7 +6,11 @@ import com.google.gson.JsonSyntaxException
 import java.lang.reflect.Type
 
 object Json {
-    val gson: Gson = Gson()
+    private val gson = Gson()
+
+    fun toJson(src: Any): String = gson.toJson(src)
+
+    fun <T> fromJson(json: String, c: Class<T>): T = gson.fromJson(json, c)
 
     fun <T> tryParseJson(json: String, c: Class<T>, defaultValue: T): T = try {
         gson.fromJson(json, c)

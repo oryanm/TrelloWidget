@@ -78,6 +78,6 @@ class LoggedInFragment : Fragment() {
         super.onSaveInstanceState(outState)
         view ?: return
         outState.putInt(VISIBILITY, view.loading_panel.visibility)
-        outState.putString(USER, Json.gson.toJson(user))
+        outState.putString(USER, Json.toJson(user))
     }
 }
