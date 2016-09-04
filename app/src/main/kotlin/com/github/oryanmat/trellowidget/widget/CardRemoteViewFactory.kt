@@ -26,7 +26,8 @@ import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
 import java.util.*
 
-class CardRemoteViewFactory(val context: Context, val appWidgetId: Int) : RemoteViewsService.RemoteViewsFactory {
+class CardRemoteViewFactory(private val context: Context,
+                            private val appWidgetId: Int) : RemoteViewsService.RemoteViewsFactory {
     private var cards: List<Card> = ArrayList()
     @ColorInt private var color = 0
 
@@ -77,7 +78,7 @@ class CardRemoteViewFactory(val context: Context, val appWidgetId: Int) : Remote
         setBadge(views, R.id.subscribed, R.drawable.ic_visibility_white_24dp, card.badges.subscribed)
     }
 
-    internal fun setVotes(views: RemoteViews, card: Card) {
+    private fun setVotes(views: RemoteViews, card: Card) {
         setIntBadge(views, R.id.votes, R.id.vote_count,
                 R.drawable.ic_thumb_up_white_24dp, card.badges.votes)
     }
@@ -86,43 +87,43 @@ class CardRemoteViewFactory(val context: Context, val appWidgetId: Int) : Remote
         setBadge(views, R.id.desc, R.drawable.ic_subject_white_24dp, card.badges.description)
     }
 
-    internal fun setDueDate(views: RemoteViews, card: Card) {
+    private fun setDueDate(views: RemoteViews, card: Card) {
         val visible = card.badges.due != null
         val text = if (visible) DateTimeUtil.parseDate(card.badges.due!!) else ""
         setBadge(views, R.id.due, R.id.due_string,
                 R.drawable.ic_access_time_white_24dp, text, visible)
     }
 
-    internal fun setChecklist(views: RemoteViews, card: Card) {
+    private fun setChecklist(views: RemoteViews, card: Card) {
         val text = "${card.badges.checkItemsChecked}/${card.badges.checkItems}"
         val visible = card.badges.checkItems > 0
         setBadge(views, R.id.checklist, R.id.checklist_count,
                 R.drawable.ic_check_box_white_24dp, text, visible)
     }
 
-    internal fun setComments(views: RemoteViews, card: Card) {
+    private fun setComments(views: RemoteViews, card: Card) {
         setIntBadge(views, R.id.comments, R.id.comment_count,
                 R.drawable.ic_chat_bubble_outline_white_24dp, card.badges.comments)
     }
 
-    internal fun setAttachments(views: RemoteViews, card: Card) {
+    private fun setAttachments(views: RemoteViews, card: Card) {
         setIntBadge(views, R.id.attachment, R.id.attachment_count,
                 R.drawable.ic_attachment_white_24dp, card.badges.attachments)
     }
 
-    internal fun setIntBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
-                             @DrawableRes image: Int, value: Int) {
+    private fun setIntBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
+                            @DrawableRes image: Int, value: Int) {
         setBadge(views, view, textView, image, value.toString(), value > 0)
     }
 
-    internal fun setBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
-                          @DrawableRes image: Int, text: String, visible: Boolean) {
+    private fun setBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
+                         @DrawableRes image: Int, text: String, visible: Boolean) {
         setTextView(context, views, textView, text, color, R.dimen.card_badges_text)
         views.setViewVisibility(textView, if (visible) View.VISIBLE else View.GONE)
         setBadge(views, view, image, visible)
     }
 
-    internal fun setBadge(views: RemoteViews, @IdRes view: Int, @DrawableRes image: Int, visible: Boolean) {
+    private fun setBadge(views: RemoteViews, @IdRes view: Int, @DrawableRes image: Int, visible: Boolean) {
         views.setViewVisibility(view, if (visible) View.VISIBLE else View.GONE)
         setImageViewColor(views, view, color)
         setImage(context, views, view, image)
