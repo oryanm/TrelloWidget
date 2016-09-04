@@ -26,7 +26,7 @@ import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.widget.updateWidget
 import kotlinx.android.synthetic.main.activity_config.*
 
-class ConfigActivity : Activity(), OnItemSelectedAdapter {
+class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()
@@ -37,7 +37,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter {
         setContentView(R.layout.activity_config)
         setWidgetId()
         dialog.show()
-        get(TrelloAPIUtil.instance.boards(), BoardListener())
+        get(TrelloAPIUtil.instance.boards(), this)
     }
 
     private fun setWidgetId() {
@@ -57,24 +57,22 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter {
         return dialog
     }
 
-    private fun get(url: String, listener: BoardListener) =
+    private fun get(url: String, listener: ConfigActivity) =
             TrelloAPIUtil.instance.getAsync(url, listener, listener)
 
-    private inner class BoardListener : Response.Listener<String>, Response.ErrorListener {
-        override fun onResponse(response: String) {
-            val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
-            board = TrelloWidget.getBoard(this@ConfigActivity, appWidgetId)
-            setSpinner(boardSpinner, boards, this@ConfigActivity, boards.indexOf(board))
-        }
+    override fun onResponse(response: String) {
+        val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
+        board = TrelloWidget.getBoard(this, appWidgetId)
+        setSpinner(boardSpinner, boards, this, boards.indexOf(board))
+    }
 
-        override fun onErrorResponse(error: VolleyError) {
-            dialog.dismiss()
-            finish()
+    override fun onErrorResponse(error: VolleyError) {
+        dialog.dismiss()
+        finish()
 
-            Log.e(T_WIDGET, error.toString())
-            val text = String.format(getString(R.string.board_load_fail), error)
-            Toast.makeText(this@ConfigActivity, text, Toast.LENGTH_LONG).show()
-        }
+        Log.e(T_WIDGET, error.toString())
+        val text = String.format(getString(R.string.board_load_fail), error)
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -86,14 +84,14 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter {
 
     private fun boardSelected(spinner: AdapterView<*>, position: Int) {
         board = spinner.getItemAtPosition(position) as Board
-        list = TrelloWidget.getList(this@ConfigActivity, appWidgetId)
+        list = TrelloWidget.getList(this, appWidgetId)
         setSpinner(listSpinner, board.lists, this, board.lists.indexOf(list))
         dialog.dismiss()
     }
 
     private fun <T> setSpinner(spinner: Spinner, lists: List<T>,
                                listener: AdapterView.OnItemSelectedListener, selectedIndex: Int): Spinner {
-        val adapter = ArrayAdapter(this@ConfigActivity, android.R.layout.simple_spinner_item, lists)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lists)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
         spinner.onItemSelectedListener = listener
