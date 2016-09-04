@@ -104,10 +104,7 @@ class ConfigActivity : Activity() {
     }
 
     fun ok(view: View) {
-        if (board.id.isEmpty() || list.id.isEmpty()) {
-            return
-        }
-
+        if (board.id.isEmpty() || list.id.isEmpty()) return
         TrelloWidget.putConfigInfo(this, appWidgetId, board, list)
         updateWidget(this, appWidgetId)
         returnOk()
