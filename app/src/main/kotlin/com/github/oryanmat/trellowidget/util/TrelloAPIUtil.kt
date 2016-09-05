@@ -1,7 +1,6 @@
 package com.github.oryanmat.trellowidget.util
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -9,7 +8,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.github.oryanmat.trellowidget.INTERNAL_PREFS
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
@@ -33,8 +31,7 @@ val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
 
 class TrelloAPIUtil private constructor(internal var context: Context) {
     internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
-    internal var preferences: SharedPreferences = context
-            .getSharedPreferences(INTERNAL_PREFS, Context.MODE_PRIVATE)
+    internal var preferences = context.preferences()
 
     companion object {
         lateinit var instance: TrelloAPIUtil

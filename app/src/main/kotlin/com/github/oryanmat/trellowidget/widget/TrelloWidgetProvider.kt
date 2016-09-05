@@ -9,10 +9,9 @@ import android.net.Uri
 import android.support.annotation.ColorInt
 import android.widget.RemoteViews
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.model.Board
-import com.github.oryanmat.trellowidget.util.PrefUtil
+import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 
@@ -30,15 +29,15 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
 
         when (intent.action) {
-            REFRESH_ACTION -> notifyDataChanged(context, intent.getIntExtra(WIDGET_ID, 0))
+            REFRESH_ACTION -> context.notifyDataChanged(intent.getIntExtra(WIDGET_ID, 0))
         }
     }
 
     private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         // TODO: We should update both the BoardList and Board on a refresh
-        val list = TrelloWidget.getList(context, appWidgetId)
-        val board = TrelloWidget.getBoard(context, appWidgetId)
-        @ColorInt val color = PrefUtil.getForegroundColor(context)
+        val list = context.getList(appWidgetId)
+        val board = context.getBoard(appWidgetId)
+        @ColorInt val color = context.getForegroundColor()
 
         val views = RemoteViews(context.packageName, R.layout.trello_widget)
         setTextView(views, R.id.list_title, list.name, color)
@@ -52,7 +51,7 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         views.setRemoteAdapter(R.id.card_list, getRemoteAdapterIntent(context, appWidgetId))
         views.setEmptyView(R.id.card_list, R.id.empty_card_list)
         views.setTextColor(R.id.empty_card_list, color)
-        setImageViewColor(views, R.id.background_image, PrefUtil.getBackgroundColor(context))
+        setImageViewColor(views, R.id.background_image, context.getBackgroundColor())
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
@@ -84,7 +83,7 @@ class TrelloWidgetProvider : AppWidgetProvider() {
     }
 
     private fun getTitleIntent(context: Context, board: Board): PendingIntent {
-        val intent = if (PrefUtil.isTitleEnabled(context)) getBoardIntent(context, board) else Intent()
+        val intent = if (context.isTitleEnabled()) getBoardIntent(context, board) else Intent()
         return PendingIntent.getActivity(context, 0, intent, 0)
     }
 

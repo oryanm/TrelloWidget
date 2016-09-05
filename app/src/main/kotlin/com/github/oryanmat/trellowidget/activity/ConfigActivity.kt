@@ -16,13 +16,10 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
-import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
-import com.github.oryanmat.trellowidget.util.Json
-import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
+import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
 import kotlinx.android.synthetic.main.activity_config.*
 
@@ -62,7 +59,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
 
     override fun onResponse(response: String) {
         val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
-        board = TrelloWidget.getBoard(this, appWidgetId)
+        board = getBoard(appWidgetId)
         setSpinner(boardSpinner, boards, this, boards.indexOf(board))
     }
 
@@ -84,7 +81,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
 
     private fun boardSelected(spinner: AdapterView<*>, position: Int) {
         board = spinner.getItemAtPosition(position) as Board
-        list = TrelloWidget.getList(this, appWidgetId)
+        list = getList(appWidgetId)
         setSpinner(listSpinner, board.lists, this, board.lists.indexOf(list))
         dialog.dismiss()
     }
@@ -101,8 +98,8 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
 
     fun ok(view: View) {
         if (board.id.isEmpty() || list.id.isEmpty()) return
-        TrelloWidget.putConfigInfo(this, appWidgetId, board, list)
-        updateWidget(this, appWidgetId)
+        putConfigInfo(appWidgetId, board, list)
+        updateWidget(appWidgetId)
         returnOk()
     }
 

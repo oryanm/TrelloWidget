@@ -32,8 +32,8 @@ class GeneralPreferenceFragment : PreferenceFragment() {
     override fun onPause() {
         super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
-        updateWidgets(activity)
-        updateWidgetsData(activity)
+        activity.updateWidgets()
+        activity.updateWidgetsData()
     }
 
     fun setPreferenceChanges(key: String) {

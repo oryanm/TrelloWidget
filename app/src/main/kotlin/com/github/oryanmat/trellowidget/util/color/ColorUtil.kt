@@ -1,10 +1,11 @@
 package com.github.oryanmat.trellowidget.util.color
 
 import android.graphics.Color
+import android.support.annotation.ColorInt
 
-fun dim(color: Int): Int {
+@ColorInt fun Int.dim(): Int {
     val hsv = FloatArray(3)
-    Color.colorToHSV(color, hsv)
+    Color.colorToHSV(this, hsv)
     // half the value component
     hsv[2] *= 0.5f
     return Color.HSVToColor(hsv)

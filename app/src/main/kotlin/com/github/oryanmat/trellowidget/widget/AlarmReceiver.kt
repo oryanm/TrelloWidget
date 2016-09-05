@@ -6,7 +6,7 @@ import android.content.Intent
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        updateWidgets(context)
-        updateWidgetsData(context)
+        context.updateWidgets()
+        context.updateWidgetsData()
     }
 }

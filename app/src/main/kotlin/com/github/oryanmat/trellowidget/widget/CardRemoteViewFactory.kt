@@ -12,18 +12,18 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.Card
 import com.github.oryanmat.trellowidget.model.Label
 import com.github.oryanmat.trellowidget.util.DateTimeUtil
-import com.github.oryanmat.trellowidget.util.PrefUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
+import com.github.oryanmat.trellowidget.util.getForegroundColor
+import com.github.oryanmat.trellowidget.util.getList
 import java.util.*
 
 class CardRemoteViewFactory(private val context: Context,
@@ -32,14 +32,14 @@ class CardRemoteViewFactory(private val context: Context,
     @ColorInt private var color = 0
 
     override fun onDataSetChanged() {
-        var list = TrelloWidget.getList(context, appWidgetId)
+        var list = context.getList(appWidgetId)
         list = TrelloAPIUtil.instance.getCards(list)
-        color = PrefUtil.getForegroundColor(context)
+        color = context.getForegroundColor()
 
         if (BoardList.ERROR != list.id) {
             cards = list.cards
         } else {
-            color = dim(color)
+            color = color.dim()
         }
     }
 

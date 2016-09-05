@@ -37,7 +37,7 @@ object RemoteViewsUtil {
         val drawable = ContextCompat.getDrawable(context, image)
         val bitmap = (drawable as BitmapDrawable).bitmap
         val density = context.resources.displayMetrics.density
-        val prefTextScale = PrefUtil.getPrefTextScale(context)
+        val prefTextScale = context.getPrefTextScale()
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap,
                 (bitmap.width.toDouble() * IMAGE_SCALE * prefTextScale.toDouble() / density).toInt(),
                 (bitmap.height.toDouble() * IMAGE_SCALE * prefTextScale.toDouble() / density).toInt(), true)
@@ -53,7 +53,7 @@ object RemoteViewsUtil {
     fun getScaledValue(context: Context, @DimenRes dimen: Int): Float {
         val dimension = context.resources.getDimension(dimen)
         val density = context.resources.displayMetrics.density
-        val prefTextScale = PrefUtil.getPrefTextScale(context)
+        val prefTextScale = context.getPrefTextScale()
         return dimension * prefTextScale / density
     }
 }
