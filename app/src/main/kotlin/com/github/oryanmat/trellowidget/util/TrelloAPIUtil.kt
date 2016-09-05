@@ -53,7 +53,7 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
     fun getCards(list: BoardList): BoardList {
         val json = get(buildURL(LIST_CARDS.format(list.id)))
 
-        return Json.tryParseJson(json, BoardList::class.java, BoardList.oneItemList(json))
+        return Json.tryParseJson(json, BoardList::class.java, BoardList.error(json))
     }
 
     fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
