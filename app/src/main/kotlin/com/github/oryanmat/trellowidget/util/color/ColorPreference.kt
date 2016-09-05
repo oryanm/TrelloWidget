@@ -25,12 +25,13 @@ class ColorPreference @JvmOverloads constructor(
 
     override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
-        val picker = view.color_picker
-        picker.addSVBar(view.svbar)
-        picker.addOpacityBar(view.opacitybar)
-        picker.color = getPersistedInt(DEFAULT_VALUE)
-        picker.oldCenterColor = getPersistedInt(DEFAULT_VALUE)
-        picker.onColorChangedListener = ColorPicker.OnColorChangedListener { color = it }
+        with(view.color_picker) {
+            addSVBar(view.svbar)
+            addOpacityBar(view.opacitybar)
+            color = getPersistedInt(DEFAULT_VALUE)
+            oldCenterColor = getPersistedInt(DEFAULT_VALUE)
+            onColorChangedListener = ColorPicker.OnColorChangedListener { color = it }
+        }
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
