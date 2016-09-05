@@ -23,7 +23,7 @@ private val TRELLO_URL = "https://www.trello.com"
 
 class TrelloWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        appWidgetIds.forEach { appWidgetId -> updateAppWidget(context, appWidgetManager, appWidgetId) }
+        appWidgetIds.forEach { updateAppWidget(context, appWidgetManager, it) }
     }
 
     override fun onReceive(context: Context, intent: Intent) {

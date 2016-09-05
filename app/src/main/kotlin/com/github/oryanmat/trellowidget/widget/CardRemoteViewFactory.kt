@@ -131,7 +131,7 @@ class CardRemoteViewFactory(private val context: Context,
 
     private fun setLabels(views: RemoteViews, card: Card) {
         views.removeAllViews(R.id.labels_layout)
-        card.labels.forEach { label -> setLabel(views, label) }
+        card.labels.forEach { setLabel(views, it) }
     }
 
     private fun setLabel(views: RemoteViews, label: Label) {

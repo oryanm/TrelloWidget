@@ -30,7 +30,7 @@ class ColorPreference @JvmOverloads constructor(
         picker.addOpacityBar(view.opacitybar)
         picker.color = getPersistedInt(DEFAULT_VALUE)
         picker.oldCenterColor = getPersistedInt(DEFAULT_VALUE)
-        picker.onColorChangedListener = ColorPicker.OnColorChangedListener { i -> color = i }
+        picker.onColorChangedListener = ColorPicker.OnColorChangedListener { color = it }
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
