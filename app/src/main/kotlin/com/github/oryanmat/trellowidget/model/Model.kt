@@ -7,7 +7,7 @@ data class Board(
         val id: String = "-1",
         val name: String = "",
         val url: String = "",
-        var lists: List<BoardList> = emptyList()) {
+        val lists: List<BoardList> = emptyList()) {
 
     override fun toString() = name
 
@@ -19,7 +19,7 @@ data class Board(
 data class BoardList(
         val id: String = "-1",
         val name: String = "",
-        var cards: List<Card> = emptyList()) {
+        val cards: List<Card> = emptyList()) {
 
     override fun toString() = name
 
@@ -28,9 +28,7 @@ data class BoardList(
         val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
         val ERROR = "ERROR"
 
-        fun oneItemList(name: String): BoardList {
-            return BoardList(id = ERROR, cards = listOf(Card(name = name)))
-        }
+        fun error(name: String) = BoardList(id = ERROR, cards = listOf(Card(name = name)))
     }
 }
 
