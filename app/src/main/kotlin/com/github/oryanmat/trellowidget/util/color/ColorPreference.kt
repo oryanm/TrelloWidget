@@ -30,7 +30,7 @@ class ColorPreference @JvmOverloads constructor(
             addOpacityBar(view.opacitybar)
             color = getPersistedInt(DEFAULT_VALUE)
             oldCenterColor = getPersistedInt(DEFAULT_VALUE)
-            onColorChangedListener = ColorPicker.OnColorChangedListener { color = it }
+            onColorChangedListener = ColorPicker.OnColorChangedListener { this@ColorPreference.color = it }
         }
     }
 
