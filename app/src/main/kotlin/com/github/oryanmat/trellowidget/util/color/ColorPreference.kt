@@ -23,6 +23,15 @@ class ColorPreference @JvmOverloads constructor(
         dialogLayoutResource = R.layout.color_chooser
     }
 
+    fun repairSVBar(view: View, colorToFix: Int) {
+        // This is a work-around for a defect in holocolorpicker when using black with an SVBar
+        val hsv = FloatArray(3)
+        Color.colorToHSV(colorToFix, hsv)
+        if (hsv[1] == 0.0f && hsv[2] == 0.0f) {
+            view.svbar.setValue(hsv[2])
+        }
+    }
+
     override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
         with(view.color_picker) {
@@ -30,7 +39,8 @@ class ColorPreference @JvmOverloads constructor(
             addOpacityBar(view.opacitybar)
             color = getPersistedInt(DEFAULT_VALUE)
             oldCenterColor = getPersistedInt(DEFAULT_VALUE)
-            onColorChangedListener = ColorPicker.OnColorChangedListener { color = it }
+            onColorChangedListener = ColorPicker.OnColorChangedListener { this@ColorPreference.color = it }
+            repairSVBar(view, color)
         }
     }
 
