@@ -22,7 +22,7 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
-import com.github.oryanmat.trellowidget.util.getForegroundColor
+import com.github.oryanmat.trellowidget.util.getCardForegroundColor
 import com.github.oryanmat.trellowidget.util.getList
 import java.util.*
 
@@ -34,7 +34,7 @@ class CardRemoteViewFactory(private val context: Context,
     override fun onDataSetChanged() {
         var list = context.getList(appWidgetId)
         list = TrelloAPIUtil.instance.getCards(list)
-        color = context.getForegroundColor()
+        color = context.getCardForegroundColor()
 
         if (BoardList.ERROR != list.id) {
             cards = list.cards

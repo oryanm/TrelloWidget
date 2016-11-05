@@ -16,6 +16,7 @@ import android.widget.RemoteViews
 object RemoteViewsUtil {
     val METHOD_SET_ALPHA = "setAlpha"
     val METHOD_SET_COLOR_FILTER = "setColorFilter"
+    val METHOD_SET_BACKGROUND = "setBackgroundColor"
     internal val IMAGE_SCALE = 1.5
 
     fun setTextView(context: Context, views: RemoteViews,
@@ -48,6 +49,10 @@ object RemoteViewsUtil {
         val opaqueColor = Color.rgb(red(color), green(color), blue(color))
         views.setInt(view, METHOD_SET_COLOR_FILTER, opaqueColor)
         views.setInt(view, METHOD_SET_ALPHA, alpha(color))
+    }
+
+    fun setBackgroundColor(views: RemoteViews, @IdRes view: Int, @ColorInt color: Int) {
+        views.setInt(view, METHOD_SET_BACKGROUND, color)
     }
 
     fun getScaledValue(context: Context, @DimenRes dimen: Int): Float {

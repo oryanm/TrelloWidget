@@ -15,13 +15,31 @@ internal fun Context.getInterval() =
                 getString(R.string.pref_update_interval_key),
                 getString(R.string.pref_update_interval_default)))
 
-internal @ColorInt fun Context.getBackgroundColor() = getColor(
+internal @ColorInt fun Context.getCardBackgroundColor() = getColor(
         getString(R.string.pref_back_color_key),
         resources.getInteger(R.integer.pref_back_color_default))
 
-internal @ColorInt fun Context.getForegroundColor() = getColor(
+internal @ColorInt fun Context.getCardForegroundColor() = getColor(
         getString(R.string.pref_fore_color_key),
         resources.getInteger(R.integer.pref_fore_color_default))
+
+internal fun Context.isTitleUniqueColor() = sharedPreferences().getBoolean(
+        getString(R.string.pref_title_use_unique_color_key),
+        resources.getBoolean(R.bool.pref_title_use_unique_color_default))
+
+internal @ColorInt fun Context.getTitleBackgroundColor(): Int = when {
+    isTitleUniqueColor() -> getColor(
+            getString(R.string.pref_title_back_color_key),
+            resources.getInteger(R.integer.pref_title_back_color_default))
+    else -> getCardBackgroundColor()
+}
+
+internal @ColorInt fun Context.getTitleForegroundColor(): Int = when {
+    isTitleUniqueColor() -> getColor(
+            getString(R.string.pref_title_fore_color_key),
+            resources.getInteger(R.integer.pref_title_fore_color_default))
+    else -> getCardForegroundColor()
+}
 
 private @ColorInt fun Context.getColor(key: String, defValue: Int) =
         sharedPreferences().getInt(key, defValue)

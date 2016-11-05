@@ -26,15 +26,30 @@
         <item>1.75</item>
     </string-array>
 
+    <string name="pref_title_back_color_key">title_back_color</string>
+    <string name="pref_title_back_color_title">Title background</string>
+    <string name="pref_title_back_color_desc">Change the background color of the title</string>
+    <integer name="pref_title_back_color_default">0xDD000000</integer>
+
+    <string name="pref_title_fore_color_key">title_fore_color</string>
+    <string name="pref_title_fore_color_title">Title foreground</string>
+    <string name="pref_title_fore_color_desc">Change the foreground color of the title</string>
+    <integer name="pref_title_fore_color_default">0xFFFFFFFF</integer>
+
     <string name="pref_back_color_key">back_color</string>
-    <string name="pref_back_color_title">Background color</string>
-    <string name="pref_back_color_desc">Change background color</string>
-    <integer name="pref_back_color_default">0xFF000000</integer>
+    <string name="pref_back_color_title">List background</string>
+    <string name="pref_back_color_desc">Change the background color of the card list</string>
+    <integer name="pref_back_color_default">0xAA000000</integer>
 
     <string name="pref_fore_color_key">fore_color</string>
-    <string name="pref_fore_color_title">Foreground color</string>
-    <string name="pref_fore_color_desc">Change foreground color</string>
+    <string name="pref_fore_color_title">List foreground</string>
+    <string name="pref_fore_color_desc">Change the foreground color of the card list</string>
     <integer name="pref_fore_color_default">0xFFFFFFFF</integer>
+
+    <string name="pref_title_use_unique_color_key">title_use_unique_color</string>
+    <string name="pref_title_use_unique_color_title">Unique title colors</string>
+    <string name="pref_title_use_unique_color_desc">Choose separate colors for the widget title</string>
+    <bool name="pref_title_use_unique_color_default">false</bool>
 
     <string name="pref_update_interval_key">interval_list</string>
     <string name="pref_update_interval_title">Refresh interval</string>

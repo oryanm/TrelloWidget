@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
+import android.preference.SwitchPreference
+import android.support.annotation.IdRes
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
@@ -21,7 +23,15 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_text_size_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_back_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_fore_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_back_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_fore_color_key))
+        listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
+
+        val titleBackgroundPref = colorPreference(R.string.pref_title_back_color_key)
+        titleBackgroundPref.copyData = colorPreference(R.string.pref_back_color_key).asColorData()
+        val titleForegroundPref = colorPreference(R.string.pref_title_fore_color_key)
+        titleForegroundPref.copyData = colorPreference(R.string.pref_fore_color_key).asColorData()
     }
 
     override fun onResume() {
@@ -52,6 +62,21 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         } else if (key == getString(R.string.pref_fore_color_key)) {
             val preference = findPreference(key) as ColorPreference
             preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_back_color_key)) {
+            val preference = findPreference(key) as ColorPreference
+            preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_fore_color_key)) {
+            val preference = findPreference(key) as ColorPreference
+            preference.summary = String.format(COLOR_FORMAT, preference.color)
+        } else if (key == getString(R.string.pref_title_use_unique_color_key)) {
+            val preference = findPreference(key) as SwitchPreference
+            with(preference) {
+                summary = getString(R.string.pref_title_use_unique_color_desc)
+                colorPreference(R.string.pref_title_fore_color_key).isEnabled = isChecked
+                colorPreference(R.string.pref_title_back_color_key).isEnabled = isChecked
+            }
         }
     }
+
+    fun colorPreference(@IdRes key: Int) = findPreference(getString(key)) as ColorPreference
 }
