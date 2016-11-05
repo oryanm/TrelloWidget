@@ -27,22 +27,18 @@ internal fun Context.isTitleUniqueColor() = sharedPreferences().getBoolean(
         getString(R.string.pref_title_use_unique_color_key),
         resources.getBoolean(R.bool.pref_title_use_unique_color_default))
 
-internal @ColorInt fun Context.getTitleBackgroundColor() : Int {
-    return if (isTitleUniqueColor())
-        getColor(
+internal @ColorInt fun Context.getTitleBackgroundColor(): Int = when {
+    isTitleUniqueColor() -> getColor(
             getString(R.string.pref_title_back_color_key),
             resources.getInteger(R.integer.pref_title_back_color_default))
-    else
-        getCardBackgroundColor()
+    else -> getCardBackgroundColor()
 }
 
-internal @ColorInt fun Context.getTitleForegroundColor() : Int {
-    return if (isTitleUniqueColor())
-        getColor(
+internal @ColorInt fun Context.getTitleForegroundColor(): Int = when {
+    isTitleUniqueColor() -> getColor(
             getString(R.string.pref_title_fore_color_key),
             resources.getInteger(R.integer.pref_title_fore_color_default))
-    else
-        getCardForegroundColor()
+    else -> getCardForegroundColor()
 }
 
 private @ColorInt fun Context.getColor(key: String, defValue: Int) =
