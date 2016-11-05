@@ -17,19 +17,19 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/title_bar"
             android:background="#54ffffff">
 
             <TextView
                 android:id="@+id/list_title"
                 style="@style/WidgetTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/list_hint"
-                android:singleLine="true" />
+                android:maxLines="1" />
 
             <ImageButton
                 android:id="@+id/refreshButt"
@@ -49,13 +49,13 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:src="@drawable/heading_divider"
+            android:src="@drawable/divider"
             tools:ignore="ContentDescription" />
 
         <FrameLayout
+            android:id="@+id/card_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/card_frame">
+            android:layout_height="match_parent">
 
             <ListView
                 android:id="@+id/card_list"
