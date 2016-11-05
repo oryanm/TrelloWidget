@@ -17,7 +17,7 @@ val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
 val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
 val BASE_URL = "https://api.trello.com/"
 val API_VERSION = "1/"
-val KEY = String.format("&key=%s", APP_KEY)
+val KEY = "&key=$APP_KEY"
 val AUTH_URL = "https://trello.com/1/authorize" +
         "?name=TrelloWidget" +
         KEY +
