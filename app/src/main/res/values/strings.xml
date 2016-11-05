@@ -33,6 +33,9 @@
     <string name="singed">Signed in as %s</string>
     <string name="logout">Logout</string>
 
+    <!-- color pref -->
+    <string name="pref_title_copy_from_card">Copy from %s</string>
+
     <!-- error -->
     <string name="http_fail">Trello http request failed: %s</string>
     <string name="login_fail">Login failed multiple times. Logging you out: %s</string>
