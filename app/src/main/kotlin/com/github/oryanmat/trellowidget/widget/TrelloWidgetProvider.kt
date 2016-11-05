@@ -52,7 +52,7 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         setTextView(views, R.id.list_title, list.name, foregroundColor)
         setImageViewColor(views, R.id.refreshButt, foregroundColor.lightDim())
         setImageViewColor(views, R.id.configButt, foregroundColor.lightDim())
-        setBackgroundColor(views, R.id.divider, foregroundColor.lightDim())
+        setImageViewColor(views, R.id.divider, foregroundColor)
 
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
