@@ -77,7 +77,7 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
     }
 
     private fun logException(e: Exception): String {
-        val msg = String.format(context.getString(R.string.http_fail), e)
+        val msg = context.getString(R.string.http_fail).format(e)
         Log.e(T_WIDGET, msg)
         return msg
     }

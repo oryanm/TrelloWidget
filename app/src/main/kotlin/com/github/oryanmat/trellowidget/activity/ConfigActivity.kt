@@ -68,7 +68,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         finish()
 
         Log.e(T_WIDGET, error.toString())
-        val text = String.format(getString(R.string.board_load_fail), error)
+        val text = getString(R.string.board_load_fail).format(error)
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 

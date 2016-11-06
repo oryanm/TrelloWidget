@@ -17,7 +17,7 @@ import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import kotlinx.android.synthetic.main.fragment_logged_in.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.timerTask
+import kotlin.concurrent.schedule
 
 class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
     private val USER = "com.github.oryanmat.trellowidget.activity.user"
@@ -52,7 +52,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
             logout(error)
         } else {
             // try again shortly. could be temp problem
-            Timer().schedule(timerTask { login() }, DELAY)
+            Timer().schedule(DELAY, { login() })
         }
     }
 
