@@ -15,14 +15,18 @@ import com.github.oryanmat.trellowidget.model.User
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
 import kotlinx.android.synthetic.main.fragment_logged_in.view.*
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.timerTask
 
 class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
     private val USER = "com.github.oryanmat.trellowidget.activity.user"
     private val VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility"
     private val MAX_LOGIN_FAIL = 3
+    private val DELAY = TimeUnit.SECONDS.toMillis(1)
 
     private var user = User()
-    private var count = 1
+    private var loginAttempts = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_logged_in, container, false)
@@ -36,24 +40,32 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
             val userJson = savedInstanceState?.getString(USER) ?: ""
             setUser(Json.tryParseJson(userJson, User::class.java, User()))
         } else {
-            TrelloAPIUtil.instance.getUserAsync(this, this)
+            login()
         }
     }
 
     override fun onErrorResponse(error: VolleyError) {
         Log.e(T_WIDGET, error.toString())
 
-        if (count >= MAX_LOGIN_FAIL) {
-            // if user get request failed N times then logout so user can try to login again
-            if (isAdded) {
-                (activity as MainActivity).logout()
-                val text = String.format(activity.getString(R.string.login_fail), error)
-                Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
-            }
+        if (loginAttempts >= MAX_LOGIN_FAIL) {
+            // logout after N failed get requests so we can try to login later
+            logout(error)
         } else {
-            // try again. could be temp problem
-            count++
-            TrelloAPIUtil.instance.getUserAsync(this, this)
+            // try again shortly. could be temp problem
+            Timer().schedule(timerTask { login() }, DELAY)
+        }
+    }
+
+    private fun login() {
+        loginAttempts++
+        TrelloAPIUtil.instance.getUserAsync(this, this)
+    }
+
+    private fun logout(error: VolleyError) {
+        if (isAdded) {
+            (activity as MainActivity).logout()
+            val text = getString(R.string.login_fail).format(error)
+            Toast.makeText(activity, text, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -62,7 +74,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
     private fun setUser(user: User) {
         this.user = user
         view ?: return
-        view.signed_text.text = String.format(getString(R.string.singed), user)
+        view.signed_text.text = getString(R.string.singed).format(user)
         view.loading_panel.visibility = View.GONE
         view.signed_panel.visibility = View.VISIBLE
     }
