@@ -16,3 +16,6 @@ Choose and display lists from your Trello boards on your home screen for a quick
 ## How to Build
 Building should be smooth using android studio and gradle, 
 but since Volley is not (officially) available as a gradle dependency we need to [clone and import it as a separate module] (https://developer.android.com/training/volley/index.html).
+
+## Contributing
+Please open an issue before attempting to contribute any code. That way we can discuss what it is that's going to be implemented and make sure it aligns with the rest of the app.
