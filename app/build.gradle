@@ -26,5 +26,5 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.larswerkman:HoloColorPicker:1.5'
-    compile project(':volley')
+    compile 'com.android.volley:volley:1.0.0'
 }
