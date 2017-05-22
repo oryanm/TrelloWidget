@@ -1,5 +1,5 @@
 # Widget for Trello
-Widget for Trello is an android home screen widget.  
+Widget for Trello is an android home screen widget.
 Choose and display lists from your Trello boards on your home screen for a quick glance at your cards.
 
 <a href='https://play.google.com/store/apps/details?id=com.oryanmat.trellowidget'>
@@ -8,14 +8,13 @@ Choose and display lists from your Trello boards on your home screen for a quick
 
 ## Tools and Tech
 * [Trello's API](http://trello.com/docs)
-* [Volly](https://android.googlesource.com/platform/frameworks/volley.git) - http handling
+* [Volley](https://android.googlesource.com/platform/frameworks/volley.git) - http handling
 * [Gson](http://sites.google.com/site/gson/) - json parsing
 * [Holo ColorPicker](http://github.com/LarsWerkman/HoloColorPicker) - color picker dialog
 * [Calendar Widget](http://github.com/plusonelabs/calendar-widget) - inspiration
 
 ## How to Build
-Building should be smooth using android studio and gradle, 
-but since Volley is not (officially) available as a gradle dependency we need to [clone and import it as a separate module] (https://developer.android.com/training/volley/index.html).
+Building should be smooth using android studio and gradle.
 
 ## Contributing
 Please open an issue before attempting to contribute any code. That way we can discuss what it is that's going to be implemented and make sure it aligns with the rest of the app.
