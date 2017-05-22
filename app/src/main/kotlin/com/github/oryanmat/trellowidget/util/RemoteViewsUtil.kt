@@ -35,6 +35,7 @@ object RemoteViewsUtil {
 
     fun setImage(context: Context, views: RemoteViews,
                  @IdRes view: Int, @DrawableRes image: Int) {
+        // TODO remove dependency on support library by setting min sdk 21 (android 5.0)
         val drawable = ContextCompat.getDrawable(context, image)
         val bitmap = (drawable as BitmapDrawable).bitmap
         val density = context.resources.displayMetrics.density
