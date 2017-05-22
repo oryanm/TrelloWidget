@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/list_hint"
+                android:ellipsize="end"
                 android:maxLines="1" />
 
             <ImageButton
