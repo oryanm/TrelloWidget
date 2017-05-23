@@ -19,18 +19,34 @@
         <LinearLayout
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#54ffffff">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/list_title"
                 style="@style/WidgetTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/list_hint"
-                android:ellipsize="end"
-                android:maxLines="1" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/board_name"
+                    style="@style/BoardTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/board_hint"
+                    android:maxLines="1" />
+
+                <TextView
+                    android:id="@+id/list_name"
+                    style="@style/ListTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/list_hint"
+                    android:maxLines="1" />
+            </LinearLayout>
 
             <ImageButton
                 android:id="@+id/refreshButt"
@@ -72,5 +88,6 @@
                 android:text="@string/no_cards"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </FrameLayout>
+
     </LinearLayout>
 </FrameLayout>

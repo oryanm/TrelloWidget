@@ -23,6 +23,10 @@ internal @ColorInt fun Context.getCardForegroundColor() = getColor(
         getString(R.string.pref_fore_color_key),
         resources.getInteger(R.integer.pref_fore_color_default))
 
+internal fun Context.displayBoardName() = sharedPreferences().getBoolean(
+        getString(R.string.pref_display_board_name_key),
+        resources.getBoolean(R.bool.pref_display_board_name_default))
+
 internal fun Context.isTitleUniqueColor() = sharedPreferences().getBoolean(
         getString(R.string.pref_title_use_unique_color_key),
         resources.getBoolean(R.bool.pref_title_use_unique_color_default))

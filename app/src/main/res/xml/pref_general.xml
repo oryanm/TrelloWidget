@@ -22,12 +22,6 @@
             android:summary="@string/pref_fore_color_desc"
             android:title="@string/pref_fore_color_title" />
 
-        <SwitchPreference
-            android:defaultValue="@bool/pref_title_use_unique_color_default"
-            android:key="@string/pref_title_use_unique_color_key"
-            android:summary="@string/pref_title_use_unique_color_desc"
-            android:title="@string/pref_title_use_unique_color_title" />
-
         <com.github.oryanmat.trellowidget.util.color.ColorPreference
             android:defaultValue="@integer/pref_title_back_color_default"
             android:key="@string/pref_title_back_color_key"
@@ -39,6 +33,18 @@
             android:key="@string/pref_title_fore_color_key"
             android:summary="@string/pref_title_fore_color_desc"
             android:title="@string/pref_title_fore_color_title" />
+
+        <SwitchPreference
+            android:defaultValue="@bool/pref_title_use_unique_color_default"
+            android:key="@string/pref_title_use_unique_color_key"
+            android:summary="@string/pref_title_use_unique_color_desc"
+            android:title="@string/pref_title_use_unique_color_title" />
+
+        <SwitchPreference
+            android:defaultValue="@bool/pref_display_board_name_default"
+            android:key="@string/pref_display_board_name_key"
+            android:summary="@string/pref_display_board_name_desc"
+            android:title="@string/pref_display_board_name_title" />
 
         <ListPreference
             android:defaultValue="@string/pref_update_interval_default"

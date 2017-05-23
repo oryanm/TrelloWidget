@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.annotation.ColorInt
+import android.view.View
 import android.widget.RemoteViews
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
@@ -49,14 +50,18 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         @ColorInt val foregroundColor = context.getTitleForegroundColor()
 
         setBackgroundColor(views, R.id.title_bar, context.getTitleBackgroundColor())
-        setTextView(views, R.id.list_title, list.name, foregroundColor)
+        views.setViewVisibility(R.id.board_name,
+                if (context.displayBoardName()) View.VISIBLE else View.GONE)
+        setTextView(views, R.id.board_name, board.name, foregroundColor)
+        setTextView(views, R.id.list_name, list.name, foregroundColor)
+        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
+
         setImageViewColor(views, R.id.refreshButt, foregroundColor.lightDim())
         setImageViewColor(views, R.id.configButt, foregroundColor.lightDim())
-        setImageViewColor(views, R.id.divider, foregroundColor)
-
-        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId))
+
+        setImageViewColor(views, R.id.divider, foregroundColor)
     }
 
     private fun updateCardList(appWidgetId: Int, context: Context, views: RemoteViews) {

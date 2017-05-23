@@ -57,6 +57,11 @@
     <string name="pref_update_interval_value_desc">Refresh lists every %s</string>
     <string name="pref_update_interval_default">900000</string>
 
+    <string name="pref_display_board_name_key">display_board_name</string>
+    <string name="pref_display_board_name_title">Display board name</string>
+    <string name="pref_display_board_name_desc">Display board name in the widget title</string>
+    <bool name="pref_display_board_name_default">false</bool>
+
     <string-array name="pref_update_interval_titles">
         <item>15 minuets</item>
         <item>half hour</item>

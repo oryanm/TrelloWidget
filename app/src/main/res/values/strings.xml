@@ -11,6 +11,7 @@
     <string name="title_activity_card">Card Details</string>
 
     <!-- widget -->
+    <string name="board_hint">Board name</string>
     <string name="list_hint">List name</string>
     <string name="no_cards">No more cards!</string>
     <string name="refresh">Refresh list cards</string>
