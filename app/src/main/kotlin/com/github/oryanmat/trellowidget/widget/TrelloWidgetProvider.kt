@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.support.annotation.ColorInt
+import android.view.View
 import android.widget.RemoteViews
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
@@ -16,8 +17,6 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
-import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.showView
-import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.hideView
 
 private val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
 private val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
@@ -50,24 +49,19 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         val list = context.getList(appWidgetId)
         @ColorInt val foregroundColor = context.getTitleForegroundColor()
 
-        // Set up the title bar
-        if (context.isTwoLineTitle() && board.id != "-1") {
-            showView(views, R.id.two_line_title)
-            setTextView(views, R.id.board_title, board.name, foregroundColor)
-            setTextView(views, R.id.list_subtitle, list.name, foregroundColor)
-            hideView(views, R.id.list_title)
-            views.setOnClickPendingIntent(R.id.two_line_title, getTitleIntent(context, board))
-        } else {
-            showView(views, R.id.list_title)
-            setTextView(views, R.id.list_title, list.name, foregroundColor)
-            hideView(views, R.id.two_line_title)
-            views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
-        }
+        setBackgroundColor(views, R.id.title_bar, context.getTitleBackgroundColor())
+        views.setViewVisibility(R.id.board_name,
+                if (context.displayBoardName()) View.VISIBLE else View.GONE)
+        setTextView(views, R.id.board_name, board.name, foregroundColor)
+        setTextView(views, R.id.list_name, list.name, foregroundColor)
+        views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
+
         setImageViewColor(views, R.id.refreshButt, foregroundColor.lightDim())
         setImageViewColor(views, R.id.configButt, foregroundColor.lightDim())
-        setBackgroundColor(views, R.id.title_bar, context.getTitleBackgroundColor())
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
         views.setOnClickPendingIntent(R.id.configButt, getReconfigPendingIntent(context, appWidgetId))
+
+        setImageViewColor(views, R.id.divider, foregroundColor)
     }
 
     private fun updateCardList(appWidgetId: Int, context: Context, views: RemoteViews) {

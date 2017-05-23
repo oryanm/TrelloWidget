@@ -11,7 +11,6 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
-import android.view.View
 import android.widget.RemoteViews
 
 object RemoteViewsUtil {
@@ -63,13 +62,4 @@ object RemoteViewsUtil {
         val prefTextScale = context.getPrefTextScale()
         return dimension * prefTextScale / density
     }
-
-    fun hideView(views: RemoteViews, @IdRes view: Int) {
-        views.setViewVisibility(view, View.GONE)
-    }
-
-    fun showView(views: RemoteViews, @IdRes view: Int) {
-        views.setViewVisibility(view, View.VISIBLE)
-    }
-
 }
