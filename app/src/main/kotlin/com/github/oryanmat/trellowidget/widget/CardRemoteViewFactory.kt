@@ -63,10 +63,10 @@ class CardRemoteViewFactory(private val context: Context,
     private fun setBadges(views: RemoteViews, card: Card) {
         setSubscribed(views, card)
         setVotes(views, card)
+        setDueDate(views, card)
         setDescription(views, card)
         setComments(views, card)
         setChecklist(views, card)
-        setDueDate(views, card)
         setAttachments(views, card)
     }
 

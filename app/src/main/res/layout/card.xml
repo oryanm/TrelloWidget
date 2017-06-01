@@ -49,6 +49,16 @@
             style="@style/WidgetItemBadge" />
 
         <ImageView
+            android:id="@+id/due"
+            style="@style/WidgetItemBadge"
+            android:contentDescription="@string/due_date_desc"
+            android:src="@drawable/ic_access_time_white_24dp" />
+
+        <TextView
+            android:id="@+id/due_string"
+            style="@style/WidgetItemBadge" />
+
+        <ImageView
             android:id="@+id/desc"
             style="@style/WidgetItemBadge"
             android:contentDescription="@string/card_desc_desc"
@@ -82,16 +92,6 @@
 
         <TextView
             android:id="@+id/checklist_count"
-            style="@style/WidgetItemBadge" />
-
-        <ImageView
-            android:id="@+id/due"
-            style="@style/WidgetItemBadge"
-            android:contentDescription="@string/due_date_desc"
-            android:src="@drawable/ic_access_time_white_24dp" />
-
-        <TextView
-            android:id="@+id/due_string"
             style="@style/WidgetItemBadge" />
 
     </LinearLayout>
