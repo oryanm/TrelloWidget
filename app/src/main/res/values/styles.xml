@@ -5,13 +5,13 @@
     <style name="WidgetTitle">
         <item name="android:paddingTop">@dimen/title_padding</item>
         <item name="android:paddingBottom">@dimen/title_padding</item>
-        <item name="android:paddingLeft">@dimen/left_title_padding</item>
+        <item name="android:paddingLeft">@dimen/title_padding</item>
     </style>
 
     <style name="BoardTitle">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="ListTitle">

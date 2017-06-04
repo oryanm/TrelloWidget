@@ -17,7 +17,7 @@ object RemoteViewsUtil {
     val METHOD_SET_ALPHA = "setAlpha"
     val METHOD_SET_COLOR_FILTER = "setColorFilter"
     val METHOD_SET_BACKGROUND = "setBackgroundColor"
-    internal val IMAGE_SCALE = 1.5
+    internal val IMAGE_SCALE = .75
 
     fun setTextView(context: Context, views: RemoteViews,
                     @IdRes textView: Int, text: String,
@@ -38,11 +38,10 @@ object RemoteViewsUtil {
         // TODO remove dependency on support library by setting min sdk 21 (android 5.0)
         val drawable = ContextCompat.getDrawable(context, image)
         val bitmap = (drawable as BitmapDrawable).bitmap
-        val density = context.resources.displayMetrics.density
-        val prefTextScale = context.getPrefTextScale()
+        val prefTextScale = context.getPrefTextScale().toDouble()
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap,
-                (bitmap.width.toDouble() * IMAGE_SCALE * prefTextScale.toDouble() / density).toInt(),
-                (bitmap.height.toDouble() * IMAGE_SCALE * prefTextScale.toDouble() / density).toInt(), true)
+                (bitmap.width.toDouble() * IMAGE_SCALE * prefTextScale).toInt(),
+                (bitmap.height.toDouble() * IMAGE_SCALE * prefTextScale).toInt(), true)
         views.setImageViewBitmap(view, scaledBitmap)
     }
 

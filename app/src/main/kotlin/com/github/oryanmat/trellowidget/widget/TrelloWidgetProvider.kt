@@ -14,6 +14,7 @@ import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
+import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
@@ -52,10 +53,12 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         setBackgroundColor(views, R.id.title_bar, context.getTitleBackgroundColor())
         views.setViewVisibility(R.id.board_name,
                 if (context.displayBoardName()) View.VISIBLE else View.GONE)
-        setTextView(views, R.id.board_name, board.name, foregroundColor)
-        setTextView(views, R.id.list_name, list.name, foregroundColor)
+        setTextView(context, views, R.id.board_name, board.name + " / ", foregroundColor, R.dimen.widget_title_text)
+        setTextView(context, views, R.id.list_name, list.name, foregroundColor, R.dimen.widget_title_text)
         views.setOnClickPendingIntent(R.id.list_title, getTitleIntent(context, board))
 
+        setImage(context, views, R.id.refreshButt, R.drawable.ic_refresh_white_24dp)
+        setImage(context, views, R.id.configButt, R.drawable.ic_settings_white_24dp)
         setImageViewColor(views, R.id.refreshButt, foregroundColor.lightDim())
         setImageViewColor(views, R.id.configButt, foregroundColor.lightDim())
         views.setOnClickPendingIntent(R.id.refreshButt, getRefreshPendingIntent(context, appWidgetId))
