@@ -63,7 +63,7 @@
     <bool name="pref_display_board_name_default">false</bool>
 
     <string-array name="pref_update_interval_titles">
-        <item>15 minuets</item>
+        <item>15 minutes</item>
         <item>half hour</item>
         <item>hour</item>
         <item>6 hours</item>
