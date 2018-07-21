@@ -40,7 +40,7 @@ class MainActivity : Activity() {
     private fun saveUserToken(intent: Intent) {
         preferences().edit()
                 .putString(TOKEN_PREF_KEY, intent.data.fragment)
-                .commit()
+                .apply()
 
         replaceFragment(LoggedInFragment())
     }
@@ -48,7 +48,7 @@ class MainActivity : Activity() {
     @JvmOverloads fun logout(view: View? = null) {
         preferences().edit()
                 .remove(TOKEN_PREF_KEY)
-                .commit()
+                .apply()
 
         replaceFragment(LoginFragment())
     }
