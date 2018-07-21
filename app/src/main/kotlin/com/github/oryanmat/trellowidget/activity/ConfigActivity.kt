@@ -68,8 +68,9 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         finish()
 
         Log.e(T_WIDGET, error.toString())
-        val text = getString(R.string.board_load_fail).format(error)
+        val text = getString(R.string.board_load_fail)
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
