@@ -21,7 +21,7 @@ object DateTimeUtil {
 
     fun parseDateTime(date: String) = parse(date, activityFormat)
 
-    private fun parse(date: String, format: DateFormat) = try {
+    private fun parse(date: String, format: DateFormat) : String = try {
         format.format(apiFormat.parse(date))
     } catch (e: ParseException) {
         DATE_PARSE_ERROR
