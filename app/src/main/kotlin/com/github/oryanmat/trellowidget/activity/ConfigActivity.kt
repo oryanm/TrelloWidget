@@ -1,7 +1,6 @@
 package com.github.oryanmat.trellowidget.activity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
@@ -27,13 +26,11 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()
-    private val dialog: ProgressDialog by lazy { showProgressDialog() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_config)
         setWidgetId()
-        dialog.show()
         get(TrelloAPIUtil.instance.boards(), this)
     }
 
@@ -47,24 +44,18 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         }
     }
 
-    private fun showProgressDialog(): ProgressDialog {
-        val dialog = ProgressDialog(this)
-        dialog.setCancelable(false)
-        dialog.setMessage(getString(R.string.loading_message))
-        return dialog
-    }
-
     private fun get(url: String, listener: ConfigActivity) =
             TrelloAPIUtil.instance.getAsync(url, listener, listener)
 
     override fun onResponse(response: String) {
+        progressBar.visibility = View.GONE
+        content.visibility = View.VISIBLE
         val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
         board = getBoard(appWidgetId)
         setSpinner(boardSpinner, boards, this, boards.indexOf(board))
     }
 
     override fun onErrorResponse(error: VolleyError) {
-        dialog.dismiss()
         finish()
 
         Log.e(T_WIDGET, error.toString())
@@ -84,7 +75,6 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         board = spinner.getItemAtPosition(position) as Board
         list = getList(appWidgetId)
         setSpinner(listSpinner, board.lists, this, board.lists.indexOf(list))
-        dialog.dismiss()
     }
 
     private fun <T> setSpinner(spinner: Spinner, lists: List<T>,

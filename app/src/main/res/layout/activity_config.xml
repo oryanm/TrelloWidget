@@ -1,66 +1,79 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="8dp"
     tools:context="com.github.oryanmat.trellowidget.activity.ConfigActivity">
 
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_width="fill_parent"
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
 
-        <TextView
-            style="?android:windowTitleStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/board" />
-
-        <Spinner
-            android:id="@+id/boardSpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            style="?android:windowTitleStyle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="@string/list" />
-
-        <Spinner
-            android:id="@+id/listSpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        style="?android:buttonBarStyle"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear"
-        android:gravity="end"
-        android:orientation="horizontal">
+        android:visibility="invisible">
 
-        <Button
-            android:id="@+id/cancelButton"
-            style="?android:buttonBarButtonStyle"
+        <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="cancel"
-            android:text="@android:string/cancel" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <Button
-            android:id="@+id/okButton"
-            style="?android:buttonBarButtonStyle"
+            <TextView
+                style="?android:windowTitleStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/board" />
+
+            <Spinner
+                android:id="@+id/boardSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="?android:windowTitleStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="@string/list" />
+
+            <Spinner
+                android:id="@+id/listSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:buttonBarStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="ok"
-            android:text="@android:string/ok" />
-    </LinearLayout>
+            android:layout_below="@id/linear"
+            android:gravity="end"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/cancelButton"
+                style="?android:buttonBarButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="cancel"
+                android:text="@android:string/cancel" />
+
+            <Button
+                android:id="@+id/okButton"
+                style="?android:buttonBarButtonStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="ok"
+                android:text="@android:string/ok" />
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
