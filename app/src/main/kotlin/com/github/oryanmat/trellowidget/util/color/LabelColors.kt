@@ -2,16 +2,16 @@ package com.github.oryanmat.trellowidget.util.color
 
 import android.graphics.Color
 
-val PINK = "#FF80CE"
-val ORANGE = "#FFAB4A"
-val LIME = "#51E898"
-val SKY = "#00C2E0"
-val BLUE = "#0079BF"
-val GREEN = "#61BD4F"
-val YELLOW = "#F2D600"
-val RED = "#EB5A46"
-val PURPLE = "#C377E0"
-val LIGHT_GREY = "#C4C9CC"
+const val PINK = "#FF80CE"
+const val ORANGE = "#FFAB4A"
+const val LIME = "#51E898"
+const val SKY = "#00C2E0"
+const val BLUE = "#0079BF"
+const val GREEN = "#61BD4F"
+const val YELLOW = "#F2D600"
+const val RED = "#EB5A46"
+const val PURPLE = "#C377E0"
+const val LIGHT_GREY = "#C4C9CC"
 
 val colors = mapOf(
         "black" to Color.BLACK,

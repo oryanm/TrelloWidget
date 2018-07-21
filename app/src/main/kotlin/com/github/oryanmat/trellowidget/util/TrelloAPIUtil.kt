@@ -13,21 +13,21 @@ import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
 import java.util.concurrent.ExecutionException
 
-val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
-val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
-val BASE_URL = "https://api.trello.com/"
-val API_VERSION = "1/"
-val KEY = "&key=$APP_KEY"
-val AUTH_URL = "https://trello.com/1/authorize" +
+const val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
+const val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
+const val BASE_URL = "https://api.trello.com/"
+const val API_VERSION = "1/"
+const val KEY = "&key=$APP_KEY"
+const val AUTH_URL = "https://trello.com/1/authorize" +
         "?name=TrelloWidget" +
         KEY +
         "&expiration=never" +
         "&callback_method=fragment" +
         "&return_url=trello-widget://callback"
 
-val USER = "members/me?fields=fullName,username"
-val BOARDS = "members/me/boards?filter=open&fields=id,name,url" + "&lists=open&list_fields=id,name"
-val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
+const val USER = "members/me?fields=fullName,username"
+const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open"
+const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
 
 class TrelloAPIUtil private constructor(internal var context: Context) {
     internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }

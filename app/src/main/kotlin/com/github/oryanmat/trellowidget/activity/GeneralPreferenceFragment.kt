@@ -11,9 +11,11 @@ import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
 
+const val COLOR_FORMAT = "#%08X"
+
 class GeneralPreferenceFragment : PreferenceFragment() {
-    val COLOR_FORMAT = "#%08X"
-    val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key -> setPreferenceChanges(key) }
+    private val listener = SharedPreferences
+            .OnSharedPreferenceChangeListener { _, key -> setPreferenceChanges(key) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +49,7 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         activity.updateWidgetsData()
     }
 
-    fun setPreferenceChanges(key: String) {
+    private fun setPreferenceChanges(key: String) {
         if (key == getString(R.string.pref_update_interval_key)) {
             val preference = findPreference(key) as ListPreference
             val index = preference.findIndexOfValue(preference.value)
@@ -82,5 +84,5 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         }
     }
 
-    fun colorPreference(@StringRes key: Int) = findPreference(getString(key)) as ColorPreference
+    private fun colorPreference(@StringRes key: Int) = findPreference(getString(key)) as ColorPreference
 }
