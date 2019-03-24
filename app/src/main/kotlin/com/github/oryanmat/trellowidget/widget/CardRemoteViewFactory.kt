@@ -79,6 +79,7 @@ class CardRemoteViewFactory(private val context: Context,
     }
 
     private fun setVotes(views: RemoteViews, card: Card) {
+        setVisibility(views, R.id.votes_layout, card.badges.viewingMemberVoted)
         setIntBadge(views, R.id.votes, R.id.vote_count,
                 R.drawable.ic_thumb_up_white_24dp, card.badges.votes)
     }
@@ -119,12 +120,12 @@ class CardRemoteViewFactory(private val context: Context,
     private fun setBadge(views: RemoteViews, @IdRes view: Int, @IdRes textView: Int,
                          @DrawableRes image: Int, text: String, visible: Boolean) {
         setTextView(context, views, textView, text, color, R.dimen.card_badges_text)
-        views.setViewVisibility(textView, if (visible) View.VISIBLE else View.GONE)
+        setVisibility(views, textView, visible)
         setBadge(views, view, image, visible)
     }
 
     private fun setBadge(views: RemoteViews, @IdRes view: Int, @DrawableRes image: Int, visible: Boolean) {
-        views.setViewVisibility(view, if (visible) View.VISIBLE else View.GONE)
+        setVisibility(views, view, visible)
         setImageViewColor(views, view, color)
         setImage(context, views, view, image)
     }
@@ -144,6 +145,9 @@ class CardRemoteViewFactory(private val context: Context,
     }
 
     private fun setDivider(views: RemoteViews) = setImageViewColor(views, R.id.list_item_divider, color)
+
+    private fun setVisibility(views: RemoteViews, @IdRes view: Int, visible: Boolean) =
+            views.setViewVisibility(view, if (visible) View.VISIBLE else View.GONE)
 
     override fun onCreate() {
     }

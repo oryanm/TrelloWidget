@@ -8,7 +8,7 @@ import android.support.annotation.ColorInt
     Color.colorToHSV(this, hsv)
     // set the value component
     hsv[2] *= value
-    return Color.HSVToColor(hsv)
+    return Color.HSVToColor(Color.alpha(this), hsv)
 }
 
 @ColorInt fun Int.lightDim(): Int = dim(.75f)
