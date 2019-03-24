@@ -30,11 +30,6 @@ class GeneralPreferenceFragment : PreferenceFragment() {
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_title_use_unique_color_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_update_interval_key))
         listener.onSharedPreferenceChanged(preferences, getString(R.string.pref_display_board_name_key))
-
-        val titleBackgroundPref = colorPreference(R.string.pref_title_back_color_key)
-        titleBackgroundPref.copyData = colorPreference(R.string.pref_back_color_key).asColorData()
-        val titleForegroundPref = colorPreference(R.string.pref_title_fore_color_key)
-        titleForegroundPref.copyData = colorPreference(R.string.pref_fore_color_key).asColorData()
     }
 
     override fun onResume() {

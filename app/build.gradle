@@ -24,6 +24,6 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.larswerkman:HoloColorPicker:1.5'
+    implementation 'com.rarepebble:colorpicker:2.4.2'
     implementation 'com.android.volley:volley:1.1.0'
 }
