@@ -10,7 +10,7 @@ Choose and display lists from your Trello boards on your home screen for a quick
 * [Trello's API](http://trello.com/docs)
 * [Volley](https://android.googlesource.com/platform/frameworks/volley.git) - http handling
 * [Gson](http://sites.google.com/site/gson/) - json parsing
-* [Holo ColorPicker](http://github.com/LarsWerkman/HoloColorPicker) - color picker dialog
+* [HSV-Alpha Color Picker for Android](https://github.com/martin-stone/hsv-alpha-color-picker-android) - color picker dialog
 * [Calendar Widget](http://github.com/plusonelabs/calendar-widget) - inspiration
 
 ## How to Build
