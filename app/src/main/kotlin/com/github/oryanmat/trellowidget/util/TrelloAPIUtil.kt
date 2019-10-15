@@ -8,7 +8,6 @@ import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.model.BoardList
 import java.util.concurrent.ExecutionException
@@ -29,15 +28,17 @@ const val USER = "members/me?fields=fullName,username"
 const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open"
 const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
 
-class TrelloAPIUtil private constructor(internal var context: Context) {
-    internal val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
-    internal var preferences = context.preferences()
+const val ERROR_MESSAGE = "HTTP request to Trello failed: %s"
+
+class TrelloAPIUtil private constructor(context: Context) {
+    private val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
+    private val preferences = context.preferences()
 
     companion object {
         lateinit var instance: TrelloAPIUtil
 
         fun init(context: Context) {
-            instance = TrelloAPIUtil(context)
+            instance = TrelloAPIUtil(context.applicationContext)
         }
     }
 
@@ -77,7 +78,7 @@ class TrelloAPIUtil private constructor(internal var context: Context) {
     }
 
     private fun logException(e: Exception): String {
-        val msg = context.getString(R.string.http_fail).format(e)
+        val msg = ERROR_MESSAGE.format(e)
         Log.e(T_WIDGET, msg)
         return msg
     }

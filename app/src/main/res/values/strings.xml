@@ -38,7 +38,6 @@
     <string name="pref_title_copy_from_card">Copy from %s</string>
 
     <!-- error -->
-    <string name="http_fail">Trello http request failed: %s</string>
     <string name="login_fail">Login failed multiple times. Logging you out: %s</string>
     <string name="board_load_fail">Could not load board data.\nPlease make sure you are logged in and try again.</string>
 
