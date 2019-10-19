@@ -1,7 +1,7 @@
 package com.github.oryanmat.trellowidget.activity
 
-import android.app.Fragment
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -73,6 +73,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     private fun setUser(user: User) {
         this.user = user
+        val view = view
         view ?: return
         view.signed_text.text = getString(R.string.singed).format(user)
         view.loading_panel.visibility = View.GONE
@@ -81,6 +82,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        val view = view
         view ?: return
         outState.putInt(VISIBILITY, view.loading_panel.visibility)
         outState.putString(USER, Json.toJson(user))
