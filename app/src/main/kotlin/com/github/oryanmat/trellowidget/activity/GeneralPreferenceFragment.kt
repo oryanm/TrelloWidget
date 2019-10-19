@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.color.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets

@@ -3,15 +3,13 @@ package com.github.oryanmat.trellowidget.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.View
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.AUTH_URL
 import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
 
-class MainActivity : FragmentActivity() {
+class MainActivity : androidx.fragment.app.FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,7 +51,7 @@ class MainActivity : FragmentActivity() {
         replaceFragment(LoginFragment())
     }
 
-    private fun replaceFragment(fragment: Fragment) = supportFragmentManager
+    private fun replaceFragment(fragment: androidx.fragment.app.Fragment) = supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()

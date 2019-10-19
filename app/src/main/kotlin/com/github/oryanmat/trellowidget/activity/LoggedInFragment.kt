@@ -1,7 +1,6 @@
 package com.github.oryanmat.trellowidget.activity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
-class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
+class LoggedInFragment : androidx.fragment.app.Fragment(), Response.Listener<String>, Response.ErrorListener {
     private val USER = "com.github.oryanmat.trellowidget.activity.user"
     private val VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility"
     private val MAX_LOGIN_FAIL = 3

@@ -6,9 +6,9 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.annotation.ColorInt
 import android.view.View
 import android.widget.RemoteViews
+import androidx.annotation.ColorInt
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.model.Board

@@ -5,12 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Color.*
 import android.net.Uri
-import android.support.annotation.ColorInt
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.Card

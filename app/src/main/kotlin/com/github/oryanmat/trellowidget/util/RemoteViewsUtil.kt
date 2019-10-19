@@ -5,13 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Color.*
 import android.graphics.drawable.BitmapDrawable
-import android.support.annotation.ColorInt
-import android.support.annotation.DimenRes
-import android.support.annotation.DrawableRes
-import android.support.annotation.IdRes
-import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.widget.RemoteViews
+import androidx.annotation.ColorInt
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
+import androidx.core.content.ContextCompat
 
 object RemoteViewsUtil {
     val METHOD_SET_ALPHA = "setAlpha"

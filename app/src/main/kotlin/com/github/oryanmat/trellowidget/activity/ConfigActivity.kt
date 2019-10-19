@@ -35,8 +35,10 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     }
 
     private fun setWidgetId() {
-        if (intent.extras != null) {
-            appWidgetId = intent.extras.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID)
+        val extras = intent.extras
+
+        if (extras != null) {
+            appWidgetId = extras.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID)
         }
 
         if (appWidgetId == INVALID_APPWIDGET_ID) {
@@ -97,7 +99,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     private fun returnOk() {
         val resultValue = Intent()
         resultValue.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
-        setResult(Activity.RESULT_OK, resultValue)
+        setResult(RESULT_OK, resultValue)
         finish()
     }
 
