@@ -7,17 +7,13 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.6">
-
-    </FrameLayout>
+        android:layout_height="wrap_content" />
 
     <fragment
         android:id="@+id/pref_fragment"
         android:name="com.github.oryanmat.trellowidget.activity.GeneralPreferenceFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         tools:layout="@android:layout/preference_category" />
 
 </LinearLayout>
