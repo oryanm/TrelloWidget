@@ -3,12 +3,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    namespace "com.github.oryanmat.trellowidget"
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.oryanmat.trellowidget"
-        minSdkVersion 17
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 16
         versionName "1.6"
     }
