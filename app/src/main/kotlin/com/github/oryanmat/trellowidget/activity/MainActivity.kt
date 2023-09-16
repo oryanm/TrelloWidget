@@ -16,7 +16,7 @@ class MainActivity : androidx.fragment.app.FragmentActivity() {
 
         if (savedInstanceState == null) {
             val userToken = preferences().getString(TOKEN_PREF_KEY, "")
-            replaceFragment(if (userToken.isEmpty()) LoginFragment() else LoggedInFragment())
+            replaceFragment(if (userToken.isNullOrEmpty()) LoginFragment() else LoggedInFragment())
         }
     }
 
@@ -37,7 +37,7 @@ class MainActivity : androidx.fragment.app.FragmentActivity() {
 
     private fun saveUserToken(intent: Intent) {
         preferences().edit()
-                .putString(TOKEN_PREF_KEY, intent.data.fragment)
+                .putString(TOKEN_PREF_KEY, intent.data?.fragment)
                 .apply()
 
         replaceFragment(LoggedInFragment())

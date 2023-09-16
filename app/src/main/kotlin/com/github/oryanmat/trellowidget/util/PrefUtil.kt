@@ -8,8 +8,7 @@ import com.github.oryanmat.trellowidget.R
 internal fun Context.getPrefTextScale(): Float {
     val def: String = getString(R.string.pref_text_size_default)
     val string: String = sharedPreferences().getString(
-            getString(R.string.pref_text_size_key),
-            def)
+        getString(R.string.pref_text_size_key), def)!!
     return java.lang.Float.parseFloat(string)
 }
 
