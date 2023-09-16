@@ -15,21 +15,25 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.model.Board
 import com.github.oryanmat.trellowidget.model.BoardList
 import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
-import kotlinx.android.synthetic.main.activity_config.*
 
 class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()
 
+    private var _binding: ActivityConfigBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_config)
+        _binding = ActivityConfigBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setWidgetId()
         get(TrelloAPIUtil.instance.boards(), this)
     }
@@ -50,11 +54,11 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
             TrelloAPIUtil.instance.getAsync(url, listener, listener)
 
     override fun onResponse(response: String) {
-        progressBar.visibility = View.GONE
-        content.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+        binding.content.visibility = View.VISIBLE
         val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
         board = getBoard(appWidgetId)
-        setSpinner(boardSpinner, boards, this, boards.indexOf(board))
+        setSpinner(binding.boardSpinner, boards, this, boards.indexOf(board))
     }
 
     override fun onErrorResponse(error: VolleyError) {
@@ -68,15 +72,15 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent) {
-            boardSpinner -> boardSelected(parent, position)
-            listSpinner -> list = parent.getItemAtPosition(position) as BoardList
+            binding.boardSpinner -> boardSelected(parent, position)
+            binding.listSpinner -> list = parent.getItemAtPosition(position) as BoardList
         }
     }
 
     private fun boardSelected(spinner: AdapterView<*>, position: Int) {
         board = spinner.getItemAtPosition(position) as Board
         list = getList(appWidgetId)
-        setSpinner(listSpinner, board.lists, this, board.lists.indexOf(list))
+        setSpinner(binding.listSpinner, board.lists, this, board.lists.indexOf(list))
     }
 
     private fun <T> setSpinner(spinner: Spinner, lists: List<T>,
@@ -104,4 +108,9 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     }
 
     fun cancel(view: View) = finish()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }

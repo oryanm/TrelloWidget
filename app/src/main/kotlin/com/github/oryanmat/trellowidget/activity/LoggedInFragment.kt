@@ -10,10 +10,10 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.model.User
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
-import kotlinx.android.synthetic.main.fragment_logged_in.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
@@ -27,8 +27,12 @@ class LoggedInFragment : androidx.fragment.app.Fragment(), Response.Listener<Str
     private var user = User()
     private var loginAttempts = 0
 
+    private var _binding: FragmentLoggedInBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_logged_in, container, false)
+        _binding = FragmentLoggedInBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -72,18 +76,19 @@ class LoggedInFragment : androidx.fragment.app.Fragment(), Response.Listener<Str
 
     private fun setUser(user: User) {
         this.user = user
-        val view = view
-        view ?: return
-        view.signed_text.text = getString(R.string.singed).format(user)
-        view.loading_panel.visibility = View.GONE
-        view.signed_panel.visibility = View.VISIBLE
+        binding.signedText.text = getString(R.string.singed).format(user)
+        binding.loadingPanel.visibility = View.GONE
+        binding.signedPanel.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val view = view
-        view ?: return
-        outState.putInt(VISIBILITY, view.loading_panel.visibility)
+        outState.putInt(VISIBILITY, binding.loadingPanel.visibility)
         outState.putString(USER, Json.toJson(user))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
