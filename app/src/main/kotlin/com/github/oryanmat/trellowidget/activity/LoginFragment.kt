@@ -10,10 +10,9 @@ import android.widget.Toast
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.databinding.FragmentLoginBinding
 import com.github.oryanmat.trellowidget.util.AUTH_URL
-import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : androidx.fragment.app.Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.loginBtn.setOnClickListener { startBrowserWithAuthURL() }
         return binding.root
