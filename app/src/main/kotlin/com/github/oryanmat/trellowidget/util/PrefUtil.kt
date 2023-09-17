@@ -1,7 +1,7 @@
 package com.github.oryanmat.trellowidget.util
 
 import android.content.Context
-import android.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.preference.PreferenceManager
 import androidx.annotation.ColorInt
 import com.github.oryanmat.trellowidget.R
 
@@ -59,4 +59,4 @@ internal fun Context.isTitleEnabled() = sharedPreferences().getBoolean(
         getString(R.string.pref_title_onclick_key),
         resources.getBoolean(R.bool.pref_title_onclick_default))
 
-private fun Context.sharedPreferences() = getDefaultSharedPreferences(this)
+private fun Context.sharedPreferences() = PreferenceManager.getDefaultSharedPreferences(this)

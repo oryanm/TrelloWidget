@@ -1,8 +1,12 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
+        app:iconSpaceReserved="false"
         android:key="pref_key_storage_settings"
         android:title="@string/pref_title">
         <ListPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@string/pref_text_size_default"
             android:entries="@array/pref_text_size_entries"
             android:entryValues="@array/pref_text_size_values"
@@ -10,43 +14,50 @@
             android:summary="@string/pref_text_size_desc"
             android:title="@string/pref_text_size_title" />
 
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+        <com.rarepebble.colorpicker.ColorPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@integer/pref_back_color_default"
             android:key="@string/pref_back_color_key"
             android:summary="@string/pref_back_color_desc"
             android:title="@string/pref_back_color_title" />
 
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+        <com.rarepebble.colorpicker.ColorPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@integer/pref_fore_color_default"
             android:key="@string/pref_fore_color_key"
             android:summary="@string/pref_fore_color_desc"
             android:title="@string/pref_fore_color_title" />
 
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+        <com.rarepebble.colorpicker.ColorPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@integer/pref_title_back_color_default"
             android:key="@string/pref_title_back_color_key"
             android:summary="@string/pref_title_back_color_desc"
             android:title="@string/pref_title_back_color_title" />
 
-        <com.github.oryanmat.trellowidget.util.color.ColorPreference
+        <com.rarepebble.colorpicker.ColorPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@integer/pref_title_fore_color_default"
             android:key="@string/pref_title_fore_color_key"
             android:summary="@string/pref_title_fore_color_desc"
             android:title="@string/pref_title_fore_color_title" />
 
         <SwitchPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@bool/pref_title_use_unique_color_default"
             android:key="@string/pref_title_use_unique_color_key"
             android:summary="@string/pref_title_use_unique_color_desc"
             android:title="@string/pref_title_use_unique_color_title" />
 
         <SwitchPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@bool/pref_display_board_name_default"
             android:key="@string/pref_display_board_name_key"
             android:summary="@string/pref_display_board_name_desc"
             android:title="@string/pref_display_board_name_title" />
 
         <ListPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="@string/pref_update_interval_default"
             android:entries="@array/pref_update_interval_titles"
             android:entryValues="@array/pref_update_interval_values"
@@ -57,6 +68,7 @@
             android:title="@string/pref_update_interval_title" />
 
         <SwitchPreference
+            app:iconSpaceReserved="false"
             android:defaultValue="true"
             android:key="@string/pref_title_onclick_key"
             android:summary="@string/pref_title_onclick_desc"

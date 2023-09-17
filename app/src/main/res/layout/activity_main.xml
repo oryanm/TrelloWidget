@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/pref_fragment"
         android:name="com.github.oryanmat.trellowidget.activity.GeneralPreferenceFragment"
         android:layout_width="match_parent"
