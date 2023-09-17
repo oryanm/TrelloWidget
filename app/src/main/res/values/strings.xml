@@ -33,6 +33,7 @@
     <string name="login">Lets go</string>
     <string name="singed">Signed in as %s</string>
     <string name="logout">Logout</string>
+    <string name="browser_error">No application can handle the link.</string>
 
     <!-- color pref -->
     <string name="pref_title_copy_from_card">Copy from %s</string>
