@@ -11,12 +11,21 @@ import com.github.oryanmat.trellowidget.R
 import com.rarepebble.colorpicker.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
+import com.github.oryanmat.trellowidget.T_WIDGET
+import android.util.Log
 
 const val COLOR_FORMAT = "#%08X"
 
 class GeneralPreferenceFragment : PreferenceFragmentCompat() {
     private val listener = SharedPreferences
-            .OnSharedPreferenceChangeListener { _, key -> setPreferenceChanges(key) }
+        .OnSharedPreferenceChangeListener { _, key ->
+            try {
+                setPreferenceChanges(key)
+            } catch (e: NullPointerException) {
+                Log.e(T_WIDGET, "Can't find corresponding preference to key $key\n${e.stackTraceToString()}")
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
