@@ -1,29 +1,45 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    namespace "com.github.oryanmat.trellowidget"
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.oryanmat.trellowidget"
-        minSdkVersion 17
-        targetSdkVersion 28
+        minSdk 21
+        targetSdk 33
         versionCode 16
         versionName "1.6"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.annotation:annotation:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.annotation:annotation:1.7.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.rarepebble:colorpicker:2.4.2'
-    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.github.martin-stone:hsv-alpha-color-picker-android:3.1.0'
+    implementation 'com.android.volley:volley:1.2.1'
 }

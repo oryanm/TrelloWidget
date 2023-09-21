@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="8dp"
-    tools:context="com.github.oryanmat.trellowidget.activity.ConfigActivity">
+    tools:context=".activity.ConfigActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"
