@@ -12,6 +12,7 @@ data class Board(
     override fun toString() = name
 
     companion object {
+        val LIST_OF_BOARDS_TYPE: Type = object : TypeToken<List<Board>>() {}.type
         val NULL_JSON = """{"id":"-1","name":"oops","url":"","lists":[]}"""
     }
 }
@@ -24,7 +25,6 @@ data class BoardList(
     override fun toString() = name
 
     companion object {
-        val BOARD_LIST_TYPE: Type = object : TypeToken<List<Board>>() {}.type
         val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
         val ERROR = "ERROR"
 

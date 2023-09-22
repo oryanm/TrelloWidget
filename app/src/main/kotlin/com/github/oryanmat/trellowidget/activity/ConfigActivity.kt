@@ -19,7 +19,7 @@ import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
 import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
-import com.github.oryanmat.trellowidget.data.model.BoardList.Companion.BOARD_LIST_TYPE
+import com.github.oryanmat.trellowidget.data.model.Board.Companion.LIST_OF_BOARDS_TYPE
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
 
@@ -54,7 +54,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     override fun onResponse(response: String) {
         binding.progressBar.visibility = View.GONE
         binding.content.visibility = View.VISIBLE
-        val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
+        val boards = Json.tryParseJson(response, LIST_OF_BOARDS_TYPE, emptyList<Board>())
         board = getBoard(appWidgetId)
         setSpinner(binding.boardSpinner, boards, this, boards.indexOf(board))
     }
