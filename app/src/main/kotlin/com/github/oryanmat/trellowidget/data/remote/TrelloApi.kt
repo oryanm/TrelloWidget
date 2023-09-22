@@ -19,48 +19,44 @@ const val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
 const val BASE_URL = "https://api.trello.com/"
 const val API_VERSION = "1/"
 const val KEY = "&key=$APP_KEY"
-const val AUTH_URL = "https://trello.com/1/authorize" +
+const val AUTH_URL = "$BASE_URL$API_VERSION" + "authorize" +
         "?name=TrelloWidget" +
         KEY +
         "&expiration=never" +
         "&callback_method=fragment" +
         "&return_url=trello-widget://callback"
 
-const val USER = "members/me?fields=fullName,username"
-const val BOARDS = "members/me/boards?filter=open&fields=id,name,url&lists=open"
-const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
+const val USER_PATH = "members/me?fields=fullName,username"
+const val BOARDS_PATH = "members/me/boards?filter=open&fields=id,name,url&lists=open"
+const val LIST_CARDS_PATH = "lists/%s?cards=open&card_fields=name,badges,labels,url"
 
 const val ERROR_MESSAGE = "HTTP request to Trello failed: %s"
 
-class TrelloApi private constructor(context: Context) {
+class TrelloApi(context: Context) {
     private val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
     private val preferences = context.preferences()
+    private fun buildURL(query: String) =
+        "$BASE_URL$API_VERSION$query$KEY&${preferences.getString(TOKEN_PREF_KEY, "")}"
 
-    companion object {
-        lateinit var instance: TrelloApi
-
-        fun init(context: Context) {
-            instance = TrelloApi(context.applicationContext)
-        }
-    }
-
-    fun buildURL(query: String) = "$BASE_URL$API_VERSION$query$KEY&${preferences.getString(TOKEN_PREF_KEY, "")}"
-
-    fun user() = buildURL(USER)
-
-    fun boards() = buildURL(BOARDS)
-
-    fun getCards(list: BoardList): BoardList {
-        val json = get(buildURL(LIST_CARDS.format(list.id)))
+    fun getCards(id: String): BoardList {
+        val json = get(buildURL(LIST_CARDS_PATH.format(id)))
 
         return Json.tryParseJson(json, BoardList::class.java, BoardList.error(json))
     }
 
     fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
-        getAsync(user(), listener, errorListener)
+        getAsync(buildURL(USER_PATH), listener, errorListener)
     }
 
-    fun getAsync(url: String, listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
+    fun getBoardsAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
+        getAsync(buildURL(BOARDS_PATH), listener, errorListener)
+    }
+
+    private fun getAsync(
+        url: String,
+        listener: Response.Listener<String>,
+        errorListener: Response.ErrorListener
+    ) {
         queue.add(StringRequest(Request.Method.GET, url, listener, errorListener))
     }
 
@@ -68,15 +64,13 @@ class TrelloApi private constructor(context: Context) {
         val future = RequestFuture.newFuture<String>()
         queue.add(StringRequest(Request.Method.GET, url, future, future))
 
-        return get(future)
-    }
-
-    private fun get(future: RequestFuture<String>) = try {
-        future.get()
-    } catch (e: ExecutionException) {
-        logException(e)
-    } catch (e: InterruptedException) {
-        logException(e)
+        return try {
+            future.get()
+        } catch (e: ExecutionException) {
+            logException(e)
+        } catch (e: InterruptedException) {
+            logException(e)
+        }
     }
 
     private fun logException(e: Exception): String {
