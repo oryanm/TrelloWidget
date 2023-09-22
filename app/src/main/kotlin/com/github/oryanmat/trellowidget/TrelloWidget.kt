@@ -6,7 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.StrictMode
-import com.github.oryanmat.trellowidget.util.TrelloAPIUtil
+import com.github.oryanmat.trellowidget.data.remote.TrelloApi
 import com.github.oryanmat.trellowidget.util.getInterval
 import com.github.oryanmat.trellowidget.widget.AlarmReceiver
 import java.util.concurrent.Executors
@@ -18,7 +18,7 @@ class TrelloWidget : Application() {
     override fun onCreate() {
         if (DEBUG) StrictMode.enableDefaults()
         super.onCreate()
-        TrelloAPIUtil.init(applicationContext)
+        TrelloApi.init(applicationContext)
         Executors.callable { scheduleAlarm(this@TrelloWidget) }.call()
     }
 

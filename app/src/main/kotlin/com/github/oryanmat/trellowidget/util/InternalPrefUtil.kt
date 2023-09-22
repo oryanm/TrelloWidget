@@ -1,8 +1,8 @@
 package com.github.oryanmat.trellowidget.util
 
 import android.content.Context
-import com.github.oryanmat.trellowidget.model.Board
-import com.github.oryanmat.trellowidget.model.BoardList
+import com.github.oryanmat.trellowidget.data.model.Board
+import com.github.oryanmat.trellowidget.data.model.BoardList
 
 private val INTERNAL_PREFS = "com.oryanmat.trellowidget.prefs"
 private val LIST_KEY = ""

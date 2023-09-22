@@ -1,4 +1,4 @@
-package com.github.oryanmat.trellowidget.util
+package com.github.oryanmat.trellowidget.data.remote
 
 import android.content.Context
 import android.util.Log
@@ -9,7 +9,9 @@ import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.oryanmat.trellowidget.T_WIDGET
-import com.github.oryanmat.trellowidget.model.BoardList
+import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.util.Json
+import com.github.oryanmat.trellowidget.util.preferences
 import java.util.concurrent.ExecutionException
 
 const val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
@@ -30,15 +32,15 @@ const val LIST_CARDS = "lists/%s?cards=open&card_fields=name,badges,labels,url"
 
 const val ERROR_MESSAGE = "HTTP request to Trello failed: %s"
 
-class TrelloAPIUtil private constructor(context: Context) {
+class TrelloApi private constructor(context: Context) {
     private val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
     private val preferences = context.preferences()
 
     companion object {
-        lateinit var instance: TrelloAPIUtil
+        lateinit var instance: TrelloApi
 
         fun init(context: Context) {
-            instance = TrelloAPIUtil(context.applicationContext)
+            instance = TrelloApi(context.applicationContext)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.github.oryanmat.trellowidget.model
+package com.github.oryanmat.trellowidget.data.model
 
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -59,10 +59,3 @@ data class Label(
         val name: String = "",
         val color: String = "",
         val uses: Int = 0)
-
-data class User(
-        val id: String = "",
-        val fullName: String = "",
-        val username: String = "") {
-    override fun toString() = "$fullName (@$username)"
-}

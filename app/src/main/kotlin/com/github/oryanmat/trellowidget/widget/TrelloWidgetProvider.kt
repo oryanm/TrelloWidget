@@ -11,7 +11,7 @@ import android.widget.RemoteViews
 import androidx.annotation.ColorInt
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
-import com.github.oryanmat.trellowidget.model.Board
+import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage

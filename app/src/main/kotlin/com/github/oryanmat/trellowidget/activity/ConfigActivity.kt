@@ -15,10 +15,11 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.data.remote.TrelloApi
 import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
-import com.github.oryanmat.trellowidget.model.Board
-import com.github.oryanmat.trellowidget.model.BoardList
-import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
+import com.github.oryanmat.trellowidget.data.model.Board
+import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.data.model.BoardList.Companion.BOARD_LIST_TYPE
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
 
@@ -35,7 +36,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         _binding = ActivityConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setWidgetId()
-        get(TrelloAPIUtil.instance.boards(), this)
+        get(TrelloApi.instance.boards(), this)
     }
 
     private fun setWidgetId() {
@@ -51,7 +52,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     }
 
     private fun get(url: String, listener: ConfigActivity) =
-            TrelloAPIUtil.instance.getAsync(url, listener, listener)
+            TrelloApi.instance.getAsync(url, listener, listener)
 
     override fun onResponse(response: String) {
         binding.progressBar.visibility = View.GONE

@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.util.TOKEN_PREF_KEY
+import com.github.oryanmat.trellowidget.data.remote.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
 
 class MainActivity : androidx.fragment.app.FragmentActivity() {

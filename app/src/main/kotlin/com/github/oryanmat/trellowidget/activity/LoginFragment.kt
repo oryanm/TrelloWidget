@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.databinding.FragmentLoginBinding
-import com.github.oryanmat.trellowidget.util.AUTH_URL
+import com.github.oryanmat.trellowidget.data.remote.AUTH_URL
 
 class LoginFragment : androidx.fragment.app.Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
