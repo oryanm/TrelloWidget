@@ -13,7 +13,7 @@ import com.github.oryanmat.trellowidget.T_WIDGET
 import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.util.Json
-import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
+import com.github.oryanmat.trellowidget.TrelloWidget
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
@@ -61,7 +61,7 @@ class LoggedInFragment : androidx.fragment.app.Fragment(), Response.Listener<Str
 
     private fun login() {
         loginAttempts++
-        TrelloWidgetRepository.instance.getUser(this, this)
+        TrelloWidget.appModule.trelloWidgetRepository.getUser(this, this)
     }
 
     private fun logout(error: VolleyError) {

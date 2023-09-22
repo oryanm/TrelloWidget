@@ -15,7 +15,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.T_WIDGET
-import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
+import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
@@ -36,7 +36,7 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         _binding = ActivityConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setWidgetId()
-        TrelloWidgetRepository.instance.getBoards(this, this)
+        TrelloWidget.appModule.trelloWidgetRepository.getBoards(this, this)
     }
 
     private fun setWidgetId() {

@@ -7,6 +7,7 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.data.remote.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
 
+// TODO: Migrate to AppCompatActivity
 class MainActivity : androidx.fragment.app.FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
