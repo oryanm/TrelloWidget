@@ -3,12 +3,12 @@ package com.github.oryanmat.trellowidget.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.data.remote.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
 
-// TODO: Migrate to AppCompatActivity
-class MainActivity : androidx.fragment.app.FragmentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

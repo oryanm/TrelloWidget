@@ -1,6 +1,6 @@
 package com.github.oryanmat.trellowidget.activity
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
@@ -23,7 +23,7 @@ import com.github.oryanmat.trellowidget.data.model.Board.Companion.LIST_OF_BOARD
 import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.widget.updateWidget
 
-class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
+class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
     private var appWidgetId = INVALID_APPWIDGET_ID
     private var board: Board = Board()
     private var list: BoardList = BoardList()

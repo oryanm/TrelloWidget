@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
@@ -18,7 +19,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
-class LoggedInFragment : androidx.fragment.app.Fragment(), Response.Listener<String>, Response.ErrorListener {
+class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
     private val USER = "com.github.oryanmat.trellowidget.activity.user"
     private val VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility"
     private val MAX_LOGIN_FAIL = 3

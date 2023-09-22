@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.databinding.FragmentLoginBinding
 import com.github.oryanmat.trellowidget.data.remote.AUTH_URL
 
 // TODO: Remove login fragment and show it as a dialog box
-class LoginFragment : androidx.fragment.app.Fragment() {
+class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.loginBtn.setOnClickListener { startBrowserWithAuthURL() }
