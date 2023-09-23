@@ -13,7 +13,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
@@ -75,7 +75,7 @@ class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter {
     private fun onErrorFetch(error: String) {
         finish()
 
-        Log.e(T_WIDGET, error)
+        Log.e(T_WIDGET_TAG, error)
         val text = getString(R.string.board_load_fail)
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         startActivity(Intent(this, MainActivity::class.java))

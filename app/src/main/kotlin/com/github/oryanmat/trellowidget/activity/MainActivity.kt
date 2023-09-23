@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.data.remote.TOKEN_PREF_KEY
+import com.github.oryanmat.trellowidget.util.Constants.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.preferences
 
 class MainActivity : AppCompatActivity() {

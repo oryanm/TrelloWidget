@@ -13,16 +13,17 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.Constants.TRELLO_PACKAGE_NAME
+import com.github.oryanmat.trellowidget.util.Constants.TRELLO_URL
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
 
-private val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
-private val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
-private val TRELLO_PACKAGE_NAME = "com.trello"
-private val TRELLO_URL = "https://www.trello.com"
+private const val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
+private const val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
+
 
 class TrelloWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {

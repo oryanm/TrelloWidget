@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.databinding.FragmentLoginBinding
-import com.github.oryanmat.trellowidget.data.remote.AUTH_URL
+import com.github.oryanmat.trellowidget.util.Constants.AUTH_URL
 
 // TODO: Remove login fragment and show it as a dialog box
 class LoginFragment : Fragment() {

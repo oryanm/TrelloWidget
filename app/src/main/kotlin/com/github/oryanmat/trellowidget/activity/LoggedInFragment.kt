@@ -7,23 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.TrelloWidget
+import com.github.oryanmat.trellowidget.util.Constants.DELAY
+import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
+import com.github.oryanmat.trellowidget.util.Constants.USER_KEY
+import com.github.oryanmat.trellowidget.util.Constants.VISIBILITY_KEY
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.concurrent.schedule
 
 class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
-    private val USER = "com.github.oryanmat.trellowidget.activity.user"
-    private val VISIBILITY = "com.github.oryanmat.trellowidget.activity.visibility"
-    private val MAX_LOGIN_FAIL = 3
-    private val DELAY = TimeUnit.SECONDS.toMillis(1)
+
 
     private var user = User()
     private var loginAttempts = 0
@@ -38,10 +39,10 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val visibility = savedInstanceState?.getInt(VISIBILITY, View.VISIBLE) ?: View.VISIBLE
+        val visibility = savedInstanceState?.getInt(VISIBILITY_KEY, View.VISIBLE) ?: View.VISIBLE
 
         if (visibility == View.GONE) {
-            val userJson = savedInstanceState?.getString(USER) ?: ""
+            val userJson = savedInstanceState?.getString(USER_KEY) ?: ""
             setUser(Json.tryParseJson(userJson, User::class.java, User()))
         } else {
             login()
@@ -49,7 +50,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
     }
 
     override fun onErrorResponse(error: VolleyError) {
-        Log.e(T_WIDGET, error.toString())
+        Log.e(T_WIDGET_TAG, error.toString())
 
         if (loginAttempts >= MAX_LOGIN_FAIL) {
             // logout after N failed get requests so we can try to login later
@@ -84,8 +85,8 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(VISIBILITY, binding.loadingPanel.visibility)
-        outState.putString(USER, Json.toJson(user))
+        outState.putInt(VISIBILITY_KEY, binding.loadingPanel.visibility)
+        outState.putString(USER_KEY, Json.toJson(user))
     }
 
     override fun onDestroyView() {

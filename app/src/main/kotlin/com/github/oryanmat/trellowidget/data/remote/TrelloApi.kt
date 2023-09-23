@@ -8,32 +8,21 @@ import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.Board.Companion.LIST_OF_BOARDS_TYPE
 import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.util.Constants.API_VERSION
+import com.github.oryanmat.trellowidget.util.Constants.BASE_URL
+import com.github.oryanmat.trellowidget.util.Constants.BOARDS_PATH
+import com.github.oryanmat.trellowidget.util.Constants.KEY
+import com.github.oryanmat.trellowidget.util.Constants.LIST_CARDS_PATH
+import com.github.oryanmat.trellowidget.util.Constants.TOKEN_PREF_KEY
+import com.github.oryanmat.trellowidget.util.Constants.USER_PATH
 import com.github.oryanmat.trellowidget.util.DataStatus
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.util.preferences
 import java.util.concurrent.ExecutionException
-
-const val TOKEN_PREF_KEY = "com.oryanmat.trellowidget.usertoken"
-const val APP_KEY = "b250ef70ccf79ea5e107279a91045e6e"
-const val BASE_URL = "https://api.trello.com/"
-const val API_VERSION = "1/"
-const val KEY = "&key=$APP_KEY"
-const val AUTH_URL = "$BASE_URL$API_VERSION" + "authorize" +
-        "?name=TrelloWidget" +
-        KEY +
-        "&expiration=never" +
-        "&callback_method=fragment" +
-        "&return_url=trello-widget://callback"
-
-const val USER_PATH = "members/me?fields=fullName,username"
-const val BOARDS_PATH = "members/me/boards?filter=open&fields=id,name,url&lists=open"
-const val LIST_CARDS_PATH = "lists/%s?cards=open&card_fields=name,badges,labels,url"
-
-const val ERROR_MESSAGE = "HTTP request to Trello failed: %s"
 
 class TrelloApi(appContext: Context) {
     private val queue: RequestQueue by lazy { Volley.newRequestQueue(appContext) }
@@ -91,8 +80,8 @@ class TrelloApi(appContext: Context) {
     }
 
     private fun logException(e: Exception): String {
-        val msg = ERROR_MESSAGE.format(e)
-        Log.e(T_WIDGET, msg)
+        val msg = "HTTP request to Trello failed: ${e.stackTraceToString()}"
+        Log.e(T_WIDGET_TAG, msg)
         return msg
     }
 }

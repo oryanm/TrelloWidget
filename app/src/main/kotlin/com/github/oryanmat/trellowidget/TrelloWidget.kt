@@ -11,8 +11,7 @@ import com.github.oryanmat.trellowidget.util.getInterval
 import com.github.oryanmat.trellowidget.widget.AlarmReceiver
 import java.util.concurrent.Executors
 
-val T_WIDGET = "TWidget"
-private val DEBUG = false
+private const val DEBUG = false
 
 class TrelloWidget : Application() {
 
