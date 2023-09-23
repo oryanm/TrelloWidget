@@ -18,51 +18,55 @@ import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.Constants.DELAY
 import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
-import com.github.oryanmat.trellowidget.util.Constants.USER_KEY
-import com.github.oryanmat.trellowidget.util.Constants.VISIBILITY_KEY
+import com.github.oryanmat.trellowidget.viewmodels.LoggedInViewModel
+import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 import java.util.*
 import kotlin.concurrent.schedule
 
 class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
 
-
-    private var user = User()
-    private var loginAttempts = 0
+    private val viewModel: LoggedInViewModel by viewModels {
+        viewModelFactory {
+            LoggedInViewModel(TrelloWidget.appModule.trelloWidgetRepository)
+        }
+    }
 
     private var _binding: FragmentLoggedInBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentLoggedInBinding.inflate(inflater, container, false)
+
+        if (viewModel.loadingPanelVisibility == View.GONE)
+            setUser()
+        else
+            tryLogin()
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        val visibility = savedInstanceState?.getInt(VISIBILITY_KEY, View.VISIBLE) ?: View.VISIBLE
-
-        if (visibility == View.GONE) {
-            val userJson = savedInstanceState?.getString(USER_KEY) ?: ""
-            setUser(Json.tryParseJson(userJson, User::class.java, User()))
-        } else {
-            login()
-        }
+    override fun onResponse(response: String) {
+        viewModel.user = Json.tryParseJson(response, User::class.java, User())
+        setUser()
     }
 
     override fun onErrorResponse(error: VolleyError) {
         Log.e(T_WIDGET_TAG, error.toString())
 
-        if (loginAttempts >= MAX_LOGIN_FAIL) {
+        if (viewModel.loginAttempts >= MAX_LOGIN_FAIL) {
             // logout after N failed get requests so we can try to login later
             logout(error)
         } else {
             // try again shortly. could be temp problem
-            Timer().schedule(DELAY, { login() })
+            Timer().schedule(DELAY) { tryLogin() }
         }
     }
 
-    private fun login() {
-        loginAttempts++
+    private fun tryLogin() {
+        viewModel.loginAttempts++
         TrelloWidget.appModule.trelloWidgetRepository.getUser(this, this)
     }
 
@@ -74,19 +78,11 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
         }
     }
 
-    override fun onResponse(response: String) = setUser(Json.tryParseJson(response, User::class.java, User()))
-
-    private fun setUser(user: User) {
-        this.user = user
+    private fun setUser() {
+        val user = viewModel.user
         binding.signedText.text = getString(R.string.singed).format(user)
         binding.loadingPanel.visibility = View.GONE
         binding.signedPanel.visibility = View.VISIBLE
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(VISIBILITY_KEY, binding.loadingPanel.visibility)
-        outState.putString(USER_KEY, Json.toJson(user))
     }
 
     override fun onDestroyView() {

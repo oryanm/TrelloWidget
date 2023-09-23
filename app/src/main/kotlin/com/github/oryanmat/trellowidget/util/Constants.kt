@@ -7,8 +7,6 @@ object Constants {
     const val T_WIDGET_TAG = "TWidget"
 
     // Login Config Constants
-    const val USER_KEY = "com.github.oryanmat.trellowidget.activity.user"
-    const val VISIBILITY_KEY = "com.github.oryanmat.trellowidget.activity.visibility"
     const val MAX_LOGIN_FAIL = 3
     private const val DELAY_IN_SEC = 1L
     val DELAY = TimeUnit.SECONDS.toMillis(DELAY_IN_SEC)
