@@ -9,7 +9,10 @@ import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.data.model.Board
+import com.github.oryanmat.trellowidget.data.model.Board.Companion.LIST_OF_BOARDS_TYPE
 import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.util.DataStatus
 import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.util.preferences
 import java.util.concurrent.ExecutionException
@@ -32,9 +35,10 @@ const val LIST_CARDS_PATH = "lists/%s?cards=open&card_fields=name,badges,labels,
 
 const val ERROR_MESSAGE = "HTTP request to Trello failed: %s"
 
-class TrelloApi(context: Context) {
-    private val queue: RequestQueue by lazy { Volley.newRequestQueue(context) }
-    private val preferences = context.preferences()
+class TrelloApi(appContext: Context) {
+    private val queue: RequestQueue by lazy { Volley.newRequestQueue(appContext) }
+    private val networkQueue = NetworkQueue(appContext)
+    private val preferences = appContext.preferences()
     private fun buildURL(query: String) =
         "$BASE_URL$API_VERSION$query$KEY&${preferences.getString(TOKEN_PREF_KEY, "")}"
 
@@ -48,8 +52,21 @@ class TrelloApi(context: Context) {
         getAsync(buildURL(USER_PATH), listener, errorListener)
     }
 
-    fun getBoardsAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
-        getAsync(buildURL(BOARDS_PATH), listener, errorListener)
+    fun getBoards(listener: (DataStatus<List<Board>>) -> Unit) {
+        val request = StringRequest(
+            Request.Method.GET,
+            buildURL(BOARDS_PATH),
+            { response ->
+                val boards = Json.tryParseJson(response, LIST_OF_BOARDS_TYPE, emptyList<Board>())
+                val dataStatus = DataStatus.success(boards)
+                listener(dataStatus)
+            },
+            { error ->
+                val dataStatus: DataStatus<List<Board>> = DataStatus.error(error.toString())
+                listener(dataStatus)
+            }
+        )
+        networkQueue.addToRequestQueue(request)
     }
 
     private fun getAsync(
