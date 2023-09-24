@@ -8,22 +8,20 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.data.model.User
-import com.github.oryanmat.trellowidget.util.Json
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.Constants.DELAY
 import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
+import com.github.oryanmat.trellowidget.util.DataStatus
 import com.github.oryanmat.trellowidget.viewmodels.LoggedInViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
-import java.util.*
+import java.util.Timer
 import kotlin.concurrent.schedule
 
-class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorListener {
+class LoggedInFragment : Fragment() {
 
     private val viewModel: LoggedInViewModel by viewModels {
         viewModelFactory {
@@ -41,36 +39,29 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
     ): View {
         _binding = FragmentLoggedInBinding.inflate(inflater, container, false)
 
-        if (viewModel.loadingPanelVisibility == View.GONE)
-            setUser()
+        viewModel.user.observe(viewLifecycleOwner) { dataStatus ->
+            when (dataStatus.status) {
+                DataStatus.Status.SUCCESS -> setUser(dataStatus.data!!)
+                DataStatus.Status.ERROR -> onErrorFetch(dataStatus.msg!!)
+            }
+        }
+        if (viewModel.user.value != null)
+            setUser(viewModel.user.value!!.data!!)
         else
-            tryLogin()
+            viewModel.tryLogin()
         return binding.root
     }
 
-    override fun onResponse(response: String) {
-        viewModel.user = Json.tryParseJson(response, User::class.java, User())
-        setUser()
-    }
+    private fun onErrorFetch(error: String) {
+        Log.e(T_WIDGET_TAG, error)
 
-    override fun onErrorResponse(error: VolleyError) {
-        Log.e(T_WIDGET_TAG, error.toString())
-
-        if (viewModel.loginAttempts >= MAX_LOGIN_FAIL) {
-            // logout after N failed get requests so we can try to login later
+        if (viewModel.loginAttempts >= MAX_LOGIN_FAIL)
             logout(error)
-        } else {
-            // try again shortly. could be temp problem
-            Timer().schedule(DELAY) { tryLogin() }
-        }
+        else
+            Timer().schedule(DELAY) { viewModel.tryLogin() }
     }
 
-    private fun tryLogin() {
-        viewModel.loginAttempts++
-        TrelloWidget.appModule.trelloWidgetRepository.getUser(this, this)
-    }
-
-    private fun logout(error: VolleyError) {
+    private fun logout(error: String) {
         if (isAdded) {
             (activity as MainActivity).logout()
             val text = getString(R.string.login_fail).format(error)
@@ -78,8 +69,7 @@ class LoggedInFragment : Fragment(), Response.Listener<String>, Response.ErrorLi
         }
     }
 
-    private fun setUser() {
-        val user = viewModel.user
+    private fun setUser(user: User) {
         binding.signedText.text = getString(R.string.singed).format(user)
         binding.loadingPanel.visibility = View.GONE
         binding.signedPanel.visibility = View.VISIBLE

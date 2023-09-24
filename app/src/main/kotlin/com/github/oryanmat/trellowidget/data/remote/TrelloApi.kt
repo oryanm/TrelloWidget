@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -12,6 +11,7 @@ import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.Board.Companion.LIST_OF_BOARDS_TYPE
 import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.util.Constants.API_VERSION
 import com.github.oryanmat.trellowidget.util.Constants.BASE_URL
 import com.github.oryanmat.trellowidget.util.Constants.BOARDS_PATH
@@ -37,8 +37,21 @@ class TrelloApi(appContext: Context) {
         return Json.tryParseJson(json, BoardList::class.java, BoardList.error(json))
     }
 
-    fun getUserAsync(listener: Response.Listener<String>, errorListener: Response.ErrorListener) {
-        getAsync(buildURL(USER_PATH), listener, errorListener)
+    fun getUser(listener: (DataStatus<User>) -> Unit) {
+        val request = StringRequest(
+            Request.Method.GET,
+            buildURL(USER_PATH),
+            { response ->
+                val user = Json.tryParseJson(response, User::class.java, User())
+                val dataStatus = DataStatus.success(user)
+                listener(dataStatus)
+            },
+            { error ->
+                val dataStatus: DataStatus<User> = DataStatus.error(error.toString())
+                listener(dataStatus)
+            }
+        )
+        networkQueue.addToRequestQueue(request)
     }
 
     fun getBoards(listener: (DataStatus<List<Board>>) -> Unit) {
@@ -56,14 +69,6 @@ class TrelloApi(appContext: Context) {
             }
         )
         networkQueue.addToRequestQueue(request)
-    }
-
-    private fun getAsync(
-        url: String,
-        listener: Response.Listener<String>,
-        errorListener: Response.ErrorListener
-    ) {
-        queue.add(StringRequest(Request.Method.GET, url, listener, errorListener))
     }
 
     private fun get(url: String): String {
