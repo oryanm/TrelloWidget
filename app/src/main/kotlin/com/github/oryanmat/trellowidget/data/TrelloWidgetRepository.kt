@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.data.remote.TrelloApi
-import com.github.oryanmat.trellowidget.util.DataStatus
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 
 class TrelloWidgetRepository(private val trelloApi: TrelloApi) {
 

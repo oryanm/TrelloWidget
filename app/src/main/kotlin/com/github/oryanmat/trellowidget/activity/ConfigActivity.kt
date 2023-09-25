@@ -19,6 +19,7 @@ import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.util.*
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 import com.github.oryanmat.trellowidget.viewmodels.ConfigViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 

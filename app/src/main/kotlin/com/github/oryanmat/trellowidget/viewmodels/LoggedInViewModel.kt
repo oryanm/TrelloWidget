@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
 import com.github.oryanmat.trellowidget.data.model.User
-import com.github.oryanmat.trellowidget.util.DataStatus
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 import kotlinx.coroutines.launch
 
 class LoggedInViewModel(private val repository: TrelloWidgetRepository) : ViewModel() {

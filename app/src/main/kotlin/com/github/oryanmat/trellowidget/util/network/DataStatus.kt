@@ -1,4 +1,4 @@
-package com.github.oryanmat.trellowidget.util
+package com.github.oryanmat.trellowidget.util.network
 
 data class DataStatus<out T>(val status: Status, val data: T? = null, val msg: String? = null) {
 

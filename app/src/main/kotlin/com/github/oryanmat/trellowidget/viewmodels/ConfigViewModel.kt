@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
-import com.github.oryanmat.trellowidget.util.DataStatus
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 import com.github.oryanmat.trellowidget.util.getBoard
 import com.github.oryanmat.trellowidget.util.getList
 import com.github.oryanmat.trellowidget.util.putConfigInfo

@@ -19,7 +19,7 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.data.model.Card
 import com.github.oryanmat.trellowidget.data.model.Label
-import com.github.oryanmat.trellowidget.util.DataStatus
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 import com.github.oryanmat.trellowidget.util.DateTimeUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor

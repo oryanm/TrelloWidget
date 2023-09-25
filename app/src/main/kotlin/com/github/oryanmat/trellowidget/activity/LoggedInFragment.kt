@@ -15,7 +15,7 @@ import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.Constants.DELAY
 import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
-import com.github.oryanmat.trellowidget.util.DataStatus
+import com.github.oryanmat.trellowidget.util.network.DataStatus
 import com.github.oryanmat.trellowidget.viewmodels.LoggedInViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 import java.util.Timer
