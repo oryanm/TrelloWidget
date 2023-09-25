@@ -3,7 +3,6 @@ package com.github.oryanmat.trellowidget.data
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import com.github.oryanmat.trellowidget.data.model.Board
-import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.data.remote.TrelloApi
 import com.github.oryanmat.trellowidget.util.DataStatus
@@ -15,8 +14,8 @@ class TrelloWidgetRepository(private val trelloApi: TrelloApi) {
 
     @WorkerThread
     fun getUser() =
-        trelloApi.getUser {
-            user.postValue(it)
+        trelloApi.getUser { dataStatus ->
+            user.postValue(dataStatus)
         }
 
     @WorkerThread
@@ -26,5 +25,6 @@ class TrelloWidgetRepository(private val trelloApi: TrelloApi) {
         }
 
     @WorkerThread
-    fun getBoardList(listId: String): BoardList = trelloApi.getCards(listId)
+    fun getBoardList(listId: String) =
+        trelloApi.getCards(listId)
 }

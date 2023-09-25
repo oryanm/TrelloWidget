@@ -13,7 +13,7 @@ data class Board(
 
     companion object {
         val LIST_OF_BOARDS_TYPE: Type = object : TypeToken<List<Board>>() {}.type
-        val NULL_JSON = """{"id":"-1","name":"oops","url":"","lists":[]}"""
+        const val NULL_JSON = """{"id":"-1","name":"oops","url":"","lists":[]}"""
     }
 }
 
@@ -25,10 +25,10 @@ data class BoardList(
     override fun toString() = name
 
     companion object {
-        val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
-        val ERROR = "ERROR"
+        const val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
+        const val ERROR = "ERROR"
 
-        fun error(name: String) = BoardList(id = ERROR, cards = listOf(Card(name = name)))
+        fun error() = BoardList(id = ERROR, cards = listOf(Card(name = ERROR)))
     }
 }
 
