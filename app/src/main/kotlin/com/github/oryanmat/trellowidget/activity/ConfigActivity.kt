@@ -19,7 +19,7 @@ import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.util.*
-import com.github.oryanmat.trellowidget.util.network.DataStatus
+import com.github.oryanmat.trellowidget.data.remote.ApiResponse
 import com.github.oryanmat.trellowidget.viewmodels.ConfigViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 
@@ -47,10 +47,10 @@ class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter {
 
         viewModel.loadPresentConfig()
         viewModel.getBoards()
-        viewModel.boards.observe(this) { dataStatus ->
-            when (dataStatus.status) {
-                DataStatus.Status.SUCCESS -> onSuccessFetch(dataStatus.data!!)
-                DataStatus.Status.ERROR -> onErrorFetch(dataStatus.msg!!)
+        viewModel.boards.observe(this) { response ->
+            when (response) {
+                is ApiResponse.Success -> onSuccessResponse(response.data)
+                is ApiResponse.Error -> onErrorResponse(response.error)
             }
         }
     }
@@ -67,13 +67,13 @@ class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter {
         }
     }
 
-    private fun onSuccessFetch(boards: List<Board>) {
+    private fun onSuccessResponse(boards: List<Board>) {
         binding.progressBar.visibility = View.GONE
         binding.content.visibility = View.VISIBLE
         setSpinner(binding.boardSpinner, boards, this, boards.indexOf(viewModel.board))
     }
 
-    private fun onErrorFetch(error: String) {
+    private fun onErrorResponse(error: String) {
         finish()
 
         Log.e(T_WIDGET_TAG, error)

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.data.remote.TrelloApi
-import com.github.oryanmat.trellowidget.util.network.DataStatus
+import com.github.oryanmat.trellowidget.data.remote.ApiResponse
 
 class TrelloWidgetRepository(private val trelloApi: TrelloApi) {
 
-    val user = MutableLiveData<DataStatus<User>>()
-    val boards = MutableLiveData<DataStatus<List<Board>>>()
+    val user = MutableLiveData<ApiResponse<User>>()
+    val boards = MutableLiveData<ApiResponse<List<Board>>>()
 
     @WorkerThread
     fun getUser() =

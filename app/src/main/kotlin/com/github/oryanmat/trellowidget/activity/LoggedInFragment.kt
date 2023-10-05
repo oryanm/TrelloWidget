@@ -11,11 +11,10 @@ import androidx.fragment.app.viewModels
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
-import com.github.oryanmat.trellowidget.data.model.User
 import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.util.Constants.DELAY
 import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
-import com.github.oryanmat.trellowidget.util.network.DataStatus
+import com.github.oryanmat.trellowidget.data.remote.ApiResponse
 import com.github.oryanmat.trellowidget.viewmodels.LoggedInViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 import java.util.Timer
@@ -39,20 +38,23 @@ class LoggedInFragment : Fragment() {
     ): View {
         _binding = FragmentLoggedInBinding.inflate(inflater, container, false)
 
-        viewModel.user.observe(viewLifecycleOwner) { dataStatus ->
-            when (dataStatus.status) {
-                DataStatus.Status.SUCCESS -> setUser(dataStatus.data!!)
-                DataStatus.Status.ERROR -> onErrorFetch(dataStatus.msg!!)
+        viewModel.liveUser.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Success -> {
+                    viewModel.loggedInUser = response.data
+                    setUser()
+                }
+                is ApiResponse.Error -> onErrorResponse(response.error)
             }
         }
-        if (viewModel.user.value != null)
-            setUser(viewModel.user.value!!.data!!)
-        else
+        if (viewModel.loggedInUser != null) {
+            setUser()
+        } else
             viewModel.tryLogin()
         return binding.root
     }
 
-    private fun onErrorFetch(error: String) {
+    private fun onErrorResponse(error: String) {
         Log.e(T_WIDGET_TAG, error)
 
         if (viewModel.loginAttempts >= MAX_LOGIN_FAIL)
@@ -69,8 +71,8 @@ class LoggedInFragment : Fragment() {
         }
     }
 
-    private fun setUser(user: User) {
-        binding.signedText.text = getString(R.string.singed).format(user)
+    private fun setUser() {
+        binding.signedText.text = getString(R.string.singed).format(viewModel.loggedInUser)
         binding.loadingPanel.visibility = View.GONE
         binding.signedPanel.visibility = View.VISIBLE
     }

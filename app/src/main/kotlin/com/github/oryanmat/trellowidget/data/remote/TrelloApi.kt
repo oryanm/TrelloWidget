@@ -18,7 +18,6 @@ import com.github.oryanmat.trellowidget.util.Constants.LIST_CARDS_PATH
 import com.github.oryanmat.trellowidget.util.Constants.TOKEN_PREF_KEY
 import com.github.oryanmat.trellowidget.util.Constants.USER_PATH
 import com.github.oryanmat.trellowidget.util.Json
-import com.github.oryanmat.trellowidget.util.network.DataStatus
 import com.github.oryanmat.trellowidget.util.preferences
 import java.lang.reflect.Type
 
@@ -31,22 +30,22 @@ class TrelloApi(appContext: Context) {
     private fun buildURL(query: String) =
         "$BASE_URL$API_VERSION$query$KEY&${preferences.getString(TOKEN_PREF_KEY, "")}"
 
-    fun getCards(id: String): DataStatus<BoardList> {
+    fun getCards(id: String): ApiResponse<BoardList> {
         val url = buildURL(LIST_CARDS_PATH.format(id))
         return getSynchronously(url, BoardList::class.java, BoardList.error())
     }
 
-    fun getUser(listener: (DataStatus<User>) -> Unit) {
+    fun getUser(listener: (ApiResponse<User>) -> Unit) {
         val url = buildURL(USER_PATH)
         getAsynchronously(url, User::class.java, User(), listener)
     }
 
-    fun getBoards(listener: (DataStatus<List<Board>>) -> Unit) {
+    fun getBoards(listener: (ApiResponse<List<Board>>) -> Unit) {
         val url = buildURL(BOARDS_PATH)
         getAsynchronously(url, LIST_OF_BOARDS_TYPE, emptyList(), listener)
     }
 
-    private fun <T> getSynchronously(url: String, type: Type, defaultValue: T): DataStatus<T> {
+    private fun <T> getSynchronously(url: String, type: Type, defaultValue: T): ApiResponse<T> {
 
         val future = RequestFuture.newFuture<String>()
         requestQueue.add(StringRequest(Request.Method.GET, url, future, future))
@@ -54,10 +53,10 @@ class TrelloApi(appContext: Context) {
         return try {
             val json = future.get()
             val data = Json.tryParseJson(json, type, defaultValue)
-            DataStatus.success(data)
+            ApiResponse.Success(data)
         } catch (e: Exception) {
             val msg = "HTTP request to Trello failed: ${e.stackTraceToString()}"
-            DataStatus.error(msg)
+            ApiResponse.Error(msg)
         }
     }
 
@@ -65,18 +64,18 @@ class TrelloApi(appContext: Context) {
         url: String,
         type: Type,
         defaultValue: T,
-        listener: (DataStatus<T>) -> Unit
+        listener: (ApiResponse<T>) -> Unit
     ) {
         val request = StringRequest(
             Request.Method.GET,
             url,
             { response ->
                 val data = Json.tryParseJson(response, type, defaultValue)
-                val dataStatus = DataStatus.success(data)
+                val dataStatus = ApiResponse.Success(data)
                 listener(dataStatus)
             },
             { error ->
-                val dataStatus: DataStatus<T> = DataStatus.error(error.toString())
+                val dataStatus = ApiResponse.Error<T>(error.toString())
                 listener(dataStatus)
             }
         )

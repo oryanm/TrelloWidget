@@ -19,7 +19,7 @@ import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.data.model.Card
 import com.github.oryanmat.trellowidget.data.model.Label
-import com.github.oryanmat.trellowidget.util.network.DataStatus
+import com.github.oryanmat.trellowidget.data.remote.ApiResponse
 import com.github.oryanmat.trellowidget.util.DateTimeUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
@@ -43,10 +43,10 @@ class CardRemoteViewFactory(
     override fun onDataSetChanged() {
         var list = context.getList(appWidgetId)
 
-        val dataStatus = TrelloWidget.appModule.trelloWidgetRepository.getBoardList(list.id)
-        when (dataStatus.status) {
-            DataStatus.Status.SUCCESS -> list = dataStatus.data!!
-            DataStatus.Status.ERROR -> { Log.e(T_WIDGET_TAG, dataStatus.msg!!) }
+        val apiResponse = TrelloWidget.appModule.trelloWidgetRepository.getBoardList(list.id)
+        when (apiResponse) {
+            is ApiResponse.Success -> list = apiResponse.data
+            is ApiResponse.Error -> Log.e(T_WIDGET_TAG, apiResponse.error)
         }
         color = context.getCardForegroundColor()
 

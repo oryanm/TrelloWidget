@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.oryanmat.trellowidget.data.TrelloWidgetRepository
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
-import com.github.oryanmat.trellowidget.util.network.DataStatus
+import com.github.oryanmat.trellowidget.data.remote.ApiResponse
 import com.github.oryanmat.trellowidget.util.getBoard
 import com.github.oryanmat.trellowidget.util.getList
 import com.github.oryanmat.trellowidget.util.putConfigInfo
@@ -23,7 +23,7 @@ class ConfigViewModel(
     var board: Board = Board()
     var list: BoardList = BoardList()
 
-    val boards: LiveData<DataStatus<List<Board>>> = repository.boards
+    val boards: LiveData<ApiResponse<List<Board>>> = repository.boards
 
     fun getBoards() = viewModelScope.launch {
         repository.getBoards()
