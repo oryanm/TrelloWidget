@@ -53,10 +53,10 @@ class TrelloApi(appContext: Context) {
         return try {
             val json = future.get()
             val data = Json.tryParseJson(json, type, defaultValue)
-            ApiResponse.Success(data)
+            Success(data)
         } catch (e: Exception) {
             val msg = "HTTP request to Trello failed: ${e.stackTraceToString()}"
-            ApiResponse.Error(msg)
+            Error(msg)
         }
     }
 
@@ -71,11 +71,11 @@ class TrelloApi(appContext: Context) {
             url,
             { response ->
                 val data = Json.tryParseJson(response, type, defaultValue)
-                val dataStatus = ApiResponse.Success(data)
+                val dataStatus = Success(data)
                 listener(dataStatus)
             },
             { error ->
-                val dataStatus = ApiResponse.Error<T>(error.toString())
+                val dataStatus = Error<T>(error.toString())
                 listener(dataStatus)
             }
         )

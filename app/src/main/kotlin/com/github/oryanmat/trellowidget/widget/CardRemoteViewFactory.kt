@@ -16,16 +16,17 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import com.github.oryanmat.trellowidget.R
+import com.github.oryanmat.trellowidget.TrelloWidget
 import com.github.oryanmat.trellowidget.data.model.BoardList
 import com.github.oryanmat.trellowidget.data.model.Card
 import com.github.oryanmat.trellowidget.data.model.Label
-import com.github.oryanmat.trellowidget.data.remote.ApiResponse
+import com.github.oryanmat.trellowidget.data.remote.Error
+import com.github.oryanmat.trellowidget.data.remote.Success
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.util.DateTimeUtil
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
-import com.github.oryanmat.trellowidget.TrelloWidget
-import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.util.color.colors
 import com.github.oryanmat.trellowidget.util.color.dim
 import com.github.oryanmat.trellowidget.util.getCardForegroundColor
@@ -45,8 +46,8 @@ class CardRemoteViewFactory(
 
         val apiResponse = TrelloWidget.appModule.trelloWidgetRepository.getBoardList(list.id)
         when (apiResponse) {
-            is ApiResponse.Success -> list = apiResponse.data
-            is ApiResponse.Error -> Log.e(T_WIDGET_TAG, apiResponse.error)
+            is Success -> list = apiResponse.data
+            is Error -> Log.e(T_WIDGET_TAG, apiResponse.error)
         }
         color = context.getCardForegroundColor()
 

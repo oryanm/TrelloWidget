@@ -9,12 +9,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
-import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.TrelloWidget
+import com.github.oryanmat.trellowidget.data.remote.Error
+import com.github.oryanmat.trellowidget.data.remote.Success
+import com.github.oryanmat.trellowidget.databinding.FragmentLoggedInBinding
 import com.github.oryanmat.trellowidget.util.Constants.DELAY
 import com.github.oryanmat.trellowidget.util.Constants.MAX_LOGIN_FAIL
-import com.github.oryanmat.trellowidget.data.remote.ApiResponse
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.viewmodels.LoggedInViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 import java.util.Timer
@@ -40,11 +41,11 @@ class LoggedInFragment : Fragment() {
 
         viewModel.liveUser.observe(viewLifecycleOwner) { response ->
             when (response) {
-                is ApiResponse.Success -> {
+                is Success -> {
                     viewModel.loggedInUser = response.data
                     setUser()
                 }
-                is ApiResponse.Error -> onErrorResponse(response.error)
+                is Error -> onErrorResponse(response.error)
             }
         }
         if (viewModel.loggedInUser != null) {

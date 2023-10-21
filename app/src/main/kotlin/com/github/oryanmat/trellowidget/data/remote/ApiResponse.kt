@@ -1,9 +1,7 @@
 package com.github.oryanmat.trellowidget.data.remote
 
+sealed interface ApiResponse<out T>
 
-sealed class ApiResponse<out T> {
+class Success<out T>(val data: T) : ApiResponse<T>
 
-    data class Success<out T>(val data: T) : ApiResponse<T>()
-
-    data class Error<out T>(val error: String) : ApiResponse<T>()
-}
+class Error<out T>(val error: String) : ApiResponse<T>

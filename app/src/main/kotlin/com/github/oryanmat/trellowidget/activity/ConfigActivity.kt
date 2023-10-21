@@ -1,6 +1,5 @@
 package com.github.oryanmat.trellowidget.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
@@ -12,14 +11,16 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import com.github.oryanmat.trellowidget.TrelloWidget
-import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
 import com.github.oryanmat.trellowidget.data.model.Board
 import com.github.oryanmat.trellowidget.data.model.BoardList
-import com.github.oryanmat.trellowidget.util.*
-import com.github.oryanmat.trellowidget.data.remote.ApiResponse
+import com.github.oryanmat.trellowidget.data.remote.Error
+import com.github.oryanmat.trellowidget.data.remote.Success
+import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
+import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter
 import com.github.oryanmat.trellowidget.viewmodels.ConfigViewModel
 import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 
@@ -49,8 +50,8 @@ class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter {
         viewModel.getBoards()
         viewModel.boards.observe(this) { response ->
             when (response) {
-                is ApiResponse.Success -> onSuccessResponse(response.data)
-                is ApiResponse.Error -> onErrorResponse(response.error)
+                is Success -> onSuccessResponse(response.data)
+                is Error -> onErrorResponse(response.error)
             }
         }
     }
