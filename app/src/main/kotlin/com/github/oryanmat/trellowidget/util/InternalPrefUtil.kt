@@ -1,12 +1,11 @@
 package com.github.oryanmat.trellowidget.util
 
 import android.content.Context
-import com.github.oryanmat.trellowidget.model.Board
-import com.github.oryanmat.trellowidget.model.BoardList
-
-private val INTERNAL_PREFS = "com.oryanmat.trellowidget.prefs"
-private val LIST_KEY = ""
-private val BOARD_KEY = ".board"
+import com.github.oryanmat.trellowidget.data.model.Board
+import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.util.Constants.BOARD_KEY
+import com.github.oryanmat.trellowidget.util.Constants.INTERNAL_PREFS
+import com.github.oryanmat.trellowidget.util.Constants.LIST_KEY
 
 internal fun Context.getList(appWidgetId: Int): BoardList =
         get(appWidgetId, LIST_KEY, BoardList.NULL_JSON, BoardList::class.java)

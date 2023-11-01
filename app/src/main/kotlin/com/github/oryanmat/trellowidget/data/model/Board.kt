@@ -1,4 +1,4 @@
-package com.github.oryanmat.trellowidget.model
+package com.github.oryanmat.trellowidget.data.model
 
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -12,7 +12,8 @@ data class Board(
     override fun toString() = name
 
     companion object {
-        val NULL_JSON = """{"id":"-1","name":"oops","url":"","lists":[]}"""
+        val LIST_OF_BOARDS_TYPE: Type = object : TypeToken<List<Board>>() {}.type
+        const val NULL_JSON = """{"id":"-1","name":"oops","url":"","lists":[]}"""
     }
 }
 
@@ -24,11 +25,10 @@ data class BoardList(
     override fun toString() = name
 
     companion object {
-        val BOARD_LIST_TYPE: Type = object : TypeToken<List<Board>>() {}.type
-        val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
-        val ERROR = "ERROR"
+        const val NULL_JSON = """{"id":"-1","name":"oops","cards":[]}"""
+        const val ERROR = "ERROR"
 
-        fun error(name: String) = BoardList(id = ERROR, cards = listOf(Card(name = name)))
+        fun error() = BoardList(id = ERROR, cards = listOf(Card(name = ERROR)))
     }
 }
 
@@ -59,10 +59,3 @@ data class Label(
         val name: String = "",
         val color: String = "",
         val uses: Int = 0)
-
-data class User(
-        val id: String = "",
-        val fullName: String = "",
-        val username: String = "") {
-    override fun toString() = "$fullName (@$username)"
-}

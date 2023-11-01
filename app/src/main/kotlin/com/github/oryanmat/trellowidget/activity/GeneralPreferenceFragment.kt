@@ -11,7 +11,7 @@ import com.github.oryanmat.trellowidget.R
 import com.rarepebble.colorpicker.ColorPreference
 import com.github.oryanmat.trellowidget.widget.updateWidgets
 import com.github.oryanmat.trellowidget.widget.updateWidgetsData
-import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
 import android.util.Log
 
 const val COLOR_FORMAT = "#%08X"
@@ -22,7 +22,7 @@ class GeneralPreferenceFragment : PreferenceFragmentCompat() {
             try {
                 setPreferenceChanges(key)
             } catch (e: NullPointerException) {
-                Log.e(T_WIDGET, "Can't find corresponding preference to key $key\n${e.stackTraceToString()}")
+                Log.e(T_WIDGET_TAG, "Can't find corresponding preference to key $key\n${e.stackTraceToString()}")
             }
         }
 

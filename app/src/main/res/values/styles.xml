@@ -2,6 +2,8 @@
 
     <style name="AppTheme" parent="Theme.AppCompat" />
 
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog"/>
+
     <style name="WidgetTitle">
         <item name="android:paddingTop">@dimen/title_padding</item>
         <item name="android:paddingBottom">@dimen/title_padding</item>

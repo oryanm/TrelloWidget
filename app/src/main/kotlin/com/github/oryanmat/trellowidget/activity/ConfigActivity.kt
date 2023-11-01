@@ -1,6 +1,5 @@
 package com.github.oryanmat.trellowidget.activity
 
-import android.app.Activity
 import android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID
 import android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID
 import android.content.Intent
@@ -11,22 +10,30 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import com.android.volley.Response
-import com.android.volley.VolleyError
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.github.oryanmat.trellowidget.R
-import com.github.oryanmat.trellowidget.T_WIDGET
+import com.github.oryanmat.trellowidget.TrelloWidget
+import com.github.oryanmat.trellowidget.data.model.Board
+import com.github.oryanmat.trellowidget.data.model.BoardList
+import com.github.oryanmat.trellowidget.data.remote.Error
+import com.github.oryanmat.trellowidget.data.remote.Success
 import com.github.oryanmat.trellowidget.databinding.ActivityConfigBinding
-import com.github.oryanmat.trellowidget.model.Board
-import com.github.oryanmat.trellowidget.model.BoardList
-import com.github.oryanmat.trellowidget.model.BoardList.Companion.BOARD_LIST_TYPE
-import com.github.oryanmat.trellowidget.util.*
-import com.github.oryanmat.trellowidget.widget.updateWidget
+import com.github.oryanmat.trellowidget.util.Constants.T_WIDGET_TAG
+import com.github.oryanmat.trellowidget.util.OnItemSelectedAdapter
+import com.github.oryanmat.trellowidget.viewmodels.ConfigViewModel
+import com.github.oryanmat.trellowidget.viewmodels.viewModelFactory
 
-class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<String>, Response.ErrorListener {
-    private var appWidgetId = INVALID_APPWIDGET_ID
-    private var board: Board = Board()
-    private var list: BoardList = BoardList()
+class ConfigActivity : AppCompatActivity(), OnItemSelectedAdapter {
 
+    private val viewModel: ConfigViewModel by viewModels {
+        viewModelFactory {
+            ConfigViewModel(
+                TrelloWidget.appModule.trelloWidgetRepository,
+                TrelloWidget.appModule.appContext
+            )
+        }
+    }
     private var _binding: ActivityConfigBinding? = null
     private val binding get() = _binding!!
 
@@ -34,37 +41,43 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         super.onCreate(savedInstanceState)
         _binding = ActivityConfigBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.cancelButton.setOnClickListener { finish() }
+        binding.okButton.setOnClickListener { onOkClicked() }
         setWidgetId()
-        get(TrelloAPIUtil.instance.boards(), this)
+
+        viewModel.loadPresentConfig()
+        viewModel.getBoards()
+        viewModel.boards.observe(this) { response ->
+            when (response) {
+                is Success -> onSuccessResponse(response.data)
+                is Error -> onErrorResponse(response.error)
+            }
+        }
     }
 
     private fun setWidgetId() {
         val extras = intent.extras
 
         if (extras != null) {
-            appWidgetId = extras.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID)
+            viewModel.appWidgetId = extras.getInt(EXTRA_APPWIDGET_ID, INVALID_APPWIDGET_ID)
         }
 
-        if (appWidgetId == INVALID_APPWIDGET_ID) {
+        if (viewModel.appWidgetId == INVALID_APPWIDGET_ID) {
             finish()
         }
     }
 
-    private fun get(url: String, listener: ConfigActivity) =
-            TrelloAPIUtil.instance.getAsync(url, listener, listener)
-
-    override fun onResponse(response: String) {
+    private fun onSuccessResponse(boards: List<Board>) {
         binding.progressBar.visibility = View.GONE
         binding.content.visibility = View.VISIBLE
-        val boards = Json.tryParseJson(response, BOARD_LIST_TYPE, emptyList<Board>())
-        board = getBoard(appWidgetId)
-        setSpinner(binding.boardSpinner, boards, this, boards.indexOf(board))
+        setSpinner(binding.boardSpinner, boards, this, boards.indexOf(viewModel.board))
     }
 
-    override fun onErrorResponse(error: VolleyError) {
+    private fun onErrorResponse(error: String) {
         finish()
 
-        Log.e(T_WIDGET, error.toString())
+        Log.e(T_WIDGET_TAG, error)
         val text = getString(R.string.board_load_fail)
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         startActivity(Intent(this, MainActivity::class.java))
@@ -73,18 +86,20 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
         when (parent) {
             binding.boardSpinner -> boardSelected(parent, position)
-            binding.listSpinner -> list = parent.getItemAtPosition(position) as BoardList
+            binding.listSpinner -> viewModel.list = parent.getItemAtPosition(position) as BoardList
         }
     }
 
     private fun boardSelected(spinner: AdapterView<*>, position: Int) {
-        board = spinner.getItemAtPosition(position) as Board
-        list = getList(appWidgetId)
-        setSpinner(binding.listSpinner, board.lists, this, board.lists.indexOf(list))
+        val board = spinner.getItemAtPosition(position) as Board
+        viewModel.board = board
+        setSpinner(binding.listSpinner, board.lists, this, board.lists.indexOf(viewModel.list))
     }
 
-    private fun <T> setSpinner(spinner: Spinner, lists: List<T>,
-                               listener: AdapterView.OnItemSelectedListener, selectedIndex: Int): Spinner {
+    private fun <T> setSpinner(
+        spinner: Spinner, lists: List<T>,
+        listener: AdapterView.OnItemSelectedListener, selectedIndex: Int
+    ): Spinner {
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lists)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
@@ -93,24 +108,22 @@ class ConfigActivity : Activity(), OnItemSelectedAdapter, Response.Listener<Stri
         return spinner
     }
 
-    fun ok(view: View) {
-        if (board.id.isEmpty() || list.id.isEmpty()) return
-        putConfigInfo(appWidgetId, board, list)
-        updateWidget(appWidgetId)
+    private fun onOkClicked() {
+        if (viewModel.isConfigInvalid()) return
+        viewModel.updateConfig()
         returnOk()
     }
 
     private fun returnOk() {
         val resultValue = Intent()
-        resultValue.putExtra(EXTRA_APPWIDGET_ID, appWidgetId)
+        resultValue.putExtra(EXTRA_APPWIDGET_ID, viewModel.appWidgetId)
         setResult(RESULT_OK, resultValue)
         finish()
     }
 
-    fun cancel(view: View) = finish()
-
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.boards.removeObservers(this)
         _binding = null
     }
 }
