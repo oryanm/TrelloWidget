@@ -1,6 +1,7 @@
 package com.github.oryanmat.trellowidget.widget
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -12,7 +13,6 @@ import androidx.annotation.ColorInt
 import com.github.oryanmat.trellowidget.R
 import com.github.oryanmat.trellowidget.activity.ConfigActivity
 import com.github.oryanmat.trellowidget.data.model.Board
-import com.github.oryanmat.trellowidget.util.*
 import com.github.oryanmat.trellowidget.util.Constants.TRELLO_PACKAGE_NAME
 import com.github.oryanmat.trellowidget.util.Constants.TRELLO_URL
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setBackgroundColor
@@ -20,6 +20,14 @@ import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImage
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setImageViewColor
 import com.github.oryanmat.trellowidget.util.RemoteViewsUtil.setTextView
 import com.github.oryanmat.trellowidget.util.color.lightDim
+import com.github.oryanmat.trellowidget.util.displayBoardName
+import com.github.oryanmat.trellowidget.util.getBoard
+import com.github.oryanmat.trellowidget.util.getCardBackgroundColor
+import com.github.oryanmat.trellowidget.util.getCardForegroundColor
+import com.github.oryanmat.trellowidget.util.getList
+import com.github.oryanmat.trellowidget.util.getTitleBackgroundColor
+import com.github.oryanmat.trellowidget.util.getTitleForegroundColor
+import com.github.oryanmat.trellowidget.util.isTitleEnabled
 
 private const val REFRESH_ACTION = "com.github.oryanmat.trellowidget.refreshAction"
 private const val WIDGET_ID = "com.github.oryanmat.trellowidget.widgetId"
@@ -87,27 +95,27 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         val refreshIntent = Intent(context, TrelloWidgetProvider::class.java)
         refreshIntent.action = REFRESH_ACTION
         refreshIntent.putExtra(WIDGET_ID, appWidgetId)
-        return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, 0)
+        return PendingIntent.getBroadcast(context, appWidgetId, refreshIntent, FLAG_IMMUTABLE)
     }
 
     private fun getReconfigPendingIntent(context: Context, appWidgetId: Int): PendingIntent {
         val reconfigIntent = Intent(context, ConfigActivity::class.java)
         reconfigIntent.action = AppWidgetManager.ACTION_APPWIDGET_CONFIGURE
         reconfigIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-        return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, 0)
+        return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, FLAG_IMMUTABLE)
     }
 
     private fun getCardPendingIntent(context: Context): PendingIntent {
         // individual card URIs are set in a RemoteViewsFactory.setOnClickFillInIntent
-        return PendingIntent.getActivity(context, 0, Intent(Intent.ACTION_VIEW), 0)
+        return PendingIntent.getActivity(context, 0, Intent(Intent.ACTION_VIEW), FLAG_IMMUTABLE)
     }
 
     private fun getTitleIntent(context: Context, board: Board): PendingIntent {
         val intent = if (context.isTitleEnabled()) getBoardIntent(context, board) else Intent()
-        return PendingIntent.getActivity(context, 0, intent, 0)
+        return PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE)
     }
 
-    private fun getBoardIntent(context: Context, board: Board) = if (!board.url.isEmpty()) {
+    private fun getBoardIntent(context: Context, board: Board) = if (board.url.isNotEmpty()) {
         Intent(Intent.ACTION_VIEW, Uri.parse(board.url))
     } else {
         getTrelloIntent(context)
