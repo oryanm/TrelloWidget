@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(LoggedInFragment())
     }
 
-    @JvmOverloads fun logout(view: View? = null) {
+    @JvmOverloads
+    fun logout(@Suppress("UNUSED_PARAMETER") view: View? = null) {
         preferences().edit()
                 .remove(TOKEN_PREF_KEY)
                 .apply()

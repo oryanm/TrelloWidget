@@ -37,5 +37,5 @@ class TrelloWidget : Application() {
     fun pendingIntent(context: Context): PendingIntent =
             PendingIntent.getBroadcast(context, 0,
                     Intent(context, AlarmReceiver::class.java),
-                    PendingIntent.FLAG_UPDATE_CURRENT)
+                    PendingIntent.FLAG_IMMUTABLE)
 }

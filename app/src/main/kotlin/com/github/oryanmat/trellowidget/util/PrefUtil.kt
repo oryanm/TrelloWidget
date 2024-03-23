@@ -1,8 +1,8 @@
 package com.github.oryanmat.trellowidget.util
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import androidx.annotation.ColorInt
+import androidx.preference.PreferenceManager
 import com.github.oryanmat.trellowidget.R
 
 internal fun Context.getPrefTextScale(): Float {
@@ -15,7 +15,7 @@ internal fun Context.getPrefTextScale(): Float {
 internal fun Context.getInterval() =
         Integer.parseInt(sharedPreferences().getString(
                 getString(R.string.pref_update_interval_key),
-                getString(R.string.pref_update_interval_default)))
+                getString(R.string.pref_update_interval_default))!!)
 
 @ColorInt
 internal fun Context.getCardBackgroundColor() = getColor(
