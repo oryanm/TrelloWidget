@@ -14,7 +14,8 @@ Choose and display lists from your Trello boards on your home screen for a quick
 * [Calendar Widget](http://github.com/plusonelabs/calendar-widget) - inspiration
 
 ## How to Build
-Building should be smooth using android studio and gradle.
+**Dev**: Open the project in Android Studio and run the app.   
+**Prod**: Use `Build -> Generate Signed Bundle` to create a release binary.  
 
 ## Contributing
 Please open an issue before attempting to contribute any code. That way we can discuss what it is that's going to be implemented and make sure it aligns with the rest of the app.
