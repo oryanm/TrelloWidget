@@ -1,0 +1,1 @@
+Widget for Trello is an android home screen widget.

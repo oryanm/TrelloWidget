@@ -1,0 +1,2 @@
+Widget for Trello is an android home screen widget.
+Choose and display lists from your Trello boards on your home screen for a quick glance at your cards.
