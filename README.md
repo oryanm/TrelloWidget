@@ -2,8 +2,13 @@
 Widget for Trello is an android home screen widget.
 Choose and display lists from your Trello boards on your home screen for a quick glance at your cards.
 
+
 <a href='https://play.google.com/store/apps/details?id=com.oryanmat.trellowidget'>
-  <img alt='Get it on Google Play'  width="256" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
+  <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75">
+</a>
+
+<a href='https://play.google.com/store/apps/details?id=com.oryanmat.trellowidget'>
+  <img alt='Get it on Google Play' height="75" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
 </a>
 
 ## Tools and Tech
