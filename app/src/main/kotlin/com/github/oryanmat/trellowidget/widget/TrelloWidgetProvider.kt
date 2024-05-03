@@ -1,7 +1,9 @@
 package com.github.oryanmat.trellowidget.widget
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_MUTABLE
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
@@ -105,9 +107,10 @@ class TrelloWidgetProvider : AppWidgetProvider() {
         return PendingIntent.getActivity(context, appWidgetId, reconfigIntent, FLAG_IMMUTABLE)
     }
 
+    @SuppressLint("MutableImplicitPendingIntent")
     private fun getCardPendingIntent(context: Context): PendingIntent {
         // individual card URIs are set in a RemoteViewsFactory.setOnClickFillInIntent
-        return PendingIntent.getActivity(context, 0, Intent(Intent.ACTION_VIEW), FLAG_IMMUTABLE)
+        return PendingIntent.getActivity(context, 0, Intent(Intent.ACTION_VIEW), FLAG_MUTABLE)
     }
 
     private fun getTitleIntent(context: Context, board: Board): PendingIntent {
