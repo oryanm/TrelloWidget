@@ -33,6 +33,12 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    dependenciesInfo {
+        // disable google signed dependency metadata
+        includeInApk = false
+        includeInBundle = false
+    }
 }
 
 dependencies {
